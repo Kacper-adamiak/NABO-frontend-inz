@@ -1,0 +1,167 @@
+@import '../theme.scss';
+
+* {
+  font-family: 'Martel Sans', sans-serif;
+}
+/**
+ * Sidebar variables
+*/
+
+$sidebar-width-small: 90px;
+$sidebar-width-large: 190px;
+$sidebar_list-color: $primary;
+$sidebar_list_hover-color: $blue-light;
+$sidebar-font-familly: $font-familly-primary;
+$sidebar-background-color: #EAEAF1;
+$sidebar_list_active-color: $blue-light;
+
+/**
+ * Topbar variables
+*/
+
+$topbar-height: 3em;
+$topbar-background-color-before: $primary;
+$topbar-background-color: $secondary;
+
+/**
+ * Main segment variable
+ */
+
+$main_segment-height: calc(100vh - $topbar-height);
+
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  height: $topbar-height;
+  width: 100%;
+  background-color: $topbar-background-color;
+
+  ::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: $topbar-height;
+    width: $sidebar-width-large;
+    background-color: $topbar-background-color-before;
+    @media (max-width: 950px) {
+      width: $sidebar-width-small;
+    }
+  }
+
+  .topbar_icon {
+    height: 2em;
+    width: 2em;
+    margin: 0.2em;
+    fill: white;
+
+    cursor: pointer;
+
+    &:hover {
+      fill: rgb(148, 174, 215);
+    }
+  }
+
+
+}
+
+
+.main_box {
+
+  display: flex;
+
+  .sidebar {
+    width: $sidebar-width-large;
+    padding: 1em;
+    background-color: $sidebar-background-color;
+
+    ul {
+      list-style: none;
+
+      li {
+        margin: 0.5em 0 1em 0;
+        padding: 0.2em;
+        color: $sidebar_list-color;
+
+        span {
+          display: flex;
+          align-items: center;
+
+          width: fit-content;
+
+          font-weight: 700;
+          font-size: 1.2em;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+
+          cursor: pointer;
+
+          transition: color 0.3s ease;
+
+          .sidebar_icon {
+            height: 2em;
+            width: 2em;
+            margin: 0.2em;
+            fill: $sidebar_list-color;
+          }
+
+          &:hover {
+            .sidebar_icon {
+              fill: $sidebar_list_hover-color;
+            }
+
+            color: $sidebar_list_hover-color;
+          }
+
+          &.active {
+            color: $sidebar_list_active-color;
+
+            .sidebar_icon {
+              fill: $sidebar_list_active-color;
+            }
+
+            cursor: default;
+          }
+
+          @media (max-width: 950px) {
+
+            & {
+              p {
+                display: none;
+              }
+            }
+          }
+        }
+
+        &:first-of-type {
+          margin-top: 3em;
+        }
+
+        &:last-of-type {
+          margin-bottom: 3em;
+        }
+
+      }
+    }
+
+    @media (max-width: 950px) {
+      width: $sidebar-width-small;
+    }
+
+
+  }
+
+  .main_segment {
+    background-color: rgb(255, 255, 255);
+    height: $main_segment-height;
+    width: calc(100% - $sidebar-width-large);
+    @media (max-width: 950px) {
+      width: calc(100% - $sidebar-width-small);
+    }
+  }
+}
+
+
