@@ -1,0 +1,36 @@
+<div class="segment">
+  <h2 class="segment_header">Courses</h2>
+  <p class="segment_navigation">> Your Courses</p>
+  <div class="elevated_box">
+    <div class="elevated_box_header">
+      <p class="elevated_box_header_content">Your courses</p>
+      <span class="underline"></span>
+    </div>
+
+    <div class="elevated_box_table">
+      <div class="elevated_box_table_headers">
+        <p class="elevated_box_table_headers_value">Title</p>
+        <p class="elevated_box_table_headers_value">#F/#G/#T</p>
+        <p class="elevated_box_table_headers_value">Categories</p>
+        <p class="elevated_box_table_headers_value">Status</p>
+      </div>
+
+
+      <div class="elevated_box_table_row" *ngFor="let item of data">
+        <p class="elevated_box_table_row_value">{{item.name1}}</p>
+        <p class="elevated_box_table_row_value">{{item.name2}}</p>
+        <p class="elevated_box_table_row_value">{{item.name3}}</p>
+        <p class="elevated_box_table_row_value">{{item.name4}}</p>
+      </div>
+
+      <div class="elevated_box_table_row" *ngFor="let item of data">
+        <p class="elevated_box_table_row_value">{{item.name1}}</p>
+        <p class="elevated_box_table_row_value">{{item.name2}}</p>
+        <p class="elevated_box_table_row_value">{{item.name3}}</p>
+        <p class="elevated_box_table_row_value">{{item.name4}}</p>
+      </div>
+
+    </div>
+
+  </div>
+</div>

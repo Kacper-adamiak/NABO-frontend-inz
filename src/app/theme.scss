@@ -4,5 +4,219 @@ $primary: #313193;
 $secondary: #4F4FB7;
 $blue-light: #3FADF8;
 $blue-light-darker: #2795df;
+$secondary-60:rgba(79, 79, 183, 0.60 );
 
 $font-familly-primary: 'Martel Sans', sans-serif;
+
+@mixin with-count($n) {
+  @if $n == 1 {
+    &:first-of-type:nth-last-of-type(1) {
+      @content;
+    }
+  }
+  @else {
+    &:first-of-type:nth-last-of-type(#{$n}),
+    &:first-of-type:nth-last-of-type(#{$n}) ~ & {
+      @content;
+    }
+  }
+}
+
+.segment {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-width: 400px;
+  min-height: 400px;
+
+  &_header {
+    font-size: 3em;
+    font-weight: 700;
+    margin-left: 1em;
+  }
+
+  &_navigation {
+    position: relative;
+    top: -30px;
+    font-size: 0.8em;
+    margin-left: 5em;
+    color: rgb(192, 192, 192);
+  }
+
+  .elevated_box {
+    position: relative;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    width: 92%;
+    height: 80%;
+    border-radius: 5px;
+    box-shadow: 3px 3px 20px 1px rgb(208, 208, 208);
+
+    overflow-y: scroll;
+
+    &_header {
+      position: sticky;
+      top: 0;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      margin-bottom: 1em;
+
+      height: 60px;
+
+      box-shadow: 0px 10px 20px 10px rgb(255, 255, 255);
+
+      background: rgb(255, 255, 255);
+      z-index: 1;
+
+      &_content {
+        font-size: 1.3em;
+        margin: 0 10%;
+        font-weight: 700;
+        color: $primary;
+      }
+
+      .underline {
+        align-self: center;
+        display: block;
+        width: 90%;
+        height: 1px;
+        background-color: $primary;
+      }
+    }
+
+    &_label {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1em 4em;
+
+      &_name {
+        position: relative;
+        width: 20%;
+        font-weight: 700;
+        color: $secondary-60;
+      }
+
+      &_value {
+        position: relative;
+        width: 60%;
+        padding-left: 2em;
+        font-size: 1.8em;
+        text-align: right;
+        color: $secondary;
+
+        &::after {
+          position: absolute;
+          bottom: 25%;
+          left: 5px;
+          display: block;
+          content: "";
+          width: 100%;
+          height: 1px;
+          background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(79, 79, 183, 0.781) 47%, rgb(79, 79, 183) 100%);
+        }
+
+      }
+    }
+
+    &_bottom_right {
+
+      display: block;
+      width: fit-content;
+
+      align-self: flex-end;
+      margin: 5% 5%;
+
+      text-decoration: none;
+
+      opacity: 0.6;
+      color: $secondary;
+    }
+
+    &_table {
+      align-self: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 96%;
+
+      &_headers {
+        position: sticky;
+        top: 39px;
+        align-self: center;
+        display: flex;
+        width: 100%;
+        background-color: white;
+        z-index: 2;
+        margin-bottom: 2%;
+
+        &_value {
+          margin-left: 0.4em;
+          font-weight: bold;
+          width: 25%;
+        }
+
+      }
+
+      &_row {
+        align-self: center;
+        display: flex;
+        width: 100%;
+        margin: 0 0 10px 0;
+        padding: 1% 0;
+        border-radius: 3px;
+
+        background-color: rgb(213, 213, 213);
+
+        cursor: pointer;
+
+        &_value {
+          position: relative;
+          text-align: center;
+          width: 25%;
+          padding: 0 1%;
+
+          &:not(:first-child) {
+            &::before {
+              position: absolute;
+              left: 0px;
+              top: -10%;
+              content: "";
+              height: 120%;
+              width: 1px;
+              background: black;
+            }
+          }
+
+        }
+
+      }
+
+    }
+
+
+    &::-webkit-scrollbar-track {
+      //box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+      background-color: transparent;
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar {
+      width: 10px;
+      background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-color: #FFF;
+      background: radial-gradient(circle, $primary 0%, $secondary 100%);
+    }
+
+  }
+}

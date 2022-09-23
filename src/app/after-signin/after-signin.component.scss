@@ -47,9 +47,11 @@ $main_segment-height: calc(100vh - $topbar-height);
     height: $topbar-height;
     width: $sidebar-width-large;
     background-color: $topbar-background-color-before;
+
     @media (max-width: 950px) {
       width: $sidebar-width-small;
     }
+
   }
 
   .topbar_icon {
@@ -72,7 +74,7 @@ $main_segment-height: calc(100vh - $topbar-height);
 .main_box {
 
   display: flex;
-
+  min-height: 450px;
   .sidebar {
     width: $sidebar-width-large;
     padding: 1em;
@@ -106,6 +108,7 @@ $main_segment-height: calc(100vh - $topbar-height);
             width: 2em;
             margin: 0.2em;
             fill: $sidebar_list-color;
+            transition: fill 0.3s ease;
           }
 
           &:hover {
@@ -163,5 +166,7 @@ $main_segment-height: calc(100vh - $topbar-height);
     }
   }
 }
+
+
 
 
