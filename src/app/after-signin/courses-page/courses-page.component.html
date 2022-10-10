@@ -15,15 +15,14 @@
         <p class="elevated_box_table_headers_value">Status</p>
       </div>
 
-
-      <div class="elevated_box_table_row" *ngFor="let item of data">
+      <div class="elevated_box_table_row" *ngFor="let item of dataAsync | async">
         <p class="elevated_box_table_row_value">{{item.name1}}</p>
         <p class="elevated_box_table_row_value">{{item.name2}}</p>
         <p class="elevated_box_table_row_value">{{item.name3}}</p>
         <p class="elevated_box_table_row_value">{{item.name4}}</p>
       </div>
 
-      <div class="elevated_box_table_row" *ngFor="let item of data">
+      <div class="elevated_box_table_row" *ngFor="let item of dataAsync | async">
         <p class="elevated_box_table_row_value">{{item.name1}}</p>
         <p class="elevated_box_table_row_value">{{item.name2}}</p>
         <p class="elevated_box_table_row_value">{{item.name3}}</p>

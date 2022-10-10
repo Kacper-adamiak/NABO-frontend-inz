@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable, Observer } from 'rxjs';
 
 @Component({
   selector: 'app-courses-page',
@@ -16,6 +17,10 @@ export class CoursesPageComponent implements OnInit {
     {name1: "name112", name2: "name222", name3: "name332", name4: "name442"},
     {name1: "name1112", name2: "name2222", name3: "name3332", name4: "name4442"},
   ]
+
+  dataAsync = new Observable<data4[]>((observer: Observer<data4[]>) => {
+    setInterval(() => observer.next(this.data), 1000);
+  });
 
   constructor() { }
 
