@@ -1,14 +1,10 @@
 <div class="segment">
-  <h2 class="segment_header">Courses</h2>
-  <p class="segment_navigation">> Your Courses</p>
   <div class="elevated_box">
+    <button class="elevated_box_back_button button_secondary" routerLink=".."><-</button>
     <div class="elevated_box_header">
       <div class="split_box">
-        <p class="elevated_box_header_content">Your courses</p>
-        <div class="search">
-          <input type="text" placeholder="Search phrase" [formControl]="filterValue" value="">
-          <!-- <button class="button_secondary" (click)="clearData()">Search</button> -->
-        </div>
+        <h1>Your courses</h1>
+        <button class="button_secondary" (click)="addNewCourse()"><b>+</b></button>
       </div>
       <span class="underline"></span>
     </div>

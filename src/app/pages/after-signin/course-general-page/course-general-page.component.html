@@ -1,38 +1,37 @@
 <div class="segment">
-  <h2 class="segment_header">Courses</h2>
-  <p class="segment_navigation">> Your Courses / Animals</p>
   <div class="elevated_box">
+    <button class="elevated_box_back_button button_secondary" routerLink=".."><-</button>
     <div class="elevated_box_header">
-      <p class="elevated_box_header_content">Course: Animal</p>
+      <h1>Course: Animal</h1>
       <span class="underline"></span>
     </div>
-    <div class="elevated_box_scrollable_content">
-      <div class="elevated_box_input_container">
-        <label for="">Name</label>
-        <div class="input">
-          <input
-            type="text"
-            placeholder="np. Animals, Food, Verbs etc."
-            [(ngModel)]="actualData.name">
-          <span class="underline"></span>
-        </div>
-      </div>
-      <div class="elevated_box_input_container">
-        <label for="">Description</label>
-        <div class="input">
-          <textarea
-            name=""
-            id=""
-            rows="5"
-            placeholder="np. Course contains ..."
-            [(ngModel)]="actualData.description"
-          ></textarea>
-          <div class="underline"></div>
-        </div>
-
-      </div>
-      <button class="save_button" (click)="onSubmit()">Save changes</button>
+    <div class="input_container" [class.notvalid]="!name.valid && name.touched">
+      <label for="">Name*</label>
+      <input
+        type="text"
+        placeholder="np. Animals, Food, Verbs etc."
+        [formControl]="name">
+      <span class="underline"></span>
+      <span *ngIf="!name.valid && name.touched" class="input_alert">Nazwa musi być wypełniona</span>
     </div>
+
+
+
+    <div class="input_container" [class.notvalid]="!description.valid && description.touched">
+      <label for="">Description*</label>
+      <textarea
+        name=""
+        id=""
+        rows="5"
+        placeholder="np. Course contains ..."
+        [formControl]="description">
+    </textarea>
+      <div class="underline" ></div>
+      <span *ngIf="!description.valid && description.touched" class="input_alert">Opis musi być wypełniona</span>
+    </div>
+
+    <button class="save_button" (click)="onSubmit()" [disabled]="!(name.valid && description.valid)">Save changes</button>
+    <button class="save_button" (click)="openDeleteDialog()">Delete course</button>
 
   </div>
 </div>

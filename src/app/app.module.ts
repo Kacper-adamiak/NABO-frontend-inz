@@ -12,11 +12,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { StartingPageComponent } from './pages/starting-page/starting-page/starting-page.component';
+import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/snack-bar";
+import { SuccessSnackbarComponent } from './services/snack-bar/templates/success-snackbar/success-snackbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    StartingPageComponent
+    StartingPageComponent,
+    SuccessSnackbarComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +32,7 @@ import { StartingPageComponent } from './pages/starting-page/starting-page/start
     AuthModule,
     AfterSigninModule,
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },{provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

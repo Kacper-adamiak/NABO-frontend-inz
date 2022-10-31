@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { delay, Observable, Observer, of } from 'rxjs';
 import { Course } from '../models/course';
 import { WebService } from './web.service';
+import {MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,6 @@ export class CourseService {
   constructor(private webService: WebService) {
 
   }
-
 
   getAllCourses(): Observable<HttpResponse<Course[]>> {
     return this.webService.get<Course[]>('/course/all')
@@ -26,8 +26,22 @@ export class CourseService {
     return this.webService.get<Course>(`/course/${courseId}`)
   }
 
+  addCourse(newCourse: Course){
+    return this.webService.post<any>(`/course/add`, {
+      name: newCourse.name,
+      description: newCourse.description,
+      categoryName: "KAT1",
+      statusName: "STATUS_ACTIVE"
+    })
+  }
+
   editCourseById(courseId: number, editedCourse: Course): Observable<HttpResponse<any>> {
-    return this.webService.patch<any>(`/course/edit/${courseId}`, editedCourse)
+    return this.webService.patch<any>(`/course/edit/${courseId}`, {
+      name: editedCourse.name,
+      description: editedCourse.description,
+      categoryName: editedCourse.categoryName,
+      statusName: editedCourse.statusName
+    })
   }
 
   deleteCourseById(courseId: number): Observable<HttpResponse<any>> {

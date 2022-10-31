@@ -8,6 +8,7 @@ import { CoursesPageComponent } from './courses-page/courses-page.component';
 import { CourseGeneralPageComponent, DialogOverviewExampleDialog } from './course-general-page/course-general-page.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MaterialExampleModule } from 'src/material.module';
+import { NewCourseDialogComponent } from './courses-page/new-course-dialog/new-course-dialog.component';
 
 
 
@@ -18,7 +19,8 @@ import { MaterialExampleModule } from 'src/material.module';
     AccountPageComponent,
     CoursesPageComponent,
     CourseGeneralPageComponent,
-    DialogOverviewExampleDialog
+    DialogOverviewExampleDialog,
+    NewCourseDialogComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,30 @@
+<div mat-dialog-content>
+
+  <h2>Dodaj nowy kurs</h2>
+
+  <div style="width: 100%;">
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Nazwa</mat-label>
+      <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="name" required>
+      <mat-error *ngIf="name.invalid">Nazwa musi być wypełniona</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div style="width: 100%;">
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Opis</mat-label>
+      <textarea matInput
+                style="resize: none;"
+                rows="6"
+                placeholder="Kurs zawiera ..."
+                [formControl]="description">
+      </textarea>
+      <mat-error *ngIf="description.invalid">Opis musi być wypełniona</mat-error>
+    </mat-form-field>
+  </div>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Anuluj</button>
+  <button mat-button (click)="onAccept()" [disabled]="!(name.valid && description.valid)">Utwórz kurs</button>
+</div>
