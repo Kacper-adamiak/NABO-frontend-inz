@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-after-signin',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AfterSigninComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  logout() {
+    localStorage.removeItem('access_token')
+    this.router.navigate(['/auth/signin'])
   }
 
 }

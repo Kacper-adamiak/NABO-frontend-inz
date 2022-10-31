@@ -3,6 +3,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import {CourseService} from "../../../services/course.service";
 import {Course} from "../../../models/course";
 import {ActivatedRoute} from "@angular/router";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-course-general-page',
@@ -15,6 +16,7 @@ export class CourseGeneralPageComponent implements OnInit {
   actualData = {} as Course
   courseId!: number
 
+
   constructor(public dialog: MatDialog, private route: ActivatedRoute, private courseService: CourseService) { }
 
   ngOnInit(): void {
@@ -22,16 +24,26 @@ export class CourseGeneralPageComponent implements OnInit {
     if(!!this.courseId){
       this.courseService.getCourseById(this.courseId).subscribe(
         res => {
-          this.actualData = res.body!
-          this.prevData = res.body!
+          const body = res.body!
+          this.actualData = JSON.parse(JSON.stringify(body))
+          this.prevData = JSON.parse(JSON.stringify(body))
         }
       )
     }
   }
 
+  onSubmit() {
+    console.log("act",this.actualData)
+    console.log("prev",this.prevData)
+    this.openDialog()
+    // this.actualData.name = this.name
+    // this.actualData.description = this.description
+    // this.openDialog()
+  }
+
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-      width: '250px',
+      width: '50%',
       data: {prevData: this.prevData, actualData: this.actualData},
     });
 

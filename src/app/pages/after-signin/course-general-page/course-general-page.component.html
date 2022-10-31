@@ -6,27 +6,33 @@
       <p class="elevated_box_header_content">Course: Animal</p>
       <span class="underline"></span>
     </div>
-    <form class="elevated_box_scrollable_content">
+    <div class="elevated_box_scrollable_content">
       <div class="elevated_box_input_container">
         <label for="">Name</label>
         <div class="input">
           <input
             type="text"
             placeholder="np. Animals, Food, Verbs etc."
-            [value]="actualData.name">
+            [(ngModel)]="actualData.name">
           <span class="underline"></span>
         </div>
       </div>
       <div class="elevated_box_input_container">
         <label for="">Description</label>
         <div class="input">
-          <textarea name="" id="" rows="5" placeholder="np. Course contains ..."></textarea>
+          <textarea
+            name=""
+            id=""
+            rows="5"
+            placeholder="np. Course contains ..."
+            [(ngModel)]="actualData.description"
+          ></textarea>
           <div class="underline"></div>
         </div>
 
       </div>
-      <button class="save_button" (click)="openDialog()">Save changes</button>
-    </form>
+      <button class="save_button" (click)="onSubmit()">Save changes</button>
+    </div>
 
   </div>
 </div>

@@ -1,8 +1,13 @@
 <h1 mat-dialog-title>Hi {{data.actualData.name}}</h1>
 <div mat-dialog-content>
-  <p>What's your favorite animal?</p>
+  <h3>Data before edit</h3>
+  <p>{{data.prevData.name}}</p>
+  <p>{{data.prevData.description}}</p>
+  <h3>Data after edit</h3>
+  <p>{{data.actualData.name}}</p>
+  <p>{{data.actualData.description}}</p>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button (click)="onAccept()" cdkFocusInitial>Ok</button>
+  <button mat-button (click)="onAccept()">Ok</button>
 </div>
