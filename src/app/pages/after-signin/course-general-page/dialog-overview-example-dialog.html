@@ -1,13 +1,17 @@
-<h1 mat-dialog-title>Hi {{data.actualData.name}}</h1>
 <div mat-dialog-content>
-  <h3>Data before edit</h3>
-  <p>{{data.prevData.name}}</p>
-  <p>{{data.prevData.description}}</p>
-  <h3>Data after edit</h3>
-  <p>{{data.actualData.name}}</p>
-  <p>{{data.actualData.description}}</p>
+  <div class="split_box">
+    <div>
+      <h3>Data before edit</h3>
+      <p><b>Name: </b>{{data.prevData.name}}</p>
+      <p><b>Description: </b>{{data.prevData.description}}</p>
+    </div>
+    <div>
+      <h3>Data after edit</h3>
+      <p><b>Name: </b>{{data.actualData.name}}</p>
+      <p><b>Description: </b>{{data.actualData.description}}</p></div>
+  </div>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button (click)="onAccept()">Ok</button>
+  <button mat-button (click)="onNoClick()">Anuluj</button>
+  <button mat-button (click)="onAccept()">Zatwierdź zmiany</button>
 </div>

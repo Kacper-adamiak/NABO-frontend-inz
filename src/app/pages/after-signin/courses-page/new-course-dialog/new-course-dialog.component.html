@@ -1,0 +1,10 @@
+<div mat-dialog-content>
+  <div style="display: flex; flex-direction: column;">
+    <input [formControl]="name" type="text" placeholder="name">
+    <textarea [formControl]="description" placeholder="description"></textarea>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Anuluj</button>
+  <button mat-button (click)="onAccept()" [disabled]="!(name.valid && description.valid)">Zatwierdź zmiany</button>
+</div>
