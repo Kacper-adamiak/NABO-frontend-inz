@@ -13,8 +13,12 @@ export class AuthService {
   isLoggedIn$ = this._isLoggedIn$.asObservable();
 
   constructor(private webService: WebService, private router: Router) {
-    const token = localStorage.getItem('access_token');
-    this._isLoggedIn$.next(!!token);
+    this.updateIsLoggedIn()
+   }
+
+   updateIsLoggedIn() {
+     const token = localStorage.getItem('access_token');
+     this._isLoggedIn$.next(!!token);
    }
 
   signin(login: String, password: String) {

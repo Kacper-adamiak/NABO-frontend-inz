@@ -22,12 +22,12 @@ export class CourseService {
     return this.webService.get<Course[]>('/course/admin')
   }
 
-  getCourseByName(courseName: string): Observable<HttpResponse<Course>> {
-    return this.webService.get<Course>(`/course/${courseName}`)
+  getCourseByName(courseId: number): Observable<HttpResponse<Course>> {
+    return this.webService.get<Course>(`/course/${courseId}`)
   }
 
   editCourseById(courseId: number, editedCourse: Course): Observable<HttpResponse<any>> {
-    return this.webService.post<any>(`/course/edit/${courseId}`, editedCourse)
+    return this.webService.patch<any>(`/course/edit/${courseId}`, editedCourse)
   }
 
   deleteCourseById(courseId: number): Observable<HttpResponse<any>> {

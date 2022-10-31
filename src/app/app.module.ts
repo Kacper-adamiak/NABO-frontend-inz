@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterLink, RouterModule } from '@angular/router';
-import { AfterSigninModule } from './after-signin/after-signin.module';
+import { AfterSigninModule } from './pages/after-signin/after-signin.module';
 import {MatDialogModule} from '@angular/material/dialog';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './pages/auth/auth.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialExampleModule } from 'src/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
-import { StartingPageComponent } from './starting-page/starting-page/starting-page.component';
+import { StartingPageComponent } from './pages/starting-page/starting-page/starting-page.component';
 
 @NgModule({
   declarations: [

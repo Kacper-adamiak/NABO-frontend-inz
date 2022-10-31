@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AccountPageComponent } from './after-signin/account-page/account-page.component';
-import { AfterSigninComponent } from './after-signin/after-signin.component';
-import { CourseGeneralPageComponent } from './after-signin/course-general-page/course-general-page.component';
-import { CoursesPageComponent } from './after-signin/courses-page/courses-page.component';
-import { HomePageComponent } from './after-signin/home-page/home-page.component';
+import { AccountPageComponent } from './pages/after-signin/account-page/account-page.component';
+import { AfterSigninComponent } from './pages/after-signin/after-signin.component';
+import { CourseGeneralPageComponent } from './pages/after-signin/course-general-page/course-general-page.component';
+import { CoursesPageComponent } from './pages/after-signin/courses-page/courses-page.component';
+import { HomePageComponent } from './pages/after-signin/home-page/home-page.component';
 import { AppComponent } from './app.component';
-import { AuthComponent } from './auth/auth.component';
-import { SigninPageComponent } from './auth/signin-page/signin-page.component';
-import { IsAuthenticatedGuard } from './is-authenticated.guard';
-import { StartingPageComponent } from './starting-page/starting-page/starting-page.component';
+import { AuthComponent } from './pages/auth/auth.component';
+import { SigninPageComponent } from './pages/auth/signin-page/signin-page.component';
+import { IsAuthenticatedGuard } from './guards/is-authenticated.guard';
+import { StartingPageComponent } from './pages/starting-page/starting-page/starting-page.component';
 
 const routes: Routes = [
   {path: "", component: StartingPageComponent},
@@ -17,7 +17,7 @@ const routes: Routes = [
     {path: "", component: HomePageComponent},
     {path: 'account', component: AccountPageComponent},
     {path: 'courses', component: CoursesPageComponent},
-    {path: 'courses/animals', component: CourseGeneralPageComponent},
+    {path: 'courses/:id', component: CourseGeneralPageComponent},
   ], canActivate: [IsAuthenticatedGuard]},
   {path: "auth", component: AuthComponent, children: [
     {path: "signin", component: SigninPageComponent}
