@@ -20,10 +20,10 @@
         <p class="elevated_box_table_headers_value">Status</p>
       </div>
 
-      <div class="elevated_box_table_row" *ngFor="let item of data" routerLink="{{item.name}}"  >
+      <div class="elevated_box_table_row" *ngFor="let item of data" routerLink="{{item.id}}"  >
         <p class="elevated_box_table_row_value">{{item.name}}</p>
-        <p class="elevated_box_table_row_value">{{item.status}}</p>
-        <p class="elevated_box_table_row_value">{{item.category}}</p>
+        <p class="elevated_box_table_row_value">{{item.categoryName}}</p>
+        <p class="elevated_box_table_row_value">{{item.statusName}}</p>
       </div>
 
     </div>

@@ -13,7 +13,7 @@ import { CourseService } from 'src/app/services/course.service';
 
 export class CoursesPageComponent implements OnInit {
 
-  data!: any;
+  data!: Course[];
 
   filterValue = new FormControl('');
 
@@ -27,7 +27,7 @@ export class CoursesPageComponent implements OnInit {
 
 
   getCourses() {
-    this.courseServ.getCoursesCreatedByAdmin().subscribe((res) => this.data = res.body)
+    this.courseServ.getCoursesCreatedByAdmin().subscribe((res) => this.data = res.body!)
   }
 
 }
