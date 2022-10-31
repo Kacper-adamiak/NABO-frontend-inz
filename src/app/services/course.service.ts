@@ -22,7 +22,7 @@ export class CourseService {
     return this.webService.get<Course[]>('/course/admin')
   }
 
-  getCourseByName(courseId: number): Observable<HttpResponse<Course>> {
+  getCourseById(courseId: number): Observable<HttpResponse<Course>> {
     return this.webService.get<Course>(`/course/${courseId}`)
   }
 
