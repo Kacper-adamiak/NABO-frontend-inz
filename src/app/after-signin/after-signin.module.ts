@@ -6,6 +6,8 @@ import { RouterModule } from '@angular/router';
 import { AccountPageComponent } from './account-page/account-page.component';
 import { CoursesPageComponent } from './courses-page/courses-page.component';
 import { CourseGeneralPageComponent } from './course-general-page/course-general-page.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MaterialExampleModule } from 'src/material.module';
 
 
 
@@ -19,7 +21,8 @@ import { CourseGeneralPageComponent } from './course-general-page/course-general
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    ReactiveFormsModule,
   ]
 })
 export class AfterSigninModule { }

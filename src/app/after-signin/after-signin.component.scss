@@ -31,6 +31,7 @@ $main_segment-height: calc(100vh - $topbar-height);
 
 
 .topbar {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;

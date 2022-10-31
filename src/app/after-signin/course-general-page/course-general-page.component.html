@@ -3,14 +3,24 @@
   <p class="segment_navigation">> Your Courses / Animals</p>
   <div class="elevated_box">
     <div class="elevated_box_header">
-      <p class="elevated_box_header_content">Animals</p>
+      <p class="elevated_box_header_content">Course: Animal</p>
       <span class="underline"></span>
     </div>
-
-    <div class="elevated_box_split_box">
-      <div class="elevated_box_split_box_column"> <p>Numer 1</p> </div>
-      <div class="elevated_box_split_box_column"> <p>Numer 2</p> </div>
+    <div class="elevated_box_input_container">
+      <label for="">Name</label>
+      <div class="input">
+        <input type="text" placeholder="np. Animals, Food, Verbs etc." value="Animals">
+        <span class="underline"></span>
+      </div>
+    </div>
+    <div class="elevated_box_input_container">
+      <label for="">Description</label>
+      <div class="input">
+        <textarea name="" id="" rows="5" placeholder="np. Course contains ..."></textarea>
+        <div class="underline"></div>
+      </div>
     </div>
 
+    <button class="save_button" (click)="openDialog()">Save changes</button>
   </div>
 </div>
