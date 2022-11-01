@@ -1,27 +1,22 @@
-@import '../../theme';
-
-* {
-  font-family: 'Martel Sans', sans-serif;
-}
 /**
  * Sidebar variables
 */
 
 $sidebar-width-small: 90px;
 $sidebar-width-large: 190px;
-$sidebar_list-color: $primary;
-$sidebar_list_hover-color: $blue-light;
-$sidebar-font-familly: $font-familly-primary;
+$sidebar_list-color: #313193;
+$sidebar_list_hover-color: #3FADF8;
+$sidebar-font-familly: 'Martel Sans', sans-serif;;
 $sidebar-background-color: #EAEAF1;
-$sidebar_list_active-color: $blue-light;
+$sidebar_list_active-color: #3FADF8;
 
 /**
  * Topbar variables
 */
 
 $topbar-height: 3em;
-$topbar-background-color-before: $primary;
-$topbar-background-color: $secondary;
+$topbar-background-color-before: #313193;
+$topbar-background-color: #4F4FB7;
 
 /**
  * Main segment variable
@@ -70,7 +65,6 @@ $main_segment-height: calc(100vh - $topbar-height);
 
 
 }
-
 
 .main_box {
 

@@ -1,18 +1,20 @@
 <div class="segment">
   <div class="elevated_box">
-    <button class="elevated_box_back_button button_secondary" routerLink=".."><-</button>
+    <button mat-icon-button class="elevated_box_top_left" color="primary" routerLink="..">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <button mat-fab class="elevated_box_top_right" color="primary" (click)="addNewCourse()">
+      <mat-icon>add</mat-icon>
+    </button>
     <div class="elevated_box_header">
-      <div class="split_box">
-        <h1>Your courses</h1>
-        <button class="button_secondary" (click)="addNewCourse()"><b>+</b></button>
-      </div>
+      <h1>Twoje kursy</h1>
       <span class="underline"></span>
     </div>
 
     <div class="elevated_box_table">
       <div class="elevated_box_table_headers">
-        <p class="elevated_box_table_headers_value">Title</p>
-        <p class="elevated_box_table_headers_value">Categories</p>
+        <p class="elevated_box_table_headers_value">Tytuł</p>
+        <p class="elevated_box_table_headers_value">Kategoria</p>
         <p class="elevated_box_table_headers_value">Status</p>
       </div>
 

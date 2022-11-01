@@ -1,4 +1,7 @@
-@import "../../../theme";
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@include mat.core();
 
 .login-center {
   width: 100%;
@@ -6,7 +9,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: $primary;
+  background-color: map.get(mat.$indigo-palette, 400);
 }
 
 .login_form {
@@ -22,68 +25,4 @@
     font-weight: bold;
   }
 
-  .form_input {
-    position: relative;
-    padding: 0.5rem 0.25rem 0.25rem 0.25rem;
-    font-size: large;
-    border: none;
-    outline: none;
-
-    transition: border 500ms ease;
-
-    & + .underline {
-      position: relative;
-      width: 100%;
-      height: 1px;
-      background-color: rgb(186, 186, 186);
-    }
-
-    &:focus {
-      & + .underline {
-        background-color: black;
-        &::after {
-          content: "";
-          position: absolute;
-          top: -1px;
-          display: block;
-          width: 0%;
-          height: 3px;
-          background-color: black;
-          animation: underline-animation .5s forwards;
-        }
-
-      }
-    }
-  }
-
-  .form_button {
-    margin-top: 2rem;
-    padding: 1rem;
-    background-color: $blue-light;
-    border: none;
-    border-radius: 2px;
-    color: white;
-    font-size: 1.25rem;
-    font-weight: bold;
-    box-shadow: inset 2px 2px 5px rgba(255, 255, 255, 0.75);
-
-    cursor: pointer;
-
-    transition: background-color 300ms ease, box-shadow 300ms ease;
-
-    &:hover, &:focus {
-      background-color: $blue-light-darker;
-      box-shadow: inset 2px 2px 5px rgba(128, 128, 128, 0.75);
-    }
-  }
-
-}
-
-@keyframes underline-animation {
-  from {
-    width: 0%;
-  }
-  to {
-    width: 100%;
-  }
 }

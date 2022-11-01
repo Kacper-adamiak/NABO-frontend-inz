@@ -1,17 +1,24 @@
 <div class="login-center">
-  <form class="login_form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div class="login_form">
+    <h2>Zaloguj się na konto</h2>
 
-    <h2>Login</h2>
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Login</mat-label>
+      <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="email"  required>
+      <mat-error *ngIf="email.invalid">Login musi być wypełniona</mat-error>
+    </mat-form-field>
 
-    <label class="form_label" for="email">Email: </label>
-    <input class="form_input" id="email" type="text" formControlName="email">
-    <span class="underline"></span>
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Enter your password</mat-label>
+      <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password" required>
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" >
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error *ngIf="password.invalid">Podaj hasło</mat-error>
+    </mat-form-field>
 
-    <label class="form_label" for="password">Password: </label>
-    <input class="form_input" id="password" type="password" formControlName="password">
-    <span class="underline"></span>
+    <button mat-raised-button color="primary" (click)="onSubmit()">Zaloguj</button>
 
-    <button class="form_button" type="submit" [disabled]="!loginForm.valid">Login</button>
-  </form>
+  </div>
 </div>
 

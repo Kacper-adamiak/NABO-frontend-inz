@@ -4,6 +4,8 @@ import { AuthComponent } from './auth.component';
 import { SigninPageComponent } from './signin-page/signin-page.component';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import {MaterialExampleModule} from "../../../material.module";
+import {MatIconModule} from "@angular/material/icon";
 
 
 
@@ -15,7 +17,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MaterialExampleModule
   ]
 })
 export class AuthModule { }

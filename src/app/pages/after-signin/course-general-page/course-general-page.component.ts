@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {CourseService} from "../../../services/course.service";
 import {Course} from "../../../models/course";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
 import {finalize} from "rxjs";
@@ -22,7 +22,13 @@ export class CourseGeneralPageComponent implements OnInit {
   description = new FormControl('', [Validators.required])
   courseId!: number
 
-  constructor(public dialog: MatDialog, private route: ActivatedRoute, private courseService: CourseService) { }
+  constructor(
+    public dialog: MatDialog,
+    private snackBarService: SnackbarService,
+    private route: ActivatedRoute,
+    private courseService: CourseService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
 
@@ -35,6 +41,10 @@ export class CourseGeneralPageComponent implements OnInit {
           this.prevData = JSON.parse(JSON.stringify(body))
           this.name.setValue(this.actualData.name)
           this.description.setValue(this.actualData.description)
+        },
+        error: error => {
+          this.snackBarService.openSnackBar(error.error.message)
+          this.router.navigate(["/home/courses"])
         }
         })
     }
@@ -50,8 +60,20 @@ export class CourseGeneralPageComponent implements OnInit {
     this.openDialog()
   }
 
-  openDeleteDialog(){
-
+  deleteCourse(){
+    if(this.prevData.id){
+      this.courseService.deleteCourseById(this.prevData.id).subscribe(
+        {
+          next: (res) => {
+            this.snackBarService.openSuccessSnackBar(res.body.message)
+            this.router.navigate(["/home/courses"])
+          },
+          error: (err) => {
+            console.log("error: ", err)
+          }
+        }
+      );
+    }
   }
 
   openDialog(): void {
