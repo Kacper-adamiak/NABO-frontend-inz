@@ -15,13 +15,15 @@ import { StartingPageComponent } from './pages/starting-page/starting-page.compo
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/snack-bar";
 import { SuccessSnackbarComponent } from './services/snack-bar/templates/success-snackbar/success-snackbar.component';
 import { ErrorSnackbarComponent } from './services/snack-bar/templates/error-snackbar/error-snackbar.component';
+import { SpinnerDialogComponent } from './services/dialog/spinner-dialog/spinner-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     StartingPageComponent,
     SuccessSnackbarComponent,
-    ErrorSnackbarComponent
+    ErrorSnackbarComponent,
+    SpinnerDialogComponent
   ],
   imports: [
     BrowserModule,

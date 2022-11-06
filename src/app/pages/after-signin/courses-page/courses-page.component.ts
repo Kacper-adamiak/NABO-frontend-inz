@@ -1,7 +1,7 @@
 import { HttpRequest, HttpResponse } from '@angular/common/http';
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { filter, map, Observable, Observer, tap } from 'rxjs';
+import {filter, finalize, map, Observable, Observer, tap} from 'rxjs';
 import { Course } from 'src/app/models/course';
 import { CourseService } from 'src/app/services/course/course.service';
 import {NewCourseDialogComponent} from "./new-course-dialog/new-course-dialog.component";
@@ -10,6 +10,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import {DialogService} from "../../../services/dialog/dialog.service";
 
 @Component({
   selector: 'app-courses-page',
@@ -27,11 +28,8 @@ export class CoursesPageComponent implements OnInit, AfterViewInit {
 
   filterValue = new FormControl('');
 
-  constructor(private courseServ: CourseService, public dialog: MatDialog) {
-    this.getCourses();
-    this.dataSource.filterPredicate = function(data, filter: string): boolean {
-      return data.name.toLowerCase().includes(filter) || data.categoryName.toLowerCase().includes(filter) || data.statusName.toLowerCase().includes(filter);
-    };
+  constructor(private courseServ: CourseService, public dialog: MatDialog, public dialogService: DialogService) {
+
   }
 
   ngAfterViewInit(): void {
@@ -40,7 +38,10 @@ export class CoursesPageComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-
+    this.getCourses();
+    this.dataSource.filterPredicate = function(data, filter: string): boolean {
+      return data.name.toLowerCase().includes(filter) || data.categoryName.toLowerCase().includes(filter) || data.statusName.toLowerCase().includes(filter);
+    };
   }
 
   applyFilter(event: Event) {
@@ -54,11 +55,20 @@ export class CoursesPageComponent implements OnInit, AfterViewInit {
   }
 
   getCourses() {
-    this.courseServ.getCoursesCreatedByAdmin().subscribe(
-      res => {
+
+    let spinner = this.dialogService.openSpinner()
+    this.courseServ.getCoursesCreatedByAdmin().subscribe({
+      next: res => {
         let data: Course[] = res.body!
         this.dataSource.data = data
-      })
+      },
+      error: err => {
+
+      },
+      complete: () => {
+        spinner.close()
+      }
+    })
   }
 
   openDialog(): void {
@@ -69,12 +79,7 @@ export class CoursesPageComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result =>  {
       console.log(`The dialog was closed ${result}`);
-      this.getCourses();
     });
-  }
-
-  addNewCourse() {
-    this.openDialog()
   }
 
 

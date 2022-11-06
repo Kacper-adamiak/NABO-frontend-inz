@@ -23,6 +23,7 @@ export class LevelsPageComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<Level> = new MatTableDataSource<Level>([] as Level[])
   courseId!: number
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   filterValue = new FormControl('');
@@ -31,16 +32,19 @@ export class LevelsPageComponent implements OnInit, AfterViewInit {
     private levelService: LevelService,
     public dialog: MatDialog,
     private route: ActivatedRoute) {
+    this.courseId = Number(this.route.snapshot.paramMap.get('courseId'))
 
   }
 
   ngOnInit(): void {
-    this.courseId = Number(this.route.snapshot.paramMap.get('courseId'))
-    console.log("level",this.route.snapshot.paramMap.get('courseId'))
     this.getLevels();
+    this.dataSource.filterPredicate = function(data, filter: string): boolean {
+      return data.name.toLowerCase().includes(filter) || data.difficulty.toString().includes(filter) || data.statusName.toLowerCase().includes(filter);
+    };
   }
 
   ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
@@ -66,8 +70,14 @@ export class LevelsPageComponent implements OnInit, AfterViewInit {
     });
   }
 
-  addNewCourse() {
-    this.openDialog()
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    console.log(filterValue.trim().toLowerCase())
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
 }
