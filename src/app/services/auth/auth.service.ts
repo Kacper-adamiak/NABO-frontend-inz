@@ -2,7 +2,7 @@ import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observer, tap } from 'rxjs';
-import { WebService } from './web.service';
+import { WebService } from '../web.service';
 
 @Injectable({
   providedIn: 'root'

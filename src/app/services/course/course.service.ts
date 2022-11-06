@@ -1,8 +1,8 @@
 import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { delay, Observable, Observer, of } from 'rxjs';
-import { Course } from '../models/course';
-import { WebService } from './web.service';
+import { Course } from '../../models/course';
+import { WebService } from '../web.service';
 import {MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
 
 @Injectable({
@@ -31,7 +31,7 @@ export class CourseService {
       name: newCourse.name,
       description: newCourse.description,
       categoryName: "KAT1",
-      statusName: "STATUS_ACTIVE"
+      statusName: "STATUS_SUSPENDED"
     })
   }
 

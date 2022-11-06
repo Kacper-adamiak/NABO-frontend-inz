@@ -1,6 +1,6 @@
 <div mat-dialog-content>
 
-  <h2>Dodaj nowy kurs</h2>
+  <h2>Dodaj nowy poziom</h2>
 
   <div style="width: 100%;">
     <mat-form-field appearance="fill" style="width: 100%;">
@@ -12,23 +12,9 @@
 
   <div style="width: 100%;">
     <mat-form-field appearance="fill" style="width: 100%;">
-      <mat-label>Opis</mat-label>
-      <textarea matInput
-                style="resize: none;"
-                rows="6"
-                placeholder="Kurs zawiera ..."
-                [formControl]="description">
-      </textarea>
-      <mat-error *ngIf="description.invalid">Opis musi być wypełniona</mat-error>
-    </mat-form-field>
-  </div>
-
-  <div style="width: 100%;">
-    <mat-form-field appearance="fill" style="width: 100%;">
-      <mat-label>Kategoria</mat-label>
-      <mat-select matInputd>
-        <mat-option value="one">First option</mat-option>
-        <mat-option value="two">Second option</mat-option>
+      <mat-label>Poziom trudności</mat-label>
+      <mat-select matInputd [formControl]="difficulty" value="1" required>
+        <mat-option *ngFor="let i of [0,1,2,3,4,5,6,7,8,9]" [value]="i">{{i}}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
@@ -49,5 +35,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Anuluj</button>
-  <button mat-button (click)="onAccept()" [disabled]="!(name.valid && description.valid)">Utwórz kurs</button>
+  <button mat-button (click)="onAccept()" [disabled]="!(name.valid && difficulty.valid)">Utwórz poziom</button>
 </div>

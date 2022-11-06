@@ -9,7 +9,8 @@ import { AppComponent } from './app.component';
 import { AuthComponent } from './pages/auth/auth.component';
 import { SigninPageComponent } from './pages/auth/signin-page/signin-page.component';
 import { IsAuthenticatedGuard } from './guards/is-authenticated.guard';
-import { StartingPageComponent } from './pages/starting-page/starting-page/starting-page.component';
+import { StartingPageComponent } from './pages/starting-page/starting-page.component';
+import {LevelsPageComponent} from "./pages/after-signin/levels-page/levels-page.component";
 
 const routes: Routes = [
   {path: "", component: StartingPageComponent},
@@ -17,12 +18,13 @@ const routes: Routes = [
     {path: "", component: HomePageComponent},
     {path: 'account', component: AccountPageComponent},
     {path: 'courses', component: CoursesPageComponent},
-    {path: 'courses/:id', component: CourseGeneralPageComponent},
+    {path: 'courses/:courseId', component: CourseGeneralPageComponent},
+    {path: 'courses/:courseId/levels', component: LevelsPageComponent},
   ], canActivate: [IsAuthenticatedGuard]},
   {path: "auth", component: AuthComponent, children: [
     {path: "signin", component: SigninPageComponent}
   ]},
-  {path: "**", redirectTo: '/'}
+  // {path: "**", redirectTo: '/'}
 
 ];
 

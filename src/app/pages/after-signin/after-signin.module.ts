@@ -9,6 +9,9 @@ import { CourseGeneralPageComponent, DialogOverviewExampleDialog } from './cours
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MaterialExampleModule } from 'src/material.module';
 import { NewCourseDialogComponent } from './courses-page/new-course-dialog/new-course-dialog.component';
+import { LevelsPageComponent } from './levels-page/levels-page.component';
+import {MatPaginatorModule} from "@angular/material/paginator";
+import { NewLevelDialogComponent } from './levels-page/new-level-dialog/new-level-dialog.component';
 
 
 
@@ -20,7 +23,9 @@ import { NewCourseDialogComponent } from './courses-page/new-course-dialog/new-c
     CoursesPageComponent,
     CourseGeneralPageComponent,
     DialogOverviewExampleDialog,
-    NewCourseDialogComponent
+    NewCourseDialogComponent,
+    LevelsPageComponent,
+    NewLevelDialogComponent
   ],
   imports: [
     CommonModule,

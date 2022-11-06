@@ -11,15 +11,17 @@ import { MaterialExampleModule } from 'src/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
-import { StartingPageComponent } from './pages/starting-page/starting-page/starting-page.component';
+import { StartingPageComponent } from './pages/starting-page/starting-page.component';
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/snack-bar";
 import { SuccessSnackbarComponent } from './services/snack-bar/templates/success-snackbar/success-snackbar.component';
+import { ErrorSnackbarComponent } from './services/snack-bar/templates/error-snackbar/error-snackbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     StartingPageComponent,
-    SuccessSnackbarComponent
+    SuccessSnackbarComponent,
+    ErrorSnackbarComponent
   ],
   imports: [
     BrowserModule,

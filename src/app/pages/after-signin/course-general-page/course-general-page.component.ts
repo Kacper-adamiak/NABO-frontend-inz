@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {CourseService} from "../../../services/course.service";
+import {CourseService} from "../../../services/course/course.service";
 import {Course} from "../../../models/course";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -32,7 +32,7 @@ export class CourseGeneralPageComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.courseId = Number(this.route.snapshot.paramMap.get('id'))
+    this.courseId = Number(this.route.snapshot.paramMap.get('courseId'))
     if(!!this.courseId){
       this.courseService.getCourseById(this.courseId).subscribe({
         next: (res: HttpResponse<Course>) => {
@@ -115,10 +115,13 @@ export class DialogOverviewExampleDialog {
       error: (err) => {
         console.log("error: ", err)
         if(err.error.name) {
-          this.snackBarService.openSnackBar(err.error.name)
+          this.snackBarService.openErrorSnackBar(err.error.name)
         }
         if(err.error.description) {
-          this.snackBarService.openSnackBar(err.error.description)
+          this.snackBarService.openErrorSnackBar(err.error.description)
+        }
+        if(err.error.statusName) {
+          this.snackBarService.openErrorSnackBar(err.error.statusName)
         }
 
       }
