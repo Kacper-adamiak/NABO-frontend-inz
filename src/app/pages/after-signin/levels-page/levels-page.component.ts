@@ -11,6 +11,7 @@ import {LevelService} from "../../../services/level/level.service";
 import {ActivatedRoute} from "@angular/router";
 import {Level} from "../../../models/level";
 import {NewLevelDialogComponent} from "./new-level-dialog/new-level-dialog.component";
+import {DialogService} from "../../../services/dialog/dialog.service";
 
 @Component({
   selector: 'app-levels-page',
@@ -31,12 +32,12 @@ export class LevelsPageComponent implements OnInit, AfterViewInit {
   constructor(
     private levelService: LevelService,
     public dialog: MatDialog,
-    private route: ActivatedRoute) {
-    this.courseId = Number(this.route.snapshot.paramMap.get('courseId'))
-
+    private route: ActivatedRoute,
+    private dialogService: DialogService) {
   }
 
   ngOnInit(): void {
+    this.courseId = Number(this.route.snapshot.paramMap.get('courseId'))
     this.getLevels();
     this.dataSource.filterPredicate = function(data, filter: string): boolean {
       return data.name.toLowerCase().includes(filter) || data.difficulty.toString().includes(filter) || data.statusName.toLowerCase().includes(filter);
@@ -49,12 +50,19 @@ export class LevelsPageComponent implements OnInit, AfterViewInit {
   }
 
   getLevels() {
-    this.levelService.getAllLevels(this.courseId).subscribe(
-      res => {
+    const spinner = this.dialogService.openSpinner()
+    this.levelService.getAllLevels(this.courseId).subscribe({
+      next: res => {
         let data: Level[] = res.body!
         this.dataSource.data = data
+      },
+      error: err => {
+
+      },
+      complete: () => {
+        spinner.close()
       }
-    )
+    })
   }
 
   openDialog(): void {

@@ -11,6 +11,7 @@ import { SigninPageComponent } from './pages/auth/signin-page/signin-page.compon
 import { IsAuthenticatedGuard } from './guards/is-authenticated.guard';
 import { StartingPageComponent } from './pages/starting-page/starting-page.component';
 import {LevelsPageComponent} from "./pages/after-signin/levels-page/levels-page.component";
+import {LevelGeneralPageComponent} from "./pages/after-signin/level-general-page/level-general-page.component";
 
 const routes: Routes = [
   {path: "", component: StartingPageComponent},
@@ -20,6 +21,7 @@ const routes: Routes = [
     {path: 'courses', component: CoursesPageComponent},
     {path: 'courses/:courseId', component: CourseGeneralPageComponent},
     {path: 'courses/:courseId/levels', component: LevelsPageComponent},
+      {path: 'courses/:courseId/levels/:levelId', component: LevelGeneralPageComponent},
   ], canActivate: [IsAuthenticatedGuard]},
   {path: "auth", component: AuthComponent, children: [
     {path: "signin", component: SigninPageComponent}
