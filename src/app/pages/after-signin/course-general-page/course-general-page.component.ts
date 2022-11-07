@@ -37,8 +37,10 @@ export class CourseGeneralPageComponent implements OnInit {
       this.courseService.getCourseById(this.courseId).subscribe({
         next: (res: HttpResponse<Course>) => {
           const body = res.body!
+
           this.actualData = JSON.parse(JSON.stringify(body))
           this.prevData = JSON.parse(JSON.stringify(body))
+
           this.name.setValue(this.actualData.name)
           this.description.setValue(this.actualData.description)
         },

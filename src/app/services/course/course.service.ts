@@ -2,7 +2,7 @@ import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { delay, Observable, Observer, of } from 'rxjs';
 import { Course } from '../../models/course';
-import { WebService } from '../web.service';
+import { WebService } from '../web/web.service';
 import {MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
 
 @Injectable({

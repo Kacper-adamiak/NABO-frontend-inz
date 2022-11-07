@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {WebService} from "../web.service";
+import {WebService} from "../web/web.service";
 import {Observable} from "rxjs";
 import {HttpResponse} from "@angular/common/http";
 import {Course} from "../../models/course";
