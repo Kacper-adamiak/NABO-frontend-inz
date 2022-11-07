@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
-import {SuccessSnackbarComponent} from "./templates/success-snackbar/success-snackbar.component";
-import {ErrorSnackbarComponent} from "./templates/error-snackbar/error-snackbar.component";
+import {SuccessSnackbarComponent} from "../../shared/snackbars/success-snackbar/success-snackbar.component";
+import {ErrorSnackbarComponent} from "../../shared/snackbars/error-snackbar/error-snackbar.component";
 
 @Injectable({
   providedIn: 'root'

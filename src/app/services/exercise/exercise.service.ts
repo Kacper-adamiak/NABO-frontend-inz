@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {WebService} from "../web.service";
+import {WebService} from "../web/web.service";
 import {Observable} from "rxjs";
 import {HttpResponse} from "@angular/common/http";
 import {Level} from "../../models/level";
@@ -15,15 +15,15 @@ export class ExerciseService {
   }
 
   getAllExorcises(courseId: number, levelId: number,): Observable<HttpResponse<Exorcise[]>> {
-    return this.webService.get<Exorcise[]>(`/api/course/${courseId}/level/${levelId}/exercise/all`)
+    return this.webService.get<Exorcise[]>(`/course/${courseId}/level/${levelId}/exercise/all`)
   }
 
   getExorciseById(courseId: number, levelId: number, exerciseId: number): Observable<HttpResponse<Exorcise>> {
-    return this.webService.get<Exorcise>(`/api/course/${courseId}/level/${levelId}/exercise/edit/${exerciseId}`)
+    return this.webService.get<Exorcise>(`/course/${courseId}/level/${levelId}/exercise/edit/${exerciseId}`)
   }
 
   addExorcise(courseId: number, levelId: number, newExorcise: Exorcise){
-    return this.webService.post<any>(`/api/course/${courseId}/level/${levelId}/exercise/add`, {
+    return this.webService.post<any>(`/course/${courseId}/level/${levelId}/exercise/add`, {
       question: newExorcise.question,
       expression: newExorcise.expression,
       bad_answer1: newExorcise.bad_answer1,

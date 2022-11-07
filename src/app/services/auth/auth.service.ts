@@ -2,7 +2,7 @@ import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observer, tap } from 'rxjs';
-import { WebService } from '../web.service';
+import { WebService } from '../web/web.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,14 +22,14 @@ export class AuthService {
    }
 
   signin(login: String, password: String) {
-    this.webService.post<signinResponse>("/auth/signin", {
+    return this.webService.post<signinResponse>("/auth/signin", {
       login: login,
       password: password
-    }).subscribe((response: any) => {
+    }).pipe(tap((response: any) => {
       this._isLoggedIn$.next(true);
       localStorage.setItem('access_token', response.body?.token || "");
       this.router.navigate(["/home"])
-    })
+    }))
   }
 
   signup(login: String, password: String) {
