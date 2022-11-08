@@ -8,6 +8,7 @@ import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition}
 import {finalize} from "rxjs";
 import {HttpResponse} from "@angular/common/http";
 import {SnackbarService} from "../../../services/snack-bar/snackbar.service";
+import {DialogService} from "../../../services/dialog/dialog.service";
 
 @Component({
   selector: 'app-course-general-page',
@@ -27,6 +28,7 @@ export class CourseGeneralPageComponent implements OnInit {
     private snackBarService: SnackbarService,
     private route: ActivatedRoute,
     private courseService: CourseService,
+    private dialogService: DialogService,
     private router: Router
   ) { }
 
@@ -34,6 +36,7 @@ export class CourseGeneralPageComponent implements OnInit {
 
     this.courseId = Number(this.route.snapshot.paramMap.get('courseId'))
     if(!!this.courseId){
+      const spinner = this.dialogService.openSpinner()
       this.courseService.getCourseById(this.courseId).subscribe({
         next: (res: HttpResponse<Course>) => {
           const body = res.body!
@@ -47,8 +50,11 @@ export class CourseGeneralPageComponent implements OnInit {
         error: error => {
           this.snackBarService.openSnackBar(error.error.message)
           this.router.navigate(["/home/courses"])
+        },
+        complete: () => {
+          spinner.close()
         }
-        })
+      })
     }
   }
 
