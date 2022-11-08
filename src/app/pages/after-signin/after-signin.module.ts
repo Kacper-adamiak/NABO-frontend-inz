@@ -12,6 +12,8 @@ import { NewCourseDialogComponent } from './courses-page/new-course-dialog/new-c
 import { LevelsPageComponent } from './levels-page/levels-page.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
 import { NewLevelDialogComponent } from './levels-page/new-level-dialog/new-level-dialog.component';
+import {LevelGeneralPageComponent} from "./level-general-page/level-general-page.component";
+import { EditedLevelDialogComponent } from './level-general-page/edited-level-dialog/edited-level-dialog.component';
 
 
 
@@ -25,7 +27,9 @@ import { NewLevelDialogComponent } from './levels-page/new-level-dialog/new-leve
     DialogOverviewExampleDialog,
     NewCourseDialogComponent,
     LevelsPageComponent,
-    NewLevelDialogComponent
+    NewLevelDialogComponent,
+    LevelGeneralPageComponent,
+    EditedLevelDialogComponent
   ],
   imports: [
     CommonModule,

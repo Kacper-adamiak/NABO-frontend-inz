@@ -57,7 +57,7 @@ export class LevelsPageComponent implements OnInit, AfterViewInit {
         this.dataSource.data = data
       },
       error: err => {
-
+        spinner.close()
       },
       complete: () => {
         spinner.close()

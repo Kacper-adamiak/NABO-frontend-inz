@@ -30,15 +30,15 @@ export class LevelService {
     })
   }
 
-  editLevelById(courseId: number, editedLevel: Level): Observable<HttpResponse<any>> {
-    return this.webService.patch<any>(`/course/edit/${courseId}`, {
+  editLevelById(courseId: number, levelId: number, editedLevel: Level): Observable<HttpResponse<any>> {
+    return this.webService.patch<any>(`/course/${courseId}/level/edit/${levelId}`, {
       name: editedLevel.name,
-      difficoulty: editedLevel.difficulty,
+      difficulty: editedLevel.difficulty,
       statusName: editedLevel.statusName
     })
   }
 
-  deleteLevelById(courseId: number): Observable<HttpResponse<any>> {
-    return this.webService.delete<any>(`/course/delete/${courseId}`)
+  deleteLevelById(courseId: number, levelId: number): Observable<HttpResponse<any>> {
+    return this.webService.delete<any>(`/course/${courseId}/level/delete/${levelId}`)
   }
 }
