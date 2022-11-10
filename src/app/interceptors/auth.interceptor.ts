@@ -1,13 +1,6 @@
-import { Injectable } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor,
-  HttpHeaders
-} from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { AuthService } from '../services/auth/auth.service';
+import {Injectable} from '@angular/core';
+import {HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -21,7 +14,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
     request = request.clone({headers: headers});
 
-    console.log("Interceptor: ", request);
+    console.log("Interceptor: ", request)
 
     return next.handle(request);
   }
