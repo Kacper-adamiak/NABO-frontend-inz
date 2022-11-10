@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs';
 
@@ -21,7 +21,7 @@ export class WebService {
     )
   }
 
-  post<T>(uri: string, payload: any) {
+  post<T>(uri: string, payload: any, headers?: HttpHeaders) {
     return this.http.post<T>(`${this.ROOT_URL}${uri}`, payload, {observe: "response"}).pipe(
       tap(
         res => console.log(res)
