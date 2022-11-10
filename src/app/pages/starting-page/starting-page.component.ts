@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {DialogService} from "../../services/dialog/dialog.service";
 
 @Component({
   selector: 'app-starting-page',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StartingPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialogService: DialogService) { }
 
   ngOnInit(): void {
+  }
+
+  openDialog() {
+    const dialog = this.dialogService.openUploadImage()
   }
 
 }
