@@ -10,7 +10,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MaterialExampleModule} from "../../material.module";
-
+import {ToastModule} from 'primeng/toast';
 
 @NgModule({
   declarations: [
@@ -27,6 +27,7 @@ import {MaterialExampleModule} from "../../material.module";
     MaterialExampleModule,
     AuthModule,
     AfterSigninModule,
+    ToastModule
   ]
 })
 export class PagesModule { }

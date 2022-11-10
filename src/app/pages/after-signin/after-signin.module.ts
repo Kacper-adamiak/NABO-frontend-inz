@@ -49,7 +49,8 @@ import {NewExerciseDialogComponent} from './exercises-page/new-exercise-dialog/n
     RouterModule,
     ReactiveFormsModule,
     MaterialExampleModule,
-    FormsModule
+    FormsModule,
+
   ]
 })
 export class AfterSigninModule { }
