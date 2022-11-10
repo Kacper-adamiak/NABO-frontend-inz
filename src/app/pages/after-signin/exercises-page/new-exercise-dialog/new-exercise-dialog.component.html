@@ -1,0 +1,57 @@
+<div mat-dialog-content>
+
+  <h2>Dodaj nowy poziom</h2>
+
+  <div style="width: 100%;">
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Pytanie</mat-label>
+      <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="question" required>
+      <mat-error *ngIf="question.invalid">Nazwa musi być wypełniona</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div style="width: 100%;">
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Odpowiedź poprawna</mat-label>
+      <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="expression" required>
+      <mat-error *ngIf="expression.invalid">Nazwa musi być wypełniona</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div style="width: 100%;">
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Zła odpowiedź [1]</mat-label>
+      <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="bad_answer1" required>
+      <mat-error *ngIf="bad_answer1.invalid">Nazwa musi być wypełniona</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div style="width: 100%;">
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Zła odpowiedź [2]</mat-label>
+      <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="bad_answer2" required>
+      <mat-error *ngIf="bad_answer2.invalid">Nazwa musi być wypełniona</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div style="width: 100%;">
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Zła odpowiedź [3]</mat-label>
+      <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="bad_answer3" required>
+      <mat-error *ngIf="bad_answer3.invalid">Nazwa musi być wypełniona</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div style="width: 100%;">
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Zdjęcie</mat-label>
+      <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="imageName" required>
+      <mat-error *ngIf="imageName.invalid">Nazwa musi być wypełniona</mat-error>
+    </mat-form-field>
+  </div>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Anuluj</button>
+  <button mat-button (click)="onAccept()" [disabled]="false">Utwórz fiszkę</button>
+</div>

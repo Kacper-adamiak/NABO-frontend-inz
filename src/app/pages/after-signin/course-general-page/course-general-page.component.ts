@@ -18,7 +18,7 @@ import {DialogService} from "../../../services/dialog/dialog.service";
 export class CourseGeneralPageComponent implements OnInit {
 
   prevData = {} as Course
-  actualData = {} as Course
+  editedData = {} as Course
   name = new FormControl('', [Validators.required])
   description = new FormControl('', [Validators.required])
   courseId!: number
@@ -41,11 +41,11 @@ export class CourseGeneralPageComponent implements OnInit {
         next: (res: HttpResponse<Course>) => {
           const body = res.body!
 
-          this.actualData = JSON.parse(JSON.stringify(body))
+          this.editedData = JSON.parse(JSON.stringify(body))
           this.prevData = JSON.parse(JSON.stringify(body))
 
-          this.name.setValue(this.actualData.name)
-          this.description.setValue(this.actualData.description)
+          this.name.setValue(this.editedData.name)
+          this.description.setValue(this.editedData.description)
         },
         error: error => {
           this.snackBarService.openSnackBar(error.error.message)
@@ -61,10 +61,8 @@ export class CourseGeneralPageComponent implements OnInit {
 
 
   onSubmit() {
-    this.actualData.name = this.name.value
-    this.actualData.description = this.description.value
-    console.log("act",this.actualData)
-    console.log("prev",this.prevData)
+    this.editedData.name = this.name.value
+    this.editedData.description = this.description.value
     this.openDialog()
   }
 
@@ -87,7 +85,7 @@ export class CourseGeneralPageComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
       width: '50%',
-      data: {prevData: this.prevData, actualData: this.actualData},
+      data: {prevData: this.prevData, editedData: this.editedData},
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -107,7 +105,7 @@ export class DialogOverviewExampleDialog {
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
     private courseService: CourseService,
     private snackBarService: SnackbarService,
-    @Inject(MAT_DIALOG_DATA) public data: {prevData: Course, actualData: Course},
+    @Inject(MAT_DIALOG_DATA) public data: {prevData: Course, editedData: Course},
   ) {}
 
   onNoClick(): void {
@@ -115,8 +113,8 @@ export class DialogOverviewExampleDialog {
   }
 
   onAccept() {
-    console.log("dialog: ",this.data.actualData)
-    this.courseService.editCourseById(this.data.actualData.id!, this.data.actualData).subscribe({
+    console.log("dialog: ",this.data.editedData)
+    this.courseService.editCourseById(this.data.editedData.id!, this.data.editedData).subscribe({
       next: (res) => {
         this.snackBarService.openSuccessSnackBar(res.body.message)
       },

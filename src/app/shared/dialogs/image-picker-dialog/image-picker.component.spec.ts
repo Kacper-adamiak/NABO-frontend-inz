@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FlashcardPageComponent } from './flashcard-page.component';
+import { ImagePickerComponent } from './image-picker.component';
 
-describe('FlashcardPageComponent', () => {
-  let component: FlashcardPageComponent;
-  let fixture: ComponentFixture<FlashcardPageComponent>;
+describe('ImagePickerComponent', () => {
+  let component: ImagePickerComponent;
+  let fixture: ComponentFixture<ImagePickerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FlashcardPageComponent ]
+      declarations: [ ImagePickerComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FlashcardPageComponent);
+    fixture = TestBed.createComponent(ImagePickerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

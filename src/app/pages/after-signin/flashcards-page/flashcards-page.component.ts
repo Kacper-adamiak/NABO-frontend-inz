@@ -1,28 +1,29 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {Course} from "../../../models/course";
+import {Level} from "../../../models/level";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {FormControl} from "@angular/forms";
-import {CourseService} from "../../../services/course/course.service";
-import {MatDialog} from "@angular/material/dialog";
-import {NewCourseDialogComponent} from "../courses-page/new-course-dialog/new-course-dialog.component";
 import {LevelService} from "../../../services/level/level.service";
+import {MatDialog} from "@angular/material/dialog";
 import {ActivatedRoute} from "@angular/router";
-import {Level} from "../../../models/level";
-import {NewLevelDialogComponent} from "./new-level-dialog/new-level-dialog.component";
 import {DialogService} from "../../../services/dialog/dialog.service";
+import {NewLevelDialogComponent} from "../levels-page/new-level-dialog/new-level-dialog.component";
+import {FlashcardService} from "../../../services/flashcard/flashcard.service";
+import {Flashcard} from "../../../models/flashcard";
+import {NewFlashcardDialogComponent} from "./new-flashcard-dialog/new-flashcard-dialog.component";
 
 @Component({
-  selector: 'app-levels-page',
-  templateUrl: './levels-page.component.html',
-  styleUrls: ['./levels-page.component.scss']
+  selector: 'app-flashcards-page',
+  templateUrl: './flashcards-page.component.html',
+  styleUrls: ['./flashcards-page.component.scss']
 })
-export class LevelsPageComponent implements OnInit, AfterViewInit {
+export class FlashcardsPageComponent implements OnInit {
 
-  displayedColumns: string[] = ["name", "difficulty", "status" ];
-  dataSource: MatTableDataSource<Level> = new MatTableDataSource<Level>([] as Level[])
+  displayedColumns: string[] = ["expOriginal", "expTranslation", "expDescription", "imageName", "imageUrl"];
+  dataSource: MatTableDataSource<Flashcard> = new MatTableDataSource<Flashcard>([] as Flashcard[])
   courseId!: number
+  levelId!: number
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -30,7 +31,7 @@ export class LevelsPageComponent implements OnInit, AfterViewInit {
   filterValue = new FormControl('');
 
   constructor(
-    private levelService: LevelService,
+    private flashcardService: FlashcardService,
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private dialogService: DialogService) {
@@ -38,10 +39,8 @@ export class LevelsPageComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.courseId = Number(this.route.snapshot.paramMap.get('courseId'))
-    this.getLevels();
-    this.dataSource.filterPredicate = function(data, filter: string): boolean {
-      return data.name.toLowerCase().includes(filter) || data.difficulty.toString().includes(filter) || data.statusName.toLowerCase().includes(filter);
-    };
+    this.levelId = Number(this.route.snapshot.paramMap.get('levelId'))
+    this.getFlashcards();
   }
 
   ngAfterViewInit(): void {
@@ -49,11 +48,11 @@ export class LevelsPageComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  getLevels() {
+  getFlashcards() {
     const spinner = this.dialogService.openSpinner()
-    this.levelService.getAllLevels(this.courseId).subscribe({
+    this.flashcardService.getAllFlashcards(this.courseId, this.levelId).subscribe({
       next: res => {
-        let data: Level[] = res.body!
+        let data: Flashcard[] = res.body!
         this.dataSource.data = data
       },
       error: err => {
@@ -66,15 +65,14 @@ export class LevelsPageComponent implements OnInit, AfterViewInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(NewLevelDialogComponent, {
+    const dialogRef = this.dialog.open(NewFlashcardDialogComponent, {
       width: '90%',
       height: '90%',
-      data: {courseId: this.courseId}
+      data: {courseId: this.courseId, levelId: this.levelId}
     });
 
     dialogRef.afterClosed().subscribe(result =>  {
       console.log(`The dialog was closed ${result}`);
-      this.getLevels();
     });
   }
 
