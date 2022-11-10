@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
-import {NewLevelDialogComponent} from "../../pages/after-signin/levels-page/new-level-dialog/new-level-dialog.component";
 import {SpinnerDialogComponent} from "./spinner-dialog/spinner-dialog.component";
 import {UploadImageDialogComponent} from "../../shared/dialogs/upload-image-dialog/upload-image-dialog.component";
 
@@ -28,8 +27,8 @@ export class DialogService {
 
   openUploadImage() {
     const dialogRef = this.dialog.open(UploadImageDialogComponent, {
-      width: '90%',
-      height: '90%',
+      width: '50%',
+      height: 'fit-content',
     });
 
     return dialogRef

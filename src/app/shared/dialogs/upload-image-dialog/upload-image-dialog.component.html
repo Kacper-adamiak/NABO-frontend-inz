@@ -1,14 +1,25 @@
 <div mat-dialog-content>
 
-  <div class="form-group">
+
+  <mat-form-field appearance="fill" style="width: 100%;">
+    <mat-label>Nazwa zdjęcia</mat-label>
+    <input matInput placeholder="Tu wprowadź nazwę zdjęcia" [formControl]="name" required>
+    <mat-error *ngIf="name.invalid">Nazwa musi być wypełniona</mat-error>
+  </mat-form-field>
+
+
+  <div style="display: flex; height: 30px; ">
     <input type="file" [formControl]="image" (change)="uploadFile($event)">
+    <mat-progress-spinner
+      class="example-margin"
+      [diameter]="30"
+      [mode]="spinnerMode"
+      [value]="spinnerValue"
+      *ngIf="spinnerShow">
+    </mat-progress-spinner>
   </div>
-  <div class="form-group input-group-lg">
-    <input class="form-control" placeholder="Name" [formControl]="name">
-  </div>
-  <div class="form-group">
-    <button class="btn btn-danger btn-block btn-lg" (click)="submitForm()" >Create</button>
-  </div>
+
+
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Anuluj</button>

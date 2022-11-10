@@ -14,7 +14,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
     request = request.clone({headers: headers});
 
-    console.log("Interceptor: ", request)
+    console.log("Interceptor: ", request);
 
     return next.handle(request);
   }
