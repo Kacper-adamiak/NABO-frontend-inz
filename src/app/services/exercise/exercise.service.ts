@@ -3,7 +3,7 @@ import {WebService} from "../web/web.service";
 import {Observable} from "rxjs";
 import {HttpResponse} from "@angular/common/http";
 import {Level} from "../../models/level";
-import {Exorcise} from "../../models/exorcise";
+import {Exercise} from "../../models/exercise";
 
 @Injectable({
   providedIn: 'root'
@@ -14,15 +14,15 @@ export class ExerciseService {
 
   }
 
-  getAllExorcises(courseId: number, levelId: number,): Observable<HttpResponse<Exorcise[]>> {
-    return this.webService.get<Exorcise[]>(`/course/${courseId}/level/${levelId}/exercise/all`)
+  getAllExercises(courseId: number, levelId: number,): Observable<HttpResponse<Exercise[]>> {
+    return this.webService.get<Exercise[]>(`/course/${courseId}/level/${levelId}/exercise/all`)
   }
 
-  getExorciseById(courseId: number, levelId: number, exerciseId: number): Observable<HttpResponse<Exorcise>> {
-    return this.webService.get<Exorcise>(`/course/${courseId}/level/${levelId}/exercise/edit/${exerciseId}`)
+  getExerciseById(courseId: number, levelId: number, exerciseId: number): Observable<HttpResponse<Exercise>> {
+    return this.webService.get<Exercise>(`/course/${courseId}/level/${levelId}/exercise/edit/${exerciseId}`)
   }
 
-  addExorcise(courseId: number, levelId: number, newExorcise: Exorcise){
+  addExercise(courseId: number, levelId: number, newExorcise: Exercise){
     return this.webService.post<any>(`/course/${courseId}/level/${levelId}/exercise/add`, {
       question: newExorcise.question,
       expression: newExorcise.expression,
@@ -33,7 +33,7 @@ export class ExerciseService {
     })
   }
 
-  editExorciseById(courseId: number, levelId: number, editedExorcise: Exorcise): Observable<HttpResponse<any>> {
+  editExerciseById(courseId: number, levelId: number, editedExorcise: Exercise): Observable<HttpResponse<any>> {
     return this.webService.patch<any>(`/course/${courseId}/level/${levelId}/exercise/edit/${editedExorcise.id}`, {
       question: editedExorcise.question,
       expression: editedExorcise.expression,
