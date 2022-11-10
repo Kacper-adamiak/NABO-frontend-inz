@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, FormControl} from "@angular/forms";
+import {UntypedFormBuilder, UntypedFormControl} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {SnackbarService} from "../../../services/snack-bar/snackbar.service";
 import {ImageService} from "../../../services/image/image.service";
@@ -14,8 +14,8 @@ import {ProgressSpinnerMode} from "@angular/material/progress-spinner";
 })
 export class UploadImageDialogComponent implements OnInit {
 
-  image = new FormControl(null)
-  name = new FormControl('')
+  image = new UntypedFormControl(null)
+  name = new UntypedFormControl('')
   spinnerValue = 0;
   spinnerShow = false;
   spinnerMode: ProgressSpinnerMode = 'determinate'
@@ -26,7 +26,7 @@ export class UploadImageDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<UploadImageDialogComponent>,
     private imageService: ImageService,
     private snackBarService: SnackbarService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private http: HttpClient,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {

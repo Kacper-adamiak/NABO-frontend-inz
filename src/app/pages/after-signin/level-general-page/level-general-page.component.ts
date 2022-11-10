@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {FormControl, Validators} from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {UntypedFormControl, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {SnackbarService} from "../../../services/snack-bar/snackbar.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -18,9 +18,9 @@ export class LevelGeneralPageComponent implements OnInit {
 
   prevData = {} as Level
   editedData = {} as Level
-  name = new FormControl('', [Validators.required])
-  difficulty = new FormControl('', [Validators.required])
-  status = new FormControl('', [Validators.required])
+  name = new UntypedFormControl('', [Validators.required])
+  difficulty = new UntypedFormControl('', [Validators.required])
+  status = new UntypedFormControl('', [Validators.required])
   courseId!: number
   levelId!: number
 

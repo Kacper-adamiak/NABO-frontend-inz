@@ -1,11 +1,8 @@
-import { HttpRequest, HttpResponse } from '@angular/common/http';
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import { FormControl } from '@angular/forms';
-import {filter, finalize, map, Observable, Observer, tap} from 'rxjs';
-import { Course } from 'src/app/models/course';
-import { CourseService } from 'src/app/services/course/course.service';
+import {UntypedFormControl} from '@angular/forms';
+import {Course} from 'src/app/models/course';
+import {CourseService} from 'src/app/services/course/course.service';
 import {NewCourseDialogComponent} from "./new-course-dialog/new-course-dialog.component";
-import {DialogOverviewExampleDialog} from "../course-general-page/course-general-page.component";
 import {MatDialog} from "@angular/material/dialog";
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
@@ -26,7 +23,7 @@ export class CoursesPageComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  filterValue = new FormControl('');
+  filterValue = new UntypedFormControl('');
 
   constructor(private courseServ: CourseService, public dialog: MatDialog, public dialogService: DialogService) {
 

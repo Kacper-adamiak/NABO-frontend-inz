@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Flashcard} from "../../../models/flashcard";
-import {FormControl, Validators} from "@angular/forms";
-import {Level} from "../../../models/level";
+import {UntypedFormControl, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {SnackbarService} from "../../../services/snack-bar/snackbar.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {LevelService} from "../../../services/level/level.service";
 import {DialogService} from "../../../services/dialog/dialog.service";
 import {FlashcardService} from "../../../services/flashcard/flashcard.service";
 import {HttpResponse} from "@angular/common/http";
@@ -19,10 +17,10 @@ export class FlashcardGeneralPageComponent implements OnInit {
 
   orginalData = {} as Flashcard
   editedData = {} as Flashcard
-  expOriginal = new FormControl('', [Validators.required])
-  expTranslation = new FormControl('', [Validators.required])
-  expDescription = new FormControl('', [Validators.required])
-  imageName = new FormControl('', [Validators.required])
+  expOriginal = new UntypedFormControl('', [Validators.required])
+  expTranslation = new UntypedFormControl('', [Validators.required])
+  expDescription = new UntypedFormControl('', [Validators.required])
+  imageName = new UntypedFormControl('', [Validators.required])
 
   courseId!: number
   levelId!: number

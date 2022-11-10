@@ -1,11 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {CourseService} from "../../../services/course/course.service";
 import {Course} from "../../../models/course";
 import {ActivatedRoute, Router} from "@angular/router";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
-import {finalize} from "rxjs";
+import {UntypedFormControl, Validators} from "@angular/forms";
 import {HttpResponse} from "@angular/common/http";
 import {SnackbarService} from "../../../services/snack-bar/snackbar.service";
 import {DialogService} from "../../../services/dialog/dialog.service";
@@ -19,8 +17,8 @@ export class CourseGeneralPageComponent implements OnInit {
 
   prevData = {} as Course
   editedData = {} as Course
-  name = new FormControl('', [Validators.required])
-  description = new FormControl('', [Validators.required])
+  name = new UntypedFormControl('', [Validators.required])
+  description = new UntypedFormControl('', [Validators.required])
   courseId!: number
 
   constructor(

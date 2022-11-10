@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { AuthService } from 'src/app/services/auth/auth.service';
-import {Course} from "../../../models/course";
+import {Component, OnInit} from '@angular/core';
+import {UntypedFormControl} from '@angular/forms';
+import {AuthService} from 'src/app/services/auth/auth.service';
 import {DialogService} from "../../../services/dialog/dialog.service";
 import {SnackbarService} from "../../../services/snack-bar/snackbar.service";
 
@@ -19,8 +18,8 @@ export class SigninPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  email = new FormControl('')
-  password = new FormControl('')
+  email = new UntypedFormControl('')
+  password = new UntypedFormControl('')
 
   onSubmit() {
     let spinner = this.dialogService.openSpinner()

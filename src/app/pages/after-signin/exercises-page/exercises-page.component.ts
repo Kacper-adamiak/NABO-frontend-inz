@@ -1,14 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {Flashcard} from "../../../models/flashcard";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
-import {FormControl} from "@angular/forms";
-import {FlashcardService} from "../../../services/flashcard/flashcard.service";
+import {UntypedFormControl} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {ActivatedRoute} from "@angular/router";
 import {DialogService} from "../../../services/dialog/dialog.service";
-import {NewFlashcardDialogComponent} from "../flashcards-page/new-flashcard-dialog/new-flashcard-dialog.component";
 import {ExerciseService} from "../../../services/exercise/exercise.service";
 import {Exercise} from "../../../models/exercise";
 import {NewExerciseDialogComponent} from "./new-exercise-dialog/new-exercise-dialog.component";
@@ -28,7 +25,7 @@ export class ExercisesPageComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  filterValue = new FormControl('');
+  filterValue = new UntypedFormControl('');
 
   constructor(
     private exerciseService: ExerciseService,

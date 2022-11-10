@@ -1,12 +1,9 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {Course} from "../../../models/course";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
-import {FormControl} from "@angular/forms";
-import {CourseService} from "../../../services/course/course.service";
+import {UntypedFormControl} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
-import {NewCourseDialogComponent} from "../courses-page/new-course-dialog/new-course-dialog.component";
 import {LevelService} from "../../../services/level/level.service";
 import {ActivatedRoute} from "@angular/router";
 import {Level} from "../../../models/level";
@@ -27,7 +24,7 @@ export class LevelsPageComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  filterValue = new FormControl('');
+  filterValue = new UntypedFormControl('');
 
   constructor(
     private levelService: LevelService,

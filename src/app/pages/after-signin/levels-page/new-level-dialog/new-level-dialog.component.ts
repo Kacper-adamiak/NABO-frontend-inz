@@ -1,8 +1,6 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
-import {Course} from "../../../../models/course";
-import {FormControl, Validators} from "@angular/forms";
+import {Component, Inject, OnInit} from '@angular/core';
+import {UntypedFormControl, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {CourseService} from "../../../../services/course/course.service";
 import {SnackbarService} from "../../../../services/snack-bar/snackbar.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {LevelService} from "../../../../services/level/level.service";
@@ -16,8 +14,8 @@ import {Level} from "../../../../models/level";
 export class NewLevelDialogComponent implements OnInit {
 
   newLevel = {} as Level
-  name = new FormControl('', [Validators.required])
-  difficulty = new FormControl('', [Validators.required])
+  name = new UntypedFormControl('', [Validators.required])
+  difficulty = new UntypedFormControl('', [Validators.required])
 
   constructor(
     public dialogRef: MatDialogRef<NewLevelDialogComponent>,

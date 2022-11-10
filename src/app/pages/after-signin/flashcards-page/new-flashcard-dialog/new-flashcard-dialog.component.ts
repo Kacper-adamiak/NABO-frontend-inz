@@ -1,8 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {Level} from "../../../../models/level";
-import {FormControl, Validators} from "@angular/forms";
+import {UntypedFormControl, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {LevelService} from "../../../../services/level/level.service";
 import {SnackbarService} from "../../../../services/snack-bar/snackbar.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Flashcard} from "../../../../models/flashcard";
@@ -16,10 +14,10 @@ import {FlashcardService} from "../../../../services/flashcard/flashcard.service
 export class NewFlashcardDialogComponent implements OnInit {
 
   newFlashcard = {} as Flashcard
-  expOriginal = new FormControl('', [Validators.required])
-  expTranslation = new FormControl('', [Validators.required])
-  expDescription = new FormControl('', [Validators.required])
-  imageName = new FormControl('', [Validators.required])
+  expOriginal = new UntypedFormControl('', [Validators.required])
+  expTranslation = new UntypedFormControl('', [Validators.required])
+  expDescription = new UntypedFormControl('', [Validators.required])
+  imageName = new UntypedFormControl('', [Validators.required])
 
   constructor(
     public dialogRef: MatDialogRef<NewFlashcardDialogComponent>,

@@ -1,10 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {Flashcard} from "../../../../models/flashcard";
-import {FormControl, Validators} from "@angular/forms";
+import {UntypedFormControl, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {FlashcardService} from "../../../../services/flashcard/flashcard.service";
 import {SnackbarService} from "../../../../services/snack-bar/snackbar.service";
-import {ActivatedRoute, Router} from "@angular/router";
 import {Exercise} from "../../../../models/exercise";
 import {ExerciseService} from "../../../../services/exercise/exercise.service";
 
@@ -16,12 +13,12 @@ import {ExerciseService} from "../../../../services/exercise/exercise.service";
 export class NewExerciseDialogComponent implements OnInit {
 
   newExercise = {} as Exercise
-  question = new FormControl('', [Validators.required])
-  expression = new FormControl('', [Validators.required])
-  bad_answer1 = new FormControl('', [Validators.required])
-  bad_answer2 = new FormControl('', [Validators.required])
-  bad_answer3 = new FormControl('', [Validators.required])
-  imageName = new FormControl('', [Validators.required])
+  question = new UntypedFormControl('', [Validators.required])
+  expression = new UntypedFormControl('', [Validators.required])
+  bad_answer1 = new UntypedFormControl('', [Validators.required])
+  bad_answer2 = new UntypedFormControl('', [Validators.required])
+  bad_answer3 = new UntypedFormControl('', [Validators.required])
+  imageName = new UntypedFormControl('', [Validators.required])
 
   constructor(
     public dialogRef: MatDialogRef<NewExerciseDialogComponent>,

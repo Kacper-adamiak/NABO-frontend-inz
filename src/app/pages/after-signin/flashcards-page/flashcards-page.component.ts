@@ -1,14 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {Level} from "../../../models/level";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
-import {FormControl} from "@angular/forms";
-import {LevelService} from "../../../services/level/level.service";
+import {UntypedFormControl} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {ActivatedRoute} from "@angular/router";
 import {DialogService} from "../../../services/dialog/dialog.service";
-import {NewLevelDialogComponent} from "../levels-page/new-level-dialog/new-level-dialog.component";
 import {FlashcardService} from "../../../services/flashcard/flashcard.service";
 import {Flashcard} from "../../../models/flashcard";
 import {NewFlashcardDialogComponent} from "./new-flashcard-dialog/new-flashcard-dialog.component";
@@ -28,7 +25,7 @@ export class FlashcardsPageComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  filterValue = new FormControl('');
+  filterValue = new UntypedFormControl('');
 
   constructor(
     private flashcardService: FlashcardService,

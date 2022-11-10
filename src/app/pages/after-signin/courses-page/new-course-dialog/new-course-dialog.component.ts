@@ -1,10 +1,10 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {Component, OnInit} from '@angular/core';
+import {MatDialogRef} from "@angular/material/dialog";
 import {CourseService} from "../../../../services/course/course.service";
 import {SnackbarService} from "../../../../services/snack-bar/snackbar.service";
 import {Course} from "../../../../models/course";
-import {FormControl, Validators} from "@angular/forms";
-import {ActivatedRoute, Route, Router} from "@angular/router";
+import {UntypedFormControl, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-new-course-dialog',
@@ -15,8 +15,8 @@ import {ActivatedRoute, Route, Router} from "@angular/router";
 export class NewCourseDialogComponent implements OnInit {
 
   newCourse = {} as Course
-  name = new FormControl('', [Validators.required])
-  description = new FormControl('', [Validators.required])
+  name = new UntypedFormControl('', [Validators.required])
+  description = new UntypedFormControl('', [Validators.required])
 
   constructor(
     public dialogRef: MatDialogRef<NewCourseDialogComponent>,
