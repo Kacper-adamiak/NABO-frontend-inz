@@ -1,8 +1,8 @@
-import { HttpResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { BehaviorSubject, Observer, tap } from 'rxjs';
-import { WebService } from '../web/web.service';
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+import {BehaviorSubject, tap} from 'rxjs';
+import {WebService} from '../web/web.service';
+import {Role} from "../../enums/role";
 
 @Injectable({
   providedIn: 'root'
@@ -11,25 +11,100 @@ export class AuthService {
 
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this._isLoggedIn$.asObservable();
+  private _isAdmin$ = new BehaviorSubject<boolean>(false);
+  isAdmin$ = this._isAdmin$.asObservable();
+  private _isSuperAdmin$ = new BehaviorSubject<boolean>(false);
+  isSuperAdmin$ = this._isSuperAdmin$.asObservable();
 
   constructor(private webService: WebService, private router: Router) {
     this.updateIsLoggedIn()
-   }
+    this.isLoggedIn$.subscribe({
+      next: val => {
+        if(val) {
+          console.log("auth", this.isSuperAdmin$)
+          this._isAdmin$.next(this.hasRole(Role.Admin))
+          this._isSuperAdmin$.next(this.hasRole(Role.SuperAdmin))
+          console.log("auth", this.isSuperAdmin$)
+        }
+      }
+    })
+  }
+
 
    updateIsLoggedIn() {
-     const token = localStorage.getItem('access_token');
-     this._isLoggedIn$.next(!!token);
+     const data =localStorage.getItem('user_data')!
+     console.log("localStorage_user_data", data)
+    if(data && data != ''){
+      const user_data = JSON.parse(data)
+      if(user_data){
+        if(user_data.access_token) {
+          this._isLoggedIn$.next(!!(user_data) && !!(user_data.access_token))
+        }
+      }
+    }
+
+
+   }
+
+   getAccessToken() {
+    const user_data = JSON.parse(localStorage.getItem('user_data')!)
+     if(!(!!(user_data) && !!(user_data.access_token))) return ''
+      return user_data.access_token
+   }
+
+   setAccessToken(token: string) {
+      let user_data = JSON.parse(localStorage.getItem('user_data')!)
+     if(!!user_data && !!(user_data.access_token)) {
+      user_data.access_token = token;
+      localStorage.setItem('user_data', JSON.stringify(user_data))
+     }
+   }
+
+   getRefreshToken() {
+     const user_data = JSON.parse(localStorage.getItem('user_data')!)
+     if(!(!!(user_data) && !!(user_data.refresh_token))) return ''
+     return user_data.refresh_token
+   }
+
+   hasRole(role: Role) {
+     const user_data = JSON.parse(localStorage.getItem('user_data')!)
+     console.log(user_data)
+     if(!(!!user_data && !!(user_data.roles))) return false
+     return user_data.roles.includes(role)
+   }
+
+   logout() {
+    localStorage.removeItem('user_data')
+     this._isLoggedIn$.next(false);
+     this._isAdmin$.next(false)
+     this._isSuperAdmin$.next(false)
+     this.router.navigate(['/'])
    }
 
   signin(login: String, password: String) {
     return this.webService.post<signinResponse>("/auth/signin", {
       login: login,
       password: password
-    }).pipe(tap((response: any) => {
-      this._isLoggedIn$.next(true);
-      localStorage.setItem('access_token', response.body?.token || "");
-      this.router.navigate(["/home"])
-    }))
+    })
+    .pipe(
+      tap((response) => {
+        this._isLoggedIn$.next(true);
+        this._isAdmin$.next(this.hasRole(Role.Admin))
+        this._isSuperAdmin$.next(this.hasRole(Role.SuperAdmin))
+        localStorage.setItem('user_data', JSON.stringify({access_token: response.token, refresh_token: response.refreshToken, roles: response.roles}));
+        this.router.navigate(["/home"])
+      })
+    )
+  }
+
+  refreshAccessToken() {
+    return this.webService.post<any>('/auth/refreshtoken', { refreshToken: this.getRefreshToken()}).pipe(
+      tap({
+        next: res => {
+          this.setAccessToken(res.accessToken)
+        }
+      })
+    )
   }
 
   signup(login: String, password: String) {

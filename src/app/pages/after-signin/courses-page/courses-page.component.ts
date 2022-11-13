@@ -56,11 +56,11 @@ export class CoursesPageComponent implements OnInit, AfterViewInit {
     let spinner = this.dialogService.openSpinner()
     this.courseServ.getCoursesCreatedByAdmin().subscribe({
       next: res => {
-        let data: Course[] = res.body!
+        let data: Course[] = res
         this.dataSource.data = data
       },
       error: err => {
-
+        spinner.close()
       },
       complete: () => {
         spinner.close()

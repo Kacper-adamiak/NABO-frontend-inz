@@ -1,0 +1,65 @@
+<div class="segment">
+  <div class="elevated_box">
+    <button mat-icon-button class="elevated_box_top_left" color="primary" routerLink="..">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="elevated_box_header">
+      <h1>Course</h1>
+      <span class="underline"></span>
+    </div>
+
+    <div style="width: 100%;">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Pytanie</mat-label>
+        <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="question" required>
+        <mat-error *ngIf="question.invalid">Nazwa musi być wypełniona</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div style="width: 100%;">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Odpowiedź poprawna</mat-label>
+        <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="expression" required>
+        <mat-error *ngIf="expression.invalid">Nazwa musi być wypełniona</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div style="width: 100%;">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Zła odpowiedź [1]</mat-label>
+        <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="bad_answer1" required>
+        <mat-error *ngIf="bad_answer1.invalid">Nazwa musi być wypełniona</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div style="width: 100%;">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Zła odpowiedź [2]</mat-label>
+        <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="bad_answer2" required>
+        <mat-error *ngIf="bad_answer2.invalid">Nazwa musi być wypełniona</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div style="width: 100%;">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Zła odpowiedź [3]</mat-label>
+        <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="bad_answer3" required>
+        <mat-error *ngIf="bad_answer3.invalid">Nazwa musi być wypełniona</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div style="width: 100%;">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Zdjęcie</mat-label>
+        <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="imageName" required>
+        <mat-error *ngIf="imageName.invalid">Nazwa musi być wypełniona</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="false">Save changes</button>
+      <button mat-raised-button color="warn" (click)="deleteExercise()">Delete course</button>
+    </div>
+
+  </div>
+</div>

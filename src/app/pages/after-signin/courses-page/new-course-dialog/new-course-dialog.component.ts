@@ -5,6 +5,8 @@ import {SnackbarService} from "../../../../services/snack-bar/snackbar.service";
 import {Course} from "../../../../models/course";
 import {UntypedFormControl, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import {Category} from "../../../../models/category";
+import {CategoryService} from "../../../../services/category/category.service";
 
 @Component({
   selector: 'app-new-course-dialog',
@@ -17,15 +19,25 @@ export class NewCourseDialogComponent implements OnInit {
   newCourse = {} as Course
   name = new UntypedFormControl('', [Validators.required])
   description = new UntypedFormControl('', [Validators.required])
+  categories = [] as Category[]
 
   constructor(
     public dialogRef: MatDialogRef<NewCourseDialogComponent>,
     private courseService: CourseService,
     private snackBarService: SnackbarService,
-    private router: Router
+    private router: Router,
+    private categoryService: CategoryService
   ) {}
 
   ngOnInit(): void {
+    this.categoryService.getCategories().subscribe({
+      next: res => {
+        this.categories = res
+      },
+      error: err => {
+        console.log(err)
+      }
+    })
   }
 
   onNoClick(): void {
@@ -38,14 +50,14 @@ export class NewCourseDialogComponent implements OnInit {
     console.log(this.newCourse)
     this.courseService.addCourse(this.newCourse).subscribe({
       next: res => {
-        console.log("courseadd", res.body!)
-        let tempCourse: Course = res.body!.course!;
+        console.log("courseadd", res)
+        let tempCourse: Course = res.course!;
         if(tempCourse){
           this.router.navigate(['/home/courses',`${tempCourse!.id}` ])
         }
-
       },
       error: err => {
+        console.log(err)
         this.snackBarService.openErrorSnackBar(err.error)
       }
     })

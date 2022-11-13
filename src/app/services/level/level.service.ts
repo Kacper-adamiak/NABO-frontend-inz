@@ -1,8 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {WebService} from "../web/web.service";
 import {Observable} from "rxjs";
-import {HttpResponse} from "@angular/common/http";
-import {Course} from "../../models/course";
 import {Level} from "../../models/level";
 
 @Injectable({
@@ -14,11 +12,11 @@ export class LevelService {
 
   }
 
-  getAllLevels(courseId: number): Observable<HttpResponse<Level[]>> {
+  getAllLevels(courseId: number): Observable<Level[]> {
     return this.webService.get<Level[]>(`/course/${courseId}/level/all`)
   }
 
-  getLevelById(courseId: number, levelId: number): Observable<HttpResponse<Level>> {
+  getLevelById(courseId: number, levelId: number): Observable<Level> {
     return this.webService.get<Level>(`/course/${courseId}/level/${levelId}`)
   }
 
@@ -30,7 +28,7 @@ export class LevelService {
     })
   }
 
-  editLevelById(courseId: number, levelId: number, editedLevel: Level): Observable<HttpResponse<any>> {
+  editLevelById(courseId: number, levelId: number, editedLevel: Level): Observable<any> {
     return this.webService.patch<any>(`/course/${courseId}/level/edit/${levelId}`, {
       name: editedLevel.name,
       difficulty: editedLevel.difficulty,
@@ -38,7 +36,7 @@ export class LevelService {
     })
   }
 
-  deleteLevelById(courseId: number, levelId: number): Observable<HttpResponse<any>> {
+  deleteLevelById(courseId: number, levelId: number): Observable<any> {
     return this.webService.delete<any>(`/course/${courseId}/level/delete/${levelId}`)
   }
 }

@@ -1,8 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {WebService} from "../web/web.service";
 import {Observable} from "rxjs";
-import {HttpResponse} from "@angular/common/http";
-import {Level} from "../../models/level";
 import {Flashcard} from "../../models/flashcard";
 
 @Injectable({
@@ -14,11 +12,11 @@ export class FlashcardService {
 
   }
 
-  getAllFlashcards(courseId: number, levelId: number): Observable<HttpResponse<Flashcard[]>> {
+  getAllFlashcards(courseId: number, levelId: number): Observable<Flashcard[]> {
     return this.webService.get<Flashcard[]>(`/course/${courseId}/level/${levelId}/flashcard/all`)
   }
 
-  getFlashcardById(courseId: number, levelId: number, flashcardId: number): Observable<HttpResponse<Flashcard>> {
+  getFlashcardById(courseId: number, levelId: number, flashcardId: number): Observable<Flashcard> {
     return this.webService.get<Flashcard>(`/course/${courseId}/level/${levelId}/flashcard/${flashcardId}`)
   }
 
@@ -31,7 +29,7 @@ export class FlashcardService {
     })
   }
 
-  editFlashcardById(courseId: number, levelId: number, flashcardId: number, editedFlashcard: Flashcard): Observable<HttpResponse<any>> {
+  editFlashcardById(courseId: number, levelId: number, flashcardId: number, editedFlashcard: Flashcard): Observable<any> {
     return this.webService.patch<any>(`/api/course/${courseId}/level/${levelId}/flashcard/edit/${flashcardId}`, {
       expOriginal: editedFlashcard.expOriginal,
       expTranslation: editedFlashcard.expTranslation,
@@ -40,7 +38,7 @@ export class FlashcardService {
     })
   }
 
-  deleteFlashcardById(courseId: number, levelId: number, flashcardId: number): Observable<HttpResponse<any>> {
+  deleteFlashcardById(courseId: number, levelId: number, flashcardId: number): Observable<any> {
     return this.webService.delete<any>(`/api/course/${courseId}/level/${levelId}/flashcard/delete/${flashcardId}`)
   }
 }

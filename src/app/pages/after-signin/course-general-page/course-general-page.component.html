@@ -4,7 +4,7 @@
       <mat-icon>arrow_back</mat-icon>
     </button>
     <div class="elevated_box_header">
-      <h1>Course</h1>
+      <h1>Kurs: {{editedData.name}}</h1>
       <span class="underline"></span>
     </div>
 
@@ -36,9 +36,8 @@
     <div style="width: 100%;">
       <mat-form-field appearance="fill" style="width: 100%;">
         <mat-label>Kategoria</mat-label>
-        <mat-select matInput >
-          <mat-option value="STATUS_SUSPENDED">Suspended</mat-option>
-          <mat-option value="STATUS_ARCHIVED">Archived</mat-option>
+        <mat-select [formControl]="category">
+          <mat-option *ngFor="let category of categories" [value]="category.name">{{category.name}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
@@ -46,17 +45,17 @@
     <div style="width: 100%;">
       <mat-form-field appearance="fill" style="width: 100%;">
         <mat-label>Status</mat-label>
-        <mat-select matInput value="STATUS_SUSPENDED">
-          <mat-option value="STATUS_ACTIVE">Active</mat-option>
-          <mat-option value="STATUS_SUSPENDED">Suspended</mat-option>
-          <mat-option value="STATUS_ARCHIVED">Archived</mat-option>
+        <mat-select [formControl]="status" required>
+          <mat-option [value]="'STATUS_ACTIVE'">Active</mat-option>
+          <mat-option [value]="'STATUS_SUSPENDED'">Suspended</mat-option>
+          <mat-option [value]="'STATUS_ARCHIVED'">Archived</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
 
     <div>
-      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!(name.valid && description.valid)">Save changes</button>
-      <button mat-raised-button color="warn" (click)="deleteCourse()">Delete course</button>
+      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!(name.valid && description.valid)">Zapisz zmiany</button>
+      <button mat-raised-button color="warn" (click)="deleteCourse()">Usuń kurs</button>
     </div>
 
   </div>

@@ -49,7 +49,7 @@ export class ExercisesPageComponent implements OnInit {
     const spinner = this.dialogService.openSpinner()
     this.exerciseService.getAllExercises(this.courseId, this.levelId).subscribe({
       next: res => {
-        let data: Exercise[] = res.body!
+        let data: Exercise[] = res
         this.dataSource.data = data
       },
       error: err => {

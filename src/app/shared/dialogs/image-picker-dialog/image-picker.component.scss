@@ -1,0 +1,21 @@
+.img_container{
+  display: grid;
+  grid-template-columns: repeat(3, 33% [col-start]);
+  grid-template-rows: auto;
+  column-gap: 5px;
+  row-gap: 5px;
+  justify-items: center;
+  align-items: center;
+
+  .img_data {
+    display: inline-block;
+    user-select: none;
+    cursor: pointer;
+    padding: 10px;
+  }
+}
+
+
+.chosen_image {
+  background: #b9b9b9;
+}

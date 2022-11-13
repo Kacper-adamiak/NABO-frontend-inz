@@ -42,16 +42,14 @@
     </mat-form-field>
   </div>
 
-  <div style="width: 100%;">
-    <mat-form-field appearance="fill" style="width: 100%;">
-      <mat-label>Zdjęcie</mat-label>
-      <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="imageName" required>
-      <mat-error *ngIf="imageName.invalid">Nazwa musi być wypełniona</mat-error>
-    </mat-form-field>
+  <div>
+    <button mat-raised-button color="primary" (click)="openImagePicker()">Wybierz obraz</button>
+    <p>{{selectedImage ? selectedImage.name : "nie wybrano obrazu"}}</p>
+    <img *ngIf="!!selectedImage" src="{{selectedImage.url}}" width="128px" height="128px">
   </div>
 
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Anuluj</button>
-  <button mat-button (click)="onAccept()" [disabled]="false">Utwórz fiszkę</button>
+  <button mat-button (click)="onAccept()" [disabled]="!(question.valid && expression.valid)">Utwórz fiszkę</button>
 </div>

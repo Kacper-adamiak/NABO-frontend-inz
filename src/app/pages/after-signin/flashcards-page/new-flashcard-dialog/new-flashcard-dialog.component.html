@@ -1,6 +1,6 @@
 <div mat-dialog-content>
 
-  <h2>Dodaj nowy poziom</h2>
+  <h2>Dodaj nową fiszkę</h2>
 
   <div style="width: 100%;">
     <mat-form-field appearance="fill" style="width: 100%;">
@@ -26,17 +26,17 @@
     </mat-form-field>
   </div>
 
-  <div style="width: 100%;">
-    <mat-form-field appearance="fill" style="width: 100%;">
-      <mat-label>Zdjęcie</mat-label>
-      <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="imageName" required>
-      <mat-error *ngIf="imageName.invalid">Nazwa musi być wypełniona</mat-error>
-    </mat-form-field>
+  <div>
+    <button mat-raised-button color="primary" (click)="openImagePicker()">Wybierz obraz</button>
+    <p>{{selectedImage ? selectedImage.name : "nie wybrano obrazu"}}</p>
+    <img *ngIf="!!selectedImage" src="{{selectedImage.url}}" width="128px" height="128px">
   </div>
+
+
 
 
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Anuluj</button>
-  <button mat-button (click)="onAccept()" [disabled]="!(expTranslation.valid && expOriginal.valid)">Utwórz fiszkę</button>
+  <button mat-button (click)="onAccept()" [disabled]="!(expTranslation.valid && expOriginal.valid && expDescription.valid && selectedImage)">Utwórz fiszkę</button>
 </div>

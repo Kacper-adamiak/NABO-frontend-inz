@@ -11,6 +11,7 @@ export class StartingPageComponent implements OnInit {
 
   constructor(private dialogService: DialogService,
               private snackbarService: SnackbarService,
+
   ) { }
 
   ngOnInit(): void {
@@ -18,10 +19,34 @@ export class StartingPageComponent implements OnInit {
 
   openDialog() {
     const dialog = this.dialogService.openUploadImage()
+    dialog.afterClosed().subscribe({
+      next: value => {
+        if(value){
+          console.log(value)
+        }
+      },
+      error: err => {
+        console.log('something went wrong')
+      }
+    })
   }
 
   openSnackbar() {
     this.snackbarService.openSuccessSnackBar("działa")
+  }
+
+  openImagePicker() {
+    const dialog = this.dialogService.openImagePicker()
+    dialog.afterClosed().subscribe({
+      next: value => {
+        if(value){
+          console.log("after close picker: ",value)
+        }
+      },
+      error: err => {
+        console.log('something went wrong')
+      }
+    })
   }
 
 }

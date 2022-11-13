@@ -19,8 +19,8 @@ export class UploadImageDialogComponent implements OnInit {
   spinnerValue = 0;
   spinnerShow = false;
   spinnerMode: ProgressSpinnerMode = 'determinate'
-
-  selectedFile = null
+  fileName: string = ''
+  selectedFile!: File
 
   constructor(
     public dialogRef: MatDialogRef<UploadImageDialogComponent>,
@@ -38,10 +38,11 @@ export class UploadImageDialogComponent implements OnInit {
   uploadFile(event: any) {
     this.selectedFile = event.target.files[0];
     console.log(this.selectedFile);
+    this.fileName = this.selectedFile!.name
   }
 
   onNoClick() {
-
+    this.dialogRef.close()
   }
 
   isHttpResponse<T>(event: HttpEvent<T>): event is HttpResponse<T> {
@@ -82,24 +83,24 @@ export class UploadImageDialogComponent implements OnInit {
             console.log("progress:", 100)
           }
           return event
-
         })
       )
       .subscribe({
-      next: res => {
-        if(this.isHttpResponse(res)) {
-          console.log("res",res)
-        }
-      },
-      error: error => {
-        this.spinnerShow = false
-        console.log("er",error)
-      },complete: () => {
+        next: res => {
+          if(this.isHttpResponse(res)) {
+            console.log("res",res)
+          }
+        },
+        error: error => {
+          this.spinnerShow = false
+          console.log("er",error)
+        },
+        complete: () => {
           this.spinnerShow = false
           console.log("complete")
+          this.dialogRef.close({imageName: this.name.value})
         }
-      },
-    )
+      })
   }
 }
 

@@ -22,6 +22,10 @@ import {ExercisesPageComponent} from './exercises-page/exercises-page.component'
 import {NewFlashcardDialogComponent} from './flashcards-page/new-flashcard-dialog/new-flashcard-dialog.component';
 import {FlashcardGeneralPageComponent} from './flashcard-general-page/flashcard-general-page.component';
 import {NewExerciseDialogComponent} from './exercises-page/new-exercise-dialog/new-exercise-dialog.component';
+import {ExerciseGeneralPageComponent} from './exercise-general-page/exercise-general-page.component';
+import {
+  NewTestQuestionDialogComponent
+} from './test-questions-page/new-test-question-dialog/new-test-question-dialog.component';
 
 
 @NgModule({
@@ -42,7 +46,9 @@ import {NewExerciseDialogComponent} from './exercises-page/new-exercise-dialog/n
     ExercisesPageComponent,
     NewFlashcardDialogComponent,
     FlashcardGeneralPageComponent,
-    NewExerciseDialogComponent
+    NewExerciseDialogComponent,
+    ExerciseGeneralPageComponent,
+    NewTestQuestionDialogComponent
   ],
   imports: [
     CommonModule,

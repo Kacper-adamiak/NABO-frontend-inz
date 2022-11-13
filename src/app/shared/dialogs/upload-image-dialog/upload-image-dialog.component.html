@@ -8,11 +8,19 @@
   </mat-form-field>
 
 
-  <div style="display: flex; height: 30px; ">
-    <input type="file" [formControl]="image" (change)="uploadFile($event)">
+  <div style="display: flex;align-items: center; height: 50px; margin-bottom: 20px">
+
+
+    <input type="file" [formControl]="image" (change)="uploadFile($event)" #fileUpload required hidden="true">
+
+    <button mat-mini-fab style="height: 50px; width: 50px;" color="primary" class="upload-btn"
+            (click)="fileUpload.click()">
+      <mat-icon>attach_file</mat-icon>
+    </button>
+    <p>{{fileName || "No file uploaded yet."}}</p>
     <mat-progress-spinner
       class="example-margin"
-      [diameter]="30"
+      [diameter]="50"
       [mode]="spinnerMode"
       [value]="spinnerValue"
       *ngIf="spinnerShow">

@@ -4,6 +4,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {SnackbarService} from "../../../../services/snack-bar/snackbar.service";
 import {Exercise} from "../../../../models/exercise";
 import {ExerciseService} from "../../../../services/exercise/exercise.service";
+import {Image} from "../../../../models/image";
+import {DialogService} from "../../../../services/dialog/dialog.service";
 
 @Component({
   selector: 'app-new-exercise-dialog',
@@ -18,12 +20,13 @@ export class NewExerciseDialogComponent implements OnInit {
   bad_answer1 = new UntypedFormControl('', [Validators.required])
   bad_answer2 = new UntypedFormControl('', [Validators.required])
   bad_answer3 = new UntypedFormControl('', [Validators.required])
-  imageName = new UntypedFormControl('', [Validators.required])
+  selectedImage!: Image
 
   constructor(
     public dialogRef: MatDialogRef<NewExerciseDialogComponent>,
     private exerciseService: ExerciseService,
     private snackBarService: SnackbarService,
+    private dialogService: DialogService,
     @Inject(MAT_DIALOG_DATA) public data: { courseId: number, levelId: number, exerciseId: number },
   ) {
   }
@@ -42,7 +45,7 @@ export class NewExerciseDialogComponent implements OnInit {
     this.newExercise.bad_answer1 = this.bad_answer1.value
     this.newExercise.bad_answer2 = this.bad_answer2.value
     this.newExercise.bad_answer3 = this.bad_answer3.value
-    this.newExercise.imageName = this.imageName.value
+    this.newExercise.imageName = this.selectedImage.name
 
 
     this.exerciseService.addExercise(this.data.courseId, this.data.levelId ,this.newExercise).subscribe({
@@ -58,6 +61,21 @@ export class NewExerciseDialogComponent implements OnInit {
       }
     })
 
+  }
+
+  openImagePicker() {
+    const dialog = this.dialogService.openImagePicker()
+    dialog.afterClosed().subscribe({
+      next: value => {
+        if(value){
+          this.selectedImage = value
+          console.log("after close picker: ",value)
+        }
+      },
+      error: err => {
+        console.log('something went wrong')
+      }
+    })
   }
 
 }

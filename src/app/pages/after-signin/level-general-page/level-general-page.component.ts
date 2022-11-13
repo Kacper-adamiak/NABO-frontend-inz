@@ -4,7 +4,6 @@ import {MatDialog} from "@angular/material/dialog";
 import {SnackbarService} from "../../../services/snack-bar/snackbar.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {DialogService} from "../../../services/dialog/dialog.service";
-import {HttpResponse} from "@angular/common/http";
 import {LevelService} from "../../../services/level/level.service";
 import {Level} from "../../../models/level";
 import {EditedLevelDialogComponent} from "./edited-level-dialog/edited-level-dialog.component";
@@ -40,18 +39,18 @@ export class LevelGeneralPageComponent implements OnInit {
     if(!!this.courseId && !!this.levelId){
       const spinner = this.dialogService.openSpinner()
       this.levelService.getLevelById(this.courseId, this.levelId).subscribe({
-        next: (res: HttpResponse<Level>) => {
-          const body = res.body!
+        next: (res: Level) => {
+          const body = res
 
           this.editedData = JSON.parse(JSON.stringify(body))
           this.prevData = JSON.parse(JSON.stringify(body))
 
-          this.name.setValue(this.editedData.name)
-          this.difficulty.setValue(this.editedData.difficulty)
-          this.status.setValue(this.editedData.statusName)
+          this.setFormFields(this.editedData)
+
         },
         error: error => {
-          this.snackBarService.openSnackBar(error.error.message)
+          spinner.close()
+          this.snackBarService.openSnackBar(error.message)
           this.router.navigate([`/home/courses/${this.courseId}/levels`])
         },
         complete: () => {
@@ -61,7 +60,11 @@ export class LevelGeneralPageComponent implements OnInit {
     }
   }
 
-
+  private setFormFields(level: Level){
+    this.name.setValue(level.name)
+    this.difficulty.setValue(level.difficulty)
+    this.status.setValue(level.statusName)
+  }
 
   onSubmit() {
     this.editedData.name = this.name.value
@@ -93,6 +96,9 @@ export class LevelGeneralPageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.prevData = JSON.parse(JSON.stringify(this.editedData))
+      }
       console.log('The dialog was closed');
     });
   }

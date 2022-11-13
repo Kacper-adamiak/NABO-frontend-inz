@@ -27,7 +27,11 @@ import {PagesModule} from "./pages/pages.module";
     SharedModule,
     PagesModule
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },{provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500} },
+    ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

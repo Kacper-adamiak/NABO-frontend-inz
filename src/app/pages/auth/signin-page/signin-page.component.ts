@@ -11,7 +11,8 @@ import {SnackbarService} from "../../../services/snack-bar/snackbar.service";
 })
 export class SigninPageComponent implements OnInit {
   hide = true;
-  constructor(private authService: AuthService,
+  constructor(
+              private authService: AuthService,
               private dialogService: DialogService,
               private snackbarService: SnackbarService) { }
 
@@ -27,6 +28,7 @@ export class SigninPageComponent implements OnInit {
       next: res => {
       },
       error: err => {
+        spinner.close()
         this.snackbarService.openErrorSnackBar(err.message)
       },
       complete: () => {

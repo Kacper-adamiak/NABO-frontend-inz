@@ -1,9 +1,7 @@
-import { HttpResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { delay, Observable, Observer, of } from 'rxjs';
-import { Course } from '../../models/course';
-import { WebService } from '../web/web.service';
-import {MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {Course} from '../../models/course';
+import {WebService} from '../web/web.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,15 +12,15 @@ export class CourseService {
 
   }
 
-  getAllCourses(): Observable<HttpResponse<Course[]>> {
+  getAllCourses(): Observable<Course[]> {
     return this.webService.get<Course[]>('/course/all')
   }
 
-  getCoursesCreatedByAdmin(): Observable<HttpResponse<Course[]>> {
+  getCoursesCreatedByAdmin(): Observable<Course[]> {
     return this.webService.get<Course[]>('/course/admin')
   }
 
-  getCourseById(courseId: number): Observable<HttpResponse<Course>> {
+  getCourseById(courseId: number): Observable<Course> {
     return this.webService.get<Course>(`/course/${courseId}`)
   }
 
@@ -35,7 +33,7 @@ export class CourseService {
     })
   }
 
-  editCourseById(courseId: number, editedCourse: Course): Observable<HttpResponse<any>> {
+  editCourseById(courseId: number, editedCourse: Course): Observable<any> {
     return this.webService.patch<any>(`/course/edit/${courseId}`, {
       name: editedCourse.name,
       description: editedCourse.description,
@@ -44,7 +42,7 @@ export class CourseService {
     })
   }
 
-  deleteCourseById(courseId: number): Observable<HttpResponse<any>> {
+  deleteCourseById(courseId: number): Observable<any> {
      return this.webService.delete<any>(`/course/delete/${courseId}`)
   }
 

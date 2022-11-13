@@ -4,7 +4,7 @@
       <mat-icon>arrow_back</mat-icon>
     </button>
     <div class="elevated_box_header">
-      <h1>Course</h1>
+      <h1>Poziom: {{prevData.name}}</h1>
       <span class="underline"></span>
     </div>
     <div style="margin-bottom: 20px">
@@ -34,9 +34,9 @@
       <mat-form-field appearance="fill" style="width: 100%;">
         <mat-label>Status</mat-label>
         <mat-select [formControl]="status" required>
-          <mat-option value="STATUS_ACTIVE">Active</mat-option>
-          <mat-option value="STATUS_SUSPENDED">Suspended</mat-option>
-          <mat-option value="STATUS_ARCHIVED">Archived</mat-option>
+          <mat-option [value]="'STATUS_ACTIVE'">Active</mat-option>
+          <mat-option [value]="'STATUS_SUSPENDED'">Suspended</mat-option>
+          <mat-option [value]="'STATUS_ARCHIVED'">Archived</mat-option>
         </mat-select>
       </mat-form-field>
     </div>

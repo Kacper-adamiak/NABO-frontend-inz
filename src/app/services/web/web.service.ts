@@ -1,6 +1,6 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { tap } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {tap} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,23 +14,23 @@ export class WebService {
    }
 
   get<T>(uri: string) {
-    return this.http.get<T>(`${this.ROOT_URL}${uri}`, {observe: "response"}).pipe(
+    return this.http.get<T>(`${this.ROOT_URL}${uri}`).pipe(
       tap(
-        res => console.log(res)
+        res => console.log('get: ',res)
       )
     )
   }
 
   post<T>(uri: string, payload: any, headers?: HttpHeaders) {
-    return this.http.post<T>(`${this.ROOT_URL}${uri}`, payload, {observe: "response"}).pipe(
+    return this.http.post<T>(`${this.ROOT_URL}${uri}`, payload).pipe(
       tap(
-        res => console.log(res)
+        res => console.log('Post: ',res)
       )
     )
   }
 
   patch<T>(uri: string, payload: any) {
-    return this.http.patch<T>(`${this.ROOT_URL}${uri}`, payload, {observe: "response"}).pipe(
+    return this.http.patch<T>(`${this.ROOT_URL}${uri}`, payload).pipe(
       tap(
         res => console.log(res)
       )
@@ -38,7 +38,7 @@ export class WebService {
   }
 
   delete<T>(uri: string) {
-    return this.http.delete<T>(`${this.ROOT_URL}${uri}`, {observe: "response"}).pipe(
+    return this.http.delete<T>(`${this.ROOT_URL}${uri}`).pipe(
       tap(
         res => console.log(res)
       )

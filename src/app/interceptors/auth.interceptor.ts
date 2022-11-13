@@ -1,21 +1,62 @@
 import {Injectable} from '@angular/core';
-import {HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {catchError, Observable, Subject, tap, throwError} from 'rxjs';
+import {AuthService} from "../services/auth/auth.service";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor() {}
+  refreshingAccessToken: boolean  = false
+  accessTokenRefreshed: Subject<any> = new Subject()
 
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+  constructor(private authService: AuthService) {}
 
-    const headers= new HttpHeaders()
-    .set('authorization', `Bearer ${localStorage.getItem('access_token') || ""}`)
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    request = request.clone({headers: headers});
-
+    request = this.addAuthHeader(request)
     console.log("Interceptor: ", request);
+      return next.handle(request).pipe(catchError(err => {
+        console.log(err)
+        if (err.status == 401) {
+          this.authService.logout();
+        }
 
-    return next.handle(request);
+        const error = err;
+        return throwError(error);
+      })
+    )
   }
+
+  refreshAccessToken() {
+    if (this.refreshingAccessToken){
+      return new Observable(observer => {
+        this.accessTokenRefreshed.subscribe(() => {
+          observer.next();
+          observer.complete();
+        })
+      })
+    }else {
+      this.refreshingAccessToken = true
+      return this.authService.getRefreshToken().pipe(
+        tap(() => {
+          console.log("Odnowiono access token!")
+          this.refreshingAccessToken = false
+          this.accessTokenRefreshed.next(2)
+        })
+      )
+    }
+  }
+
+  addAuthHeader(req: HttpRequest<any>){
+    const token = this.authService.getAccessToken()
+    if(token){
+      return req.clone({
+        setHeaders: {
+          'authorization': `Bearer ${this.authService.getAccessToken()}`
+        }
+      })
+    }
+    return req
+  }
+
 }

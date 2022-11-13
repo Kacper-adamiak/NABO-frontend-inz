@@ -50,7 +50,7 @@ export class LevelsPageComponent implements OnInit, AfterViewInit {
     const spinner = this.dialogService.openSpinner()
     this.levelService.getAllLevels(this.courseId).subscribe({
       next: res => {
-        let data: Level[] = res.body!
+        let data: Level[] = res
         this.dataSource.data = data
       },
       error: err => {

@@ -49,7 +49,7 @@ export class FlashcardsPageComponent implements OnInit {
     const spinner = this.dialogService.openSpinner()
     this.flashcardService.getAllFlashcards(this.courseId, this.levelId).subscribe({
       next: res => {
-        let data: Flashcard[] = res.body!
+        let data: Flashcard[] = res
         this.dataSource.data = data
       },
       error: err => {

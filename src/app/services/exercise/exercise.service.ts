@@ -1,8 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {WebService} from "../web/web.service";
 import {Observable} from "rxjs";
-import {HttpResponse} from "@angular/common/http";
-import {Level} from "../../models/level";
 import {Exercise} from "../../models/exercise";
 
 @Injectable({
@@ -14,11 +12,11 @@ export class ExerciseService {
 
   }
 
-  getAllExercises(courseId: number, levelId: number,): Observable<HttpResponse<Exercise[]>> {
+  getAllExercises(courseId: number, levelId: number,): Observable<Exercise[]> {
     return this.webService.get<Exercise[]>(`/course/${courseId}/level/${levelId}/exercise/all`)
   }
 
-  getExerciseById(courseId: number, levelId: number, exerciseId: number): Observable<HttpResponse<Exercise>> {
+  getExerciseById(courseId: number, levelId: number, exerciseId: number): Observable<Exercise> {
     return this.webService.get<Exercise>(`/course/${courseId}/level/${levelId}/exercise/edit/${exerciseId}`)
   }
 
@@ -33,7 +31,7 @@ export class ExerciseService {
     })
   }
 
-  editExerciseById(courseId: number, levelId: number, editedExorcise: Exercise): Observable<HttpResponse<any>> {
+  editExerciseById(courseId: number, levelId: number, editedExorcise: Exercise): Observable<any> {
     return this.webService.patch<any>(`/course/${courseId}/level/${levelId}/exercise/edit/${editedExorcise.id}`, {
       question: editedExorcise.question,
       expression: editedExorcise.expression,
@@ -44,7 +42,7 @@ export class ExerciseService {
     })
   }
 
-  deleteExerciseById(courseId: number, levelId: number, exerciseId: number): Observable<HttpResponse<any>> {
+  deleteExerciseById(courseId: number, levelId: number, exerciseId: number): Observable<any> {
     return this.webService.delete<any>(`/course/${courseId}/level/${levelId}/exercise/delete/${exerciseId}`)
   }
 }

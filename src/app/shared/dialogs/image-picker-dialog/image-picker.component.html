@@ -1,7 +1,37 @@
-<div mat-dialog-content>
+<div mat-dialog-content style="height: 100%;">
 
+  <div style="width: 100%;">
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Kategoria</mat-label>
+      <mat-select (valueChange)="onSelectChange($event)" [formControl]="categoryFormControl">
+        <mat-option *ngFor="let category of categories" [value]="category.name">{{category.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <mat-form-field appearance="standard">
+    <mat-label>Wyszukaj</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="np. kurs o zwierzętach" #input>
+  </mat-form-field>
+
+  <div *ngIf="filteredData.length != 0" class="img_container">
+    <div class="img_data" *ngFor="let image of slicedData" (click)="chooseImage(image)" [class.chosen_image]="image === this.chosenImage">
+      <p>{{image.name}}</p>
+      <img src="{{image.url}}" style="height: 128px;">
+    </div>
+  </div>
+  <p *ngIf="filteredData.length == 0">
+    Brak zdjęć
+  </p>
+
+  <mat-paginator [length]="paginatorLength"
+                 [pageSize]="paginatorPageSize"
+                 [pageSizeOptions]="paginatorPageSizeOptions"
+                 (page)="paginatorPageEvent($event)"
+                 aria-label="Select page">
+  </mat-paginator>
 </div>
-<div mat-dialog-actions>
+<div mat-dialog-actions style="position: relative; bottom: 0px;">
   <button mat-button (click)="onNoClick()">Anuluj</button>
   <button mat-button (click)="onAccept()">Zatwierdź zmiany</button>
 </div>

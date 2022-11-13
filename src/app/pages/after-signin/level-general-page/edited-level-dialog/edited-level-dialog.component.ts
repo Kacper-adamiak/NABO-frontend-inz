@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {LevelService} from "../../../../services/level/level.service";
 import {SnackbarService} from "../../../../services/snack-bar/snackbar.service";
@@ -26,23 +26,23 @@ export class EditedLevelDialogComponent {
     console.log("dialog: ",this.data.editedData)
     this.levelService.editLevelById(this.data.courseId ,this.data.prevData.id!, this.data.editedData).subscribe({
       next: (res) => {
-        this.snackBarService.openSuccessSnackBar(res.body.message)
+        this.snackBarService.openSuccessSnackBar(res.message)
+        this.dialogRef.close(true);
       },
       error: (err) => {
         console.log("error: ", err)
         if(err.error.name) {
-          this.snackBarService.openErrorSnackBar(err.error.name)
+          this.snackBarService.openErrorSnackBar(err.name)
         }
         if(err.error.description) {
-          this.snackBarService.openErrorSnackBar(err.error.description)
+          this.snackBarService.openErrorSnackBar(err.description)
         }
         if(err.error.statusName) {
-          this.snackBarService.openErrorSnackBar(err.error.statusName)
+          this.snackBarService.openErrorSnackBar(err.statusName)
         }
-
+        this.dialogRef.close(false);
       }
     })
-    this.dialogRef.close();
   }
 
 }

@@ -1,9 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {WebService} from "../web/web.service";
 import {Observable} from "rxjs";
 import {HttpResponse} from "@angular/common/http";
-import {Level} from "../../models/level";
-import {Flashcard} from "../../models/flashcard";
 import {TestQuestion} from "../../models/test-question";
 
 @Injectable({
@@ -15,11 +13,11 @@ export class TestQuestionService {
 
   }
 
-  getAllTestQuestions(courseId: number, levelId: number): Observable<HttpResponse<TestQuestion[]>> {
+  getAllTestQuestions(courseId: number, levelId: number): Observable<TestQuestion[]> {
     return this.webService.get<TestQuestion[]>(`/course/${courseId}/level/${levelId}/testquestion/all`)
   }
 
-  getTestQuestionById(courseId: number, levelId: number, testQuestionId: number): Observable<HttpResponse<TestQuestion>> {
+  getTestQuestionById(courseId: number, levelId: number, testQuestionId: number): Observable<TestQuestion> {
     return this.webService.get<TestQuestion>(`/course/${courseId}/level/${levelId}/testquestion/${testQuestionId}`)
   }
 
@@ -31,7 +29,7 @@ export class TestQuestionService {
     })
   }
 
-  editTestQuestionById(courseId: number, levelId: number, testQuestionId: number, editedTestQuestion: TestQuestion): Observable<HttpResponse<any>> {
+  editTestQuestionById(courseId: number, levelId: number, testQuestionId: number, editedTestQuestion: TestQuestion): Observable<any> {
     return this.webService.patch<any>(`/api/course/${courseId}/level/${levelId}/testquestion/edit/${testQuestionId}`, {
       question: editedTestQuestion.question,
       answer: editedTestQuestion.answer,

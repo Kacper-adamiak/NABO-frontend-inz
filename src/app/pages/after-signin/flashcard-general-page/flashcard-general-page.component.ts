@@ -6,7 +6,6 @@ import {SnackbarService} from "../../../services/snack-bar/snackbar.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {DialogService} from "../../../services/dialog/dialog.service";
 import {FlashcardService} from "../../../services/flashcard/flashcard.service";
-import {HttpResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-flashcard-general-page',
@@ -41,8 +40,8 @@ export class FlashcardGeneralPageComponent implements OnInit {
     if(!!this.courseId && !!this.levelId){
       const spinner = this.dialogService.openSpinner()
       this.flashcardService.getFlashcardById(this.courseId, this.levelId, this.flashcardId).subscribe({
-        next: (res: HttpResponse<Flashcard>) => {
-          const body = res.body!
+        next: (res: Flashcard) => {
+          const body = res
 
           this.editedData = JSON.parse(JSON.stringify(body))
           this.orginalData = JSON.parse(JSON.stringify(body))
@@ -53,7 +52,8 @@ export class FlashcardGeneralPageComponent implements OnInit {
           this.imageName.setValue(this.editedData.imageName)
         },
         error: error => {
-          this.snackBarService.openSnackBar(error.error.message)
+          spinner.close()
+          this.snackBarService.openSnackBar(error.message)
           this.router.navigate([`/home/courses/${this.courseId}/levels/${this.levelId}/flashcards`])
         },
         complete: () => {
