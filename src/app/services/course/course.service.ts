@@ -28,7 +28,7 @@ export class CourseService {
     return this.webService.post<any>(`/course/add`, {
       name: newCourse.name,
       description: newCourse.description,
-      categoryName: "KAT1",
+      categoryName: newCourse.categoryName,
       statusName: "STATUS_SUSPENDED"
     })
   }

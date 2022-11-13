@@ -17,6 +17,8 @@ import {ExercisesPageComponent} from "./pages/after-signin/exercises-page/exerci
 import {
   FlashcardGeneralPageComponent
 } from "./pages/after-signin/flashcard-general-page/flashcard-general-page.component";
+import {StatsPageComponent} from "./pages/after-signin/stats-page/stats-page.component";
+import {StatDetailPageComponent} from "./pages/after-signin/stat-detail-page/stat-detail-page.component";
 
 const routes: Routes = [
   {path: "", component: StartingPageComponent},
@@ -31,6 +33,8 @@ const routes: Routes = [
       {path: 'courses/:courseId/levels/:levelId/flashcards/:flashcardId', component: FlashcardGeneralPageComponent},
       {path: 'courses/:courseId/levels/:levelId/exercises', component: ExercisesPageComponent},
       {path: 'courses/:courseId/levels/:levelId/testquestions', component: TestQuestionsPageComponent},
+    {path: 'stats', component: StatsPageComponent},
+    {path: 'stats/:courseId', component: StatDetailPageComponent},
   ], canActivate: [IsAuthenticatedGuard]},
   {path: "auth", component: AuthComponent, children: [
     {path: "signin", component: SigninPageComponent}

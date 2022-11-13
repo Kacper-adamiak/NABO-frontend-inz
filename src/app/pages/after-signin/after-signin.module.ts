@@ -26,6 +26,8 @@ import {ExerciseGeneralPageComponent} from './exercise-general-page/exercise-gen
 import {
   NewTestQuestionDialogComponent
 } from './test-questions-page/new-test-question-dialog/new-test-question-dialog.component';
+import {StatsPageComponent} from './stats-page/stats-page.component';
+import {StatDetailPageComponent} from './stat-detail-page/stat-detail-page.component';
 
 
 @NgModule({
@@ -48,7 +50,9 @@ import {
     FlashcardGeneralPageComponent,
     NewExerciseDialogComponent,
     ExerciseGeneralPageComponent,
-    NewTestQuestionDialogComponent
+    NewTestQuestionDialogComponent,
+    StatsPageComponent,
+    StatDetailPageComponent
   ],
   imports: [
     CommonModule,

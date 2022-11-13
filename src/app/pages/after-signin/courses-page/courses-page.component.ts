@@ -8,6 +8,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {DialogService} from "../../../services/dialog/dialog.service";
+import {AuthService} from "../../../services/auth/auth.service";
 
 @Component({
   selector: 'app-courses-page',
@@ -17,16 +18,26 @@ import {DialogService} from "../../../services/dialog/dialog.service";
 
 export class CoursesPageComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ["name", "category", "status", 'modified', 'created' ];
+  displayedColumns: string[] = ["name", "categoryName", "statusName", 'modified', 'created' ];
   dataSource: MatTableDataSource<Course> = new MatTableDataSource<Course>([] as Course[])
+  isSuperAdmin = false
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   filterValue = new UntypedFormControl('');
 
-  constructor(private courseServ: CourseService, public dialog: MatDialog, public dialogService: DialogService) {
-
+  constructor(private courseServ: CourseService,
+              public dialog: MatDialog,
+              public dialogService: DialogService,
+              public authService: AuthService) {
+    this.authService.isSuperAdmin$.subscribe({
+      next: value => {
+        if(value) {
+          this.isSuperAdmin = value
+        }
+      }
+    })
   }
 
   ngAfterViewInit(): void {
@@ -39,6 +50,7 @@ export class CoursesPageComponent implements OnInit, AfterViewInit {
     this.dataSource.filterPredicate = function(data, filter: string): boolean {
       return data.name.toLowerCase().includes(filter) || data.categoryName.toLowerCase().includes(filter) || data.statusName.toLowerCase().includes(filter);
     };
+
   }
 
   applyFilter(event: Event) {
@@ -54,18 +66,36 @@ export class CoursesPageComponent implements OnInit, AfterViewInit {
   getCourses() {
 
     let spinner = this.dialogService.openSpinner()
-    this.courseServ.getCoursesCreatedByAdmin().subscribe({
-      next: res => {
-        let data: Course[] = res
-        this.dataSource.data = data
-      },
-      error: err => {
-        spinner.close()
-      },
-      complete: () => {
-        spinner.close()
+
+    if(this.isSuperAdmin) {
+        this.displayedColumns.push('authorLogin')
+        this.courseServ.getAllCourses().subscribe({
+          next: res => {
+            let data: Course[] = res
+            this.dataSource.data = data
+          },
+          error: err => {
+            spinner.close()
+          },
+          complete: () => {
+            spinner.close()
+          }
+        })
       }
-    })
+    else {
+        this.courseServ.getCoursesCreatedByAdmin().subscribe({
+          next: res => {
+            let data: Course[] = res
+            this.dataSource.data = data
+          },
+          error: err => {
+            spinner.close()
+          },
+          complete: () => {
+            spinner.close()
+          }
+        })
+      }
   }
 
   openDialog(): void {

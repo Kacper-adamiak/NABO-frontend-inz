@@ -18,17 +18,22 @@
 
     <table mat-table [dataSource]="dataSource" matSort>
 
+      <ng-container *ngIf="isSuperAdmin" matColumnDef="authorLogin">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Autor </th>
+        <td mat-cell *matCellDef="let row"> {{row.authorLogin}} </td>
+      </ng-container>
+
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa </th>
         <td mat-cell *matCellDef="let row"> {{row.name}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="category">
+      <ng-container matColumnDef="categoryName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Kategoria </th>
         <td mat-cell *matCellDef="let row"> {{row.categoryName}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="status">
+      <ng-container matColumnDef="statusName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
         <td mat-cell *matCellDef="let row"> {{row.statusName}} </td>
       </ng-container>

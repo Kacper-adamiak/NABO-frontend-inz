@@ -21,10 +21,8 @@ export class AuthService {
     this.isLoggedIn$.subscribe({
       next: val => {
         if(val) {
-          console.log("auth", this.isSuperAdmin$)
           this._isAdmin$.next(this.hasRole(Role.Admin))
           this._isSuperAdmin$.next(this.hasRole(Role.SuperAdmin))
-          console.log("auth", this.isSuperAdmin$)
         }
       }
     })
@@ -33,7 +31,6 @@ export class AuthService {
 
    updateIsLoggedIn() {
      const data =localStorage.getItem('user_data')!
-     console.log("localStorage_user_data", data)
     if(data && data != ''){
       const user_data = JSON.parse(data)
       if(user_data){
