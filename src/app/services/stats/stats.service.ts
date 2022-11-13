@@ -15,6 +15,6 @@ export class StatsService {
   }
 
   getCourseNewUsersPerDay(courseId: number) {
-    return this.webService.get<any>(`/stats/newusersperday/${courseId}`)
+    return this.webService.get<any[]>(`/stats/newusersperday/${courseId}`)
   }
 }

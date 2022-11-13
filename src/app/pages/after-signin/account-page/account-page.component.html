@@ -4,48 +4,25 @@
       <h1 class="elevated_box_header_content">Your account</h1>
       <span class="underline"></span>
     </div>
-    <div class="elevated_box_scrollable_content">
       <div class="elevated_box_label">
         <p class="elevated_box_label_name">Login:</p>
-        <p class="elevated_box_label_value">Kaspian</p>
+        <p class="elevated_box_label_value">{{data.login || " "}}</p>
       </div>
-
       <div class="elevated_box_label">
-        <p class="elevated_box_label_name">Firstname:</p>
-        <p class="elevated_box_label_value">King</p>
+        <p class="elevated_box_label_name">Email:</p>
+        <p class="elevated_box_label_value">{{data.email}}</p>
       </div>
-
       <div class="elevated_box_label">
-        <p class="elevated_box_label_name">Lastname:</p>
-        <p class="elevated_box_label_value">Corn</p>
+        <p class="elevated_box_label_name">Imię:</p>
+        <p class="elevated_box_label_value">{{data.firstName || " "}}</p>
       </div>
-
       <div class="elevated_box_label">
-        <p class="elevated_box_label_name">Lastname:</p>
-        <p class="elevated_box_label_value">Corn</p>
+        <p class="elevated_box_label_name">Nazwisko:</p>
+        <p class="elevated_box_label_value">{{data.lastName || " "}}</p>
       </div>
-
-      <div class="elevated_box_label">
-        <p class="elevated_box_label_name">Lastname:</p>
-        <p class="elevated_box_label_value">Corn</p>
-      </div>
-
-      <div class="elevated_box_label">
-        <p class="elevated_box_label_name">Lastname:</p>
-        <p class="elevated_box_label_value">Corn</p>
-      </div>
-
-      <div class="elevated_box_label">
-        <p class="elevated_box_label_name">Lastname:</p>
-        <p class="elevated_box_label_value">Corn</p>
-      </div>
-
-      <div class="elevated_box_label">
-        <p class="elevated_box_label_name">Lastname:</p>
-        <p class="elevated_box_label_value">Corn</p>
-      </div>
-
-      <a routerLink="" class="elevated_box_bottom_right">Edit account</a>
+    <div>
+      <button mat-raised-button color="primary">Edytuj dane</button>
+      <button mat-raised-button color="warn">Usuń konto</button>
     </div>
 
 

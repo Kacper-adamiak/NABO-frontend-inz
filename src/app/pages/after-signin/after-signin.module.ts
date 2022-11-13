@@ -28,6 +28,8 @@ import {
 } from './test-questions-page/new-test-question-dialog/new-test-question-dialog.component';
 import {StatsPageComponent} from './stats-page/stats-page.component';
 import {StatDetailPageComponent} from './stat-detail-page/stat-detail-page.component';
+import {NgChartsConfiguration, NgChartsModule} from "ng2-charts";
+import {AdminPanelPageComponent} from './admin-panel-page/admin-panel-page.component';
 
 
 @NgModule({
@@ -52,7 +54,8 @@ import {StatDetailPageComponent} from './stat-detail-page/stat-detail-page.compo
     ExerciseGeneralPageComponent,
     NewTestQuestionDialogComponent,
     StatsPageComponent,
-    StatDetailPageComponent
+    StatDetailPageComponent,
+    AdminPanelPageComponent
   ],
   imports: [
     CommonModule,
@@ -60,7 +63,11 @@ import {StatDetailPageComponent} from './stat-detail-page/stat-detail-page.compo
     ReactiveFormsModule,
     MaterialExampleModule,
     FormsModule,
+    NgChartsModule
 
+  ],
+  providers: [
+    { provide: NgChartsConfiguration, useValue: { generateColors: true }}
   ]
 })
 export class AfterSigninModule { }

@@ -19,6 +19,7 @@ import {
 } from "./pages/after-signin/flashcard-general-page/flashcard-general-page.component";
 import {StatsPageComponent} from "./pages/after-signin/stats-page/stats-page.component";
 import {StatDetailPageComponent} from "./pages/after-signin/stat-detail-page/stat-detail-page.component";
+import {AdminPanelPageComponent} from "./pages/after-signin/admin-panel-page/admin-panel-page.component";
 
 const routes: Routes = [
   {path: "", component: StartingPageComponent},
@@ -28,13 +29,14 @@ const routes: Routes = [
     {path: 'courses', component: CoursesPageComponent},
     {path: 'courses/:courseId', component: CourseGeneralPageComponent},
     {path: 'courses/:courseId/levels', component: LevelsPageComponent},
-      {path: 'courses/:courseId/levels/:levelId', component: LevelGeneralPageComponent},
-      {path: 'courses/:courseId/levels/:levelId/flashcards', component: FlashcardsPageComponent},
-      {path: 'courses/:courseId/levels/:levelId/flashcards/:flashcardId', component: FlashcardGeneralPageComponent},
-      {path: 'courses/:courseId/levels/:levelId/exercises', component: ExercisesPageComponent},
-      {path: 'courses/:courseId/levels/:levelId/testquestions', component: TestQuestionsPageComponent},
+    {path: 'courses/:courseId/levels/:levelId', component: LevelGeneralPageComponent},
+    {path: 'courses/:courseId/levels/:levelId/flashcards', component: FlashcardsPageComponent},
+    {path: 'courses/:courseId/levels/:levelId/flashcards/:flashcardId', component: FlashcardGeneralPageComponent},
+    {path: 'courses/:courseId/levels/:levelId/exercises', component: ExercisesPageComponent},
+    {path: 'courses/:courseId/levels/:levelId/testquestions', component: TestQuestionsPageComponent},
     {path: 'stats', component: StatsPageComponent},
     {path: 'stats/:courseId', component: StatDetailPageComponent},
+    {path: 'adminpanel', component: AdminPanelPageComponent},
   ], canActivate: [IsAuthenticatedGuard]},
   {path: "auth", component: AuthComponent, children: [
     {path: "signin", component: SigninPageComponent}
