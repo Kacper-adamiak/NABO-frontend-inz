@@ -1,5 +1,5 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
 import {CourseService} from "../../../services/course/course.service";
 import {Course} from "../../../models/course";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -16,7 +16,7 @@ import {Category} from "../../../models/category";
 })
 export class CourseGeneralPageComponent implements OnInit {
 
-  prevData = {} as Course
+  originalData = {} as Course
   editedData = {} as Course
   categories = [] as Category[]
   name = new UntypedFormControl('', [Validators.required])
@@ -51,7 +51,7 @@ export class CourseGeneralPageComponent implements OnInit {
           const body = res
 
           this.editedData = JSON.parse(JSON.stringify(body))
-          this.prevData = JSON.parse(JSON.stringify(body))
+          this.originalData = JSON.parse(JSON.stringify(body))
 
           this.setFromValues(this.editedData)
         },
@@ -82,8 +82,8 @@ export class CourseGeneralPageComponent implements OnInit {
   }
 
   deleteCourse(){
-    if(this.prevData.id){
-      this.courseService.deleteCourseById(this.prevData.id).subscribe(
+    if(this.originalData.id){
+      this.courseService.deleteCourseById(this.originalData.id).subscribe(
         {
           next: (res) => {
             this.snackBarService.openSuccessSnackBar(res.message)
@@ -98,58 +98,31 @@ export class CourseGeneralPageComponent implements OnInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-      width: '50%',
-      data: {prevData: this.prevData, editedData: this.editedData},
-    });
+    const dialogRef = this.dialogService.openDataDiffDialog(this.originalData, this.editedData)
 
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
-        this.prevData = JSON.parse(JSON.stringify(this.editedData))
+        this.courseService.editCourseById(this.editedData.id!, this.editedData).subscribe({
+          next: (res) => {
+            this.snackBarService.openSuccessSnackBar(res.message)
+          },
+          error: (err) => {
+            console.log("error: ", err)
+            if(err.error.name) {
+              this.snackBarService.openErrorSnackBar(err.name)
+            }
+            if(err.error.description) {
+              this.snackBarService.openErrorSnackBar(err.description)
+            }
+            if(err.error.statusName) {
+              this.snackBarService.openErrorSnackBar(err.statusName)
+            }
+          }
+        })
+        this.originalData = JSON.parse(JSON.stringify(this.editedData))
       }
       console.log('The dialog was closed');
     });
   }
 
-}
-
-@Component({
-  selector: 'dialog-overview-example-dialog',
-  templateUrl: 'dialog-overview-example-dialog.html',
-  styleUrls: ['./dialog-overview-example-dialog.scss']
-})
-export class DialogOverviewExampleDialog {
-  constructor(
-    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
-    private courseService: CourseService,
-    private snackBarService: SnackbarService,
-    @Inject(MAT_DIALOG_DATA) public data: {prevData: Course, editedData: Course},
-  ) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  onAccept() {
-    console.log("dialog: ",this.data.editedData)
-    this.courseService.editCourseById(this.data.editedData.id!, this.data.editedData).subscribe({
-      next: (res) => {
-        this.snackBarService.openSuccessSnackBar(res.message)
-        this.dialogRef.close(true);
-      },
-      error: (err) => {
-        console.log("error: ", err)
-        if(err.error.name) {
-          this.snackBarService.openErrorSnackBar(err.name)
-        }
-        if(err.error.description) {
-          this.snackBarService.openErrorSnackBar(err.description)
-        }
-        if(err.error.statusName) {
-          this.snackBarService.openErrorSnackBar(err.statusName)
-        }
-        this.dialogRef.close(false);
-      }
-    })
-  }
 }

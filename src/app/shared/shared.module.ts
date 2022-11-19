@@ -12,6 +12,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MaterialExampleModule} from "../../material.module";
+import {DataDifferenceDialogComponent} from './dialogs/data-difference-dialog/data-difference-dialog.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import {MaterialExampleModule} from "../../material.module";
     ErrorSnackbarComponent,
     SpinnerDialogComponent,
     ImagePickerComponent,
-    UploadImageDialogComponent],
+    UploadImageDialogComponent,
+    DataDifferenceDialogComponent],
   imports: [
     CommonModule,
     BrowserModule,

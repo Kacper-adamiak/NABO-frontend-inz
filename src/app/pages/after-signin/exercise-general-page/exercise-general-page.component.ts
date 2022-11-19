@@ -14,7 +14,7 @@ import {Exercise} from "../../../models/exercise";
 })
 export class ExerciseGeneralPageComponent implements OnInit {
 
-  orginalData = {} as Exercise
+  originalData = {} as Exercise
   editedData = {} as Exercise
   question = new UntypedFormControl('', [Validators.required])
   expression = new UntypedFormControl('', [Validators.required])
@@ -43,10 +43,9 @@ export class ExerciseGeneralPageComponent implements OnInit {
       const spinner = this.dialogService.openSpinner()
       this.exerciseService.getExerciseById(this.courseId, this.levelId, this.exerciseId).subscribe({
         next: (res: Exercise) => {
-          const body = res
 
-          this.editedData = JSON.parse(JSON.stringify(body))
-          this.orginalData = JSON.parse(JSON.stringify(body))
+          this.editedData = JSON.parse(JSON.stringify(res))
+          this.originalData = JSON.parse(JSON.stringify(res))
 
           this.question.setValue(this.editedData.question)
           this.expression.setValue(this.editedData.expression)
@@ -67,12 +66,36 @@ export class ExerciseGeneralPageComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  deleteExercise() {
 
   }
 
-  deleteExercise() {
+  openDialog(): void {
 
+    const dialogRef = this.dialogService.openDataDiffDialog(this.originalData, this.editedData)
+
+
+    dialogRef.afterClosed().subscribe(value => {
+      if(value) {
+
+        this.exerciseService.editExerciseById(this.courseId, this.levelId, this.editedData).subscribe({
+          next: res => {
+            this.originalData = JSON.parse(JSON.stringify(this.editedData))
+            this.snackBarService.openSuccessSnackBar(res.message)
+          },
+          error: err => {
+            this.snackBarService.openSuccessSnackBar(err.error)
+          },
+          complete: () => {
+
+          }
+        })
+      }
+      else {
+
+      }
+      console.log('The dialog was closed');
+    });
   }
 
 }

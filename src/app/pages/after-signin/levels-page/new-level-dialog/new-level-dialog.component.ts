@@ -43,9 +43,9 @@ export class NewLevelDialogComponent implements OnInit {
     console.log(this.newLevel)
     this.levelService.addLevel(this.data.courseId ,this.newLevel).subscribe({
       next: res => {
-        console.log("leveleadd", res.body!)
-        let tempLevel: Level = res.body!;
-        this.snackBarService.openSuccessSnackBar(res.body!.message!)
+        console.log("leveleadd", res)
+        let tempLevel: Level = res;
+        this.snackBarService.openSuccessSnackBar(res.message)
       },
       error: err => {
         console.log("leveleadd err", err.error)

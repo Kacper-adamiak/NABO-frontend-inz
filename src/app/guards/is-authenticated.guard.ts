@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable, tap } from 'rxjs';
-import { AuthService } from '../services/auth/auth.service';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
+import {Observable, tap} from 'rxjs';
+import {AuthService} from '../services/auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,7 @@ export class IsAuthenticatedGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     this.authService.updateIsLoggedIn()
+    this.authService.updateRoleStatuses()
     return this.authService.isLoggedIn$.pipe(
       tap(
         isLoggedIn => {

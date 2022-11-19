@@ -2,10 +2,10 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
-import {UntypedFormControl} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogService} from "../../../services/dialog/dialog.service";
 import {StatsService} from "../../../services/stats/stats.service";
+import {AuthService} from "../../../services/auth/auth.service";
 
 @Component({
   selector: 'app-stats-page',
@@ -20,9 +20,11 @@ export class StatsPageComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  filterValue = new UntypedFormControl('');
-
-  constructor(private statsService: StatsService, public dialog: MatDialog, public dialogService: DialogService) {
+  constructor(
+    private statsService: StatsService,
+    public dialog: MatDialog,
+    public dialogService: DialogService,
+    public authService: AuthService) {
 
   }
 
@@ -51,18 +53,37 @@ export class StatsPageComponent implements OnInit {
   getCourses() {
 
     let spinner = this.dialogService.openSpinner()
-    this.statsService.getCoursesWithStats().subscribe({
-      next: res => {
-        let data = res
-        this.dataSource.data = data
-      },
-      error: err => {
-        spinner.close()
-      },
-      complete: () => {
-        spinner.close()
+    this.authService.isSuperAdmin$.subscribe({
+      next: value => {
+        if(value) {
+          this.displayedColumns.push('author')
+          this.statsService.getAllCoursesWithStats().subscribe({
+            next: res => {
+              this.dataSource.data = res
+            },
+            error: err => {
+              spinner.close()
+            },
+            complete: () => {
+              spinner.close()
+            }
+          })
+        }else {
+          this.statsService.getCoursesWithStats().subscribe({
+            next: res => {
+              this.dataSource.data = res
+            },
+            error: err => {
+              spinner.close()
+            },
+            complete: () => {
+              spinner.close()
+            }
+          })
+        }
       }
     })
+
   }
 
 }

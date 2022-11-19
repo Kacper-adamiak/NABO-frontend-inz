@@ -4,7 +4,7 @@
       <mat-icon>arrow_back</mat-icon>
     </button>
     <div class="elevated_box_header">
-      <h1>Poziom: {{prevData.name}}</h1>
+      <h1>Poziom: {{originalData.name}}</h1>
       <span class="underline"></span>
     </div>
     <div style="margin-bottom: 20px">
@@ -41,7 +41,7 @@
       </mat-form-field>
     </div>
 
-    <div>
+    <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
       <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!(name.valid && difficulty.valid)">Save changes</button>
       <button mat-raised-button color="warn" (click)="deleteCourse()">Delete course</button>
     </div>

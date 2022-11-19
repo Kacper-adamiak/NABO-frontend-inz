@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {UntypedFormControl} from '@angular/forms';
 import {Course} from 'src/app/models/course';
 import {CourseService} from 'src/app/services/course/course.service';
 import {NewCourseDialogComponent} from "./new-course-dialog/new-course-dialog.component";
@@ -25,19 +24,10 @@ export class CoursesPageComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  filterValue = new UntypedFormControl('');
-
   constructor(private courseServ: CourseService,
               public dialog: MatDialog,
               public dialogService: DialogService,
               public authService: AuthService) {
-    this.authService.isSuperAdmin$.subscribe({
-      next: value => {
-        if(value) {
-          this.isSuperAdmin = value
-        }
-      }
-    })
   }
 
   ngAfterViewInit(): void {
@@ -63,39 +53,51 @@ export class CoursesPageComponent implements OnInit, AfterViewInit {
     }
   }
 
+
   getCourses() {
+    this.authService.isSuperAdmin$.subscribe({
+      next: value => {
+        if(value) {
+          this.displayedColumns.push('authorLogin')
+          this.getCoursesForSuperAdmin()
+        }
+        else {
+          this.getCoursesForAdmin()
+        }
+      }
+    })
 
+
+  }
+
+  getCoursesForSuperAdmin() {
     let spinner = this.dialogService.openSpinner()
+    this.courseServ.getAllCourses().subscribe({
+      next: res => {
+        this.dataSource.data = res
+      },
+      error: err => {
+        spinner.close()
+      },
+      complete: () => {
+        spinner.close()
+      }
+    })
+  }
 
-    if(this.isSuperAdmin) {
-        this.displayedColumns.push('authorLogin')
-        this.courseServ.getAllCourses().subscribe({
-          next: res => {
-            let data: Course[] = res
-            this.dataSource.data = data
-          },
-          error: err => {
-            spinner.close()
-          },
-          complete: () => {
-            spinner.close()
-          }
-        })
+  getCoursesForAdmin() {
+    let spinner = this.dialogService.openSpinner()
+    this.courseServ.getCoursesCreatedByAdmin().subscribe({
+      next: res => {
+        this.dataSource.data = res
+      },
+      error: err => {
+        spinner.close()
+      },
+      complete: () => {
+        spinner.close()
       }
-    else {
-        this.courseServ.getCoursesCreatedByAdmin().subscribe({
-          next: res => {
-            let data: Course[] = res
-            this.dataSource.data = data
-          },
-          error: err => {
-            spinner.close()
-          },
-          complete: () => {
-            spinner.close()
-          }
-        })
-      }
+    })
   }
 
   openDialog(): void {

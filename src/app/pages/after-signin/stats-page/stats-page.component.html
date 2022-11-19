@@ -30,6 +30,11 @@
         <td mat-cell *matCellDef="let row"> {{row.avgScoreInCourse}} </td>
       </ng-container>
 
+      <ng-container matColumnDef="author">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Autor </th>
+        <td mat-cell *matCellDef="let row"> {{row.author}} </td>
+      </ng-container>
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row class="mat-table-row-hover" *matRowDef="let row; columns: displayedColumns;" routerLink="{{row.courseId}}"></tr>
 

@@ -5,17 +5,13 @@ import {HomePageComponent} from './home-page/home-page.component';
 import {RouterModule} from '@angular/router';
 import {AccountPageComponent} from './account-page/account-page.component';
 import {CoursesPageComponent} from './courses-page/courses-page.component';
-import {
-  CourseGeneralPageComponent,
-  DialogOverviewExampleDialog
-} from './course-general-page/course-general-page.component';
+import {CourseGeneralPageComponent} from './course-general-page/course-general-page.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MaterialExampleModule} from 'src/material.module';
 import {NewCourseDialogComponent} from './courses-page/new-course-dialog/new-course-dialog.component';
 import {LevelsPageComponent} from './levels-page/levels-page.component';
 import {NewLevelDialogComponent} from './levels-page/new-level-dialog/new-level-dialog.component';
 import {LevelGeneralPageComponent} from "./level-general-page/level-general-page.component";
-import {EditedLevelDialogComponent} from './level-general-page/edited-level-dialog/edited-level-dialog.component';
 import {FlashcardsPageComponent} from './flashcards-page/flashcards-page.component';
 import {TestQuestionsPageComponent} from './test-questions-page/test-questions-page.component';
 import {ExercisesPageComponent} from './exercises-page/exercises-page.component';
@@ -30,6 +26,7 @@ import {StatsPageComponent} from './stats-page/stats-page.component';
 import {StatDetailPageComponent} from './stat-detail-page/stat-detail-page.component';
 import {NgChartsConfiguration, NgChartsModule} from "ng2-charts";
 import {AdminPanelPageComponent} from './admin-panel-page/admin-panel-page.component';
+import {TestQuestionGeneralPageComponent} from './test-question-general-page/test-question-general-page.component';
 
 
 @NgModule({
@@ -39,12 +36,10 @@ import {AdminPanelPageComponent} from './admin-panel-page/admin-panel-page.compo
     AccountPageComponent,
     CoursesPageComponent,
     CourseGeneralPageComponent,
-    DialogOverviewExampleDialog,
     NewCourseDialogComponent,
     LevelsPageComponent,
     NewLevelDialogComponent,
     LevelGeneralPageComponent,
-    EditedLevelDialogComponent,
     FlashcardsPageComponent,
     TestQuestionsPageComponent,
     ExercisesPageComponent,
@@ -55,7 +50,8 @@ import {AdminPanelPageComponent} from './admin-panel-page/admin-panel-page.compo
     NewTestQuestionDialogComponent,
     StatsPageComponent,
     StatDetailPageComponent,
-    AdminPanelPageComponent
+    AdminPanelPageComponent,
+    TestQuestionGeneralPageComponent
   ],
   imports: [
     CommonModule,

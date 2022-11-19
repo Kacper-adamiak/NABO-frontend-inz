@@ -4,5 +4,5 @@ export interface Flashcard {
   expTranslation: string,
   expDescription: string,
   imageName: string,
-  imageUrl?: string
+  imageUrl: string
 }

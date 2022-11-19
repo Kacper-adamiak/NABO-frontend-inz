@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
-import {BehaviorSubject, tap} from 'rxjs';
+import {BehaviorSubject, first, map, tap} from 'rxjs';
 import {WebService} from '../web/web.service';
 import {Role} from "../../enums/role";
 
@@ -10,27 +10,23 @@ import {Role} from "../../enums/role";
 export class AuthService {
 
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
-  isLoggedIn$ = this._isLoggedIn$.asObservable();
+  isLoggedIn$ = this._isLoggedIn$.asObservable().pipe(first());
   private _isAdmin$ = new BehaviorSubject<boolean>(false);
-  isAdmin$ = this._isAdmin$.asObservable();
+  isAdmin$ = this._isAdmin$.asObservable().pipe(first());
   private _isSuperAdmin$ = new BehaviorSubject<boolean>(false);
-  isSuperAdmin$ = this._isSuperAdmin$.asObservable();
+  isSuperAdmin$ = this._isSuperAdmin$.asObservable().pipe(first());
 
-  constructor(private webService: WebService, private router: Router) {
-    this.updateIsLoggedIn()
-    this.isLoggedIn$.subscribe({
-      next: val => {
-        if(val) {
-          this._isAdmin$.next(this.hasRole(Role.Admin))
-          this._isSuperAdmin$.next(this.hasRole(Role.SuperAdmin))
-        }
-      }
-    })
+  constructor(private webService: WebService, private router: Router) {}
+
+
+  updateRoleStatuses() {
+    this._isAdmin$.next(this.hasRole(Role.Admin))
+    this._isSuperAdmin$.next(this.hasRole(Role.SuperAdmin))
   }
 
 
    updateIsLoggedIn() {
-     const data =localStorage.getItem('user_data')!
+     const data = localStorage.getItem('user_data')!
     if(data && data != ''){
       const user_data = JSON.parse(data)
       if(user_data){
@@ -39,8 +35,6 @@ export class AuthService {
         }
       }
     }
-
-
    }
 
    getAccessToken() {
@@ -84,12 +78,16 @@ export class AuthService {
       password: password
     })
     .pipe(
-      tap((response) => {
-        this._isLoggedIn$.next(true);
-        this._isAdmin$.next(this.hasRole(Role.Admin))
-        this._isSuperAdmin$.next(this.hasRole(Role.SuperAdmin))
+      map((response) => {
         localStorage.setItem('user_data', JSON.stringify({access_token: response.token, refresh_token: response.refreshToken, roles: response.roles}));
-        this.router.navigate(["/home"])
+
+        if(response.roles.includes("ROLE_ADMIN") || response.roles.includes("ROLE_SUPERADMIN")) {
+          this.updateIsLoggedIn()
+          this.updateRoleStatuses()
+          this.router.navigate(["/home"])
+          return response
+        }
+        throw new Error("Nie masz dostępu do panelu twórcy")
       })
     )
   }

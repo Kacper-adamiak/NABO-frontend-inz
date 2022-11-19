@@ -1,26 +1,29 @@
 <div class="segment">
   <div class="elevated_box">
+    <button mat-icon-button class="elevated_box_top_left" color="primary" routerLink="..">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
     <div class="elevated_box_header">
       <h1 class="elevated_box_header_content">Your account</h1>
       <span class="underline"></span>
     </div>
       <div class="elevated_box_label">
         <p class="elevated_box_label_name">Login:</p>
-        <p class="elevated_box_label_value">{{data.login || " "}}</p>
+        <p class="elevated_box_label_value">{{data.login || " - "}}</p>
       </div>
       <div class="elevated_box_label">
         <p class="elevated_box_label_name">Email:</p>
-        <p class="elevated_box_label_value">{{data.email}}</p>
+        <p class="elevated_box_label_value">{{data.email || " - "}}</p>
       </div>
       <div class="elevated_box_label">
         <p class="elevated_box_label_name">Imię:</p>
-        <p class="elevated_box_label_value">{{data.firstName || " "}}</p>
+        <p class="elevated_box_label_value">{{data.firstName || " - "}}</p>
       </div>
       <div class="elevated_box_label">
         <p class="elevated_box_label_name">Nazwisko:</p>
-        <p class="elevated_box_label_value">{{data.lastName || " "}}</p>
+        <p class="elevated_box_label_value">{{data.lastName || " - "}}</p>
       </div>
-    <div>
+    <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
       <button mat-raised-button color="primary">Edytuj dane</button>
       <button mat-raised-button color="warn">Usuń konto</button>
     </div>

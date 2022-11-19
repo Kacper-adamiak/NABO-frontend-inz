@@ -20,6 +20,10 @@ import {
 import {StatsPageComponent} from "./pages/after-signin/stats-page/stats-page.component";
 import {StatDetailPageComponent} from "./pages/after-signin/stat-detail-page/stat-detail-page.component";
 import {AdminPanelPageComponent} from "./pages/after-signin/admin-panel-page/admin-panel-page.component";
+import {
+  TestQuestionGeneralPageComponent
+} from "./pages/after-signin/test-question-general-page/test-question-general-page.component";
+import {ExerciseGeneralPageComponent} from "./pages/after-signin/exercise-general-page/exercise-general-page.component";
 
 const routes: Routes = [
   {path: "", component: StartingPageComponent},
@@ -33,7 +37,9 @@ const routes: Routes = [
     {path: 'courses/:courseId/levels/:levelId/flashcards', component: FlashcardsPageComponent},
     {path: 'courses/:courseId/levels/:levelId/flashcards/:flashcardId', component: FlashcardGeneralPageComponent},
     {path: 'courses/:courseId/levels/:levelId/exercises', component: ExercisesPageComponent},
+    {path: 'courses/:courseId/levels/:levelId/exercises/:exerciseId', component: ExerciseGeneralPageComponent},
     {path: 'courses/:courseId/levels/:levelId/testquestions', component: TestQuestionsPageComponent},
+    {path: 'courses/:courseId/levels/:levelId/testquestions/:testQuestionId', component: TestQuestionGeneralPageComponent},
     {path: 'stats', component: StatsPageComponent},
     {path: 'stats/:courseId', component: StatDetailPageComponent},
     {path: 'adminpanel', component: AdminPanelPageComponent},

@@ -6,7 +6,6 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {DialogService} from "../../../services/dialog/dialog.service";
 import {LevelService} from "../../../services/level/level.service";
 import {Level} from "../../../models/level";
-import {EditedLevelDialogComponent} from "./edited-level-dialog/edited-level-dialog.component";
 
 @Component({
   selector: 'app-level-general-page',
@@ -15,7 +14,7 @@ import {EditedLevelDialogComponent} from "./edited-level-dialog/edited-level-dia
 })
 export class LevelGeneralPageComponent implements OnInit {
 
-  prevData = {} as Level
+  originalData = {} as Level
   editedData = {} as Level
   name = new UntypedFormControl('', [Validators.required])
   difficulty = new UntypedFormControl('', [Validators.required])
@@ -43,7 +42,7 @@ export class LevelGeneralPageComponent implements OnInit {
           const body = res
 
           this.editedData = JSON.parse(JSON.stringify(body))
-          this.prevData = JSON.parse(JSON.stringify(body))
+          this.originalData = JSON.parse(JSON.stringify(body))
 
           this.setFormFields(this.editedData)
 
@@ -90,14 +89,28 @@ export class LevelGeneralPageComponent implements OnInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(EditedLevelDialogComponent, {
-      width: '50%',
-      data: {courseId: this.courseId, prevData: this.prevData, editedData: this.editedData},
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if(result) {
-        this.prevData = JSON.parse(JSON.stringify(this.editedData))
+    const dialogRef = this.dialogService.openDataDiffDialog(this.originalData, this.editedData)
+
+
+    dialogRef.afterClosed().subscribe(value => {
+      if(value) {
+
+        this.levelService.editLevelById(this.courseId, this.levelId, this.editedData).subscribe({
+          next: res => {
+            this.originalData = JSON.parse(JSON.stringify(this.editedData))
+            this.snackBarService.openSuccessSnackBar(res.message)
+          },
+          error: err => {
+            this.snackBarService.openSuccessSnackBar(err.error)
+          },
+          complete: () => {
+
+          }
+        })
+      }
+      else {
+
       }
       console.log('The dialog was closed');
     });

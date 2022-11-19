@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../../services/auth/auth.service";
+import {ThemeService} from "../../services/theme.service";
 
 @Component({
   selector: 'app-after-signin',
@@ -11,7 +12,8 @@ export class AfterSigninComponent implements OnInit {
 
   constructor(
     private router: Router,
-    public authService: AuthService
+    public authService: AuthService,
+    public themeService: ThemeService
   ) { }
 
   ngOnInit(): void {

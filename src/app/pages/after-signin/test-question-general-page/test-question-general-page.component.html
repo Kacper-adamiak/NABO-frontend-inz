@@ -1,0 +1,33 @@
+<div class="segment">
+  <div class="elevated_box">
+    <button mat-icon-button class="elevated_box_top_left" color="primary" routerLink="..">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="elevated_box_header">
+      <h1>Pytanie testowe</h1>
+      <span class="underline"></span>
+    </div>
+
+    <div style="width: 100%;">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Pytanie testowe</mat-label>
+        <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="question" required>
+        <mat-error *ngIf="question.invalid">Nazwa musi być wypełniona</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div style="width: 100%;">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Odpowiedź</mat-label>
+        <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="answer" required>
+        <mat-error *ngIf="answer.invalid">Nazwa musi być wypełniona</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <button mat-raised-button color="primary" (click)="openImagePicker()">Wybierz obraz</button>
+      <p>{{selectedImage ? selectedImage.name : "nie wybrano obrazu"}}</p>
+      <img *ngIf="!!selectedImage" src="{{selectedImage.url}}" width="128px" height="128px">
+    </div>
+  </div>
+</div>

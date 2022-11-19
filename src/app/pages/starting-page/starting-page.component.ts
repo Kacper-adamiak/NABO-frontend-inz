@@ -1,16 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {DialogService} from "../../services/dialog/dialog.service";
 import {SnackbarService} from "../../services/snack-bar/snackbar.service";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-starting-page',
   templateUrl: './starting-page.component.html',
   styleUrls: ['./starting-page.component.scss'],
+  providers: [MessageService]
 })
 export class StartingPageComponent implements OnInit {
 
   constructor(private dialogService: DialogService,
               private snackbarService: SnackbarService,
+              private messageService: MessageService
 
   ) { }
 
@@ -42,6 +45,29 @@ export class StartingPageComponent implements OnInit {
         if(value){
           console.log("after close picker: ",value)
         }
+      },
+      error: err => {
+        console.log('something went wrong')
+      }
+    })
+  }
+
+  addSingle() {
+    this.messageService.add({severity:'success', summary:'Service Message', detail:'Via MessageService'});
+  }
+
+  openDiffDialog() {
+    const dialog = this.dialogService.openDataDiffDialog({name: "nazwa1", name2: "nazwa2", name3: "nazwa3", name4: "nazwa3", name5: "nazwa3"}, {name: "nazwa1", name2: "nazwa2", name3: "nazwa3", name4: "nazwa3", name5: "nazwa3"})
+
+    dialog.afterClosed().subscribe({
+      next: value => {
+        if(value){
+          console.log("after close picker: ",value)
+        }
+        else {
+          console.log("picker canceled: ", value)
+        }
+
       },
       error: err => {
         console.log('something went wrong')

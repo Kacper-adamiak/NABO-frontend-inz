@@ -1,0 +1,26 @@
+<div mat-dialog-content>
+  <h2 style="text-align: center; padding-bottom: 2rem;">Czy wprowadzić zmiany?</h2>
+  <div class="split_box">
+    <div>
+      <h3>Przed zmianą:</h3>
+      <div style="margin-left: 1rem;">
+        <p *ngFor="let key of objectKeys" [class.diffrent]="data.originalData[key]!=data.editedData[key]"><b>{{firstLetterToUpperCase(key)}}: </b>{{data.originalData[key]}}</p>
+      </div>
+
+    </div>
+    <div>
+      <h3>Po zmianie:</h3>
+      <div style="margin-left: 1rem;">
+        <ng-container *ngFor="let key of objectKeys">
+          <p [class.diffrent]="data.originalData[key]!=data.editedData[key]"><b>{{firstLetterToUpperCase(key)}}: </b>{{data.editedData[key]}}</p>
+          <p *ngIf="key=='imageUrl'"><b>{{firstLetterToUpperCase(key)}}: </b></p>
+          <img *ngIf="key=='imageUrl'" src="{{data.editedData[key]}}" height="200px"/>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onDecline()">Anuluj</button>
+  <button mat-button (click)="onAccept()">Zatwierdź</button>
+</div>

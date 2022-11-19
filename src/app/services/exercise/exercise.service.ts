@@ -17,7 +17,7 @@ export class ExerciseService {
   }
 
   getExerciseById(courseId: number, levelId: number, exerciseId: number): Observable<Exercise> {
-    return this.webService.get<Exercise>(`/course/${courseId}/level/${levelId}/exercise/edit/${exerciseId}`)
+    return this.webService.get<Exercise>(`/course/${courseId}/level/${levelId}/exercise/${exerciseId}`)
   }
 
   addExercise(courseId: number, levelId: number, newExorcise: Exercise){

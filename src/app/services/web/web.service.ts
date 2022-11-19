@@ -1,4 +1,4 @@
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {tap} from 'rxjs';
 
@@ -10,6 +10,7 @@ export class WebService {
   readonly ROOT_URL;
 
   constructor(private http: HttpClient) {
+    // this.ROOT_URL = 'https://springforinz-testapp1.azuremicroservices.io/api'
     this.ROOT_URL = 'http://localhost:8081/api'
    }
 
@@ -21,7 +22,7 @@ export class WebService {
     )
   }
 
-  post<T>(uri: string, payload: any, headers?: HttpHeaders) {
+  post<T>(uri: string, payload: any) {
     return this.http.post<T>(`${this.ROOT_URL}${uri}`, payload).pipe(
       tap(
         res => console.log('Post: ',res)

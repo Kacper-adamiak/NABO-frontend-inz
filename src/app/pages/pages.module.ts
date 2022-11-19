@@ -10,22 +10,26 @@ import {HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MaterialExampleModule} from "../../material.module";
+import {ButtonModule} from "primeng/button";
+import {ToastModule} from "primeng/toast";
 
 @NgModule({
   declarations: [
     StartingPageComponent
   ],
-  imports: [
-    CommonModule,
-    BrowserModule,
-    AppRoutingModule,
-    RouterModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    MaterialExampleModule,
-    AuthModule,
-    AfterSigninModule
-  ]
+    imports: [
+        CommonModule,
+        BrowserModule,
+        AppRoutingModule,
+        RouterModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MaterialExampleModule,
+        AuthModule,
+        AfterSigninModule,
+        ButtonModule,
+        ToastModule
+    ]
 })
 export class PagesModule { }
