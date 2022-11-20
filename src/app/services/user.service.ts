@@ -14,4 +14,26 @@ export class UserService {
     return this.webService.get<any>('/user')
   }
 
+  getAllCreators() {
+    return this.webService.get<any>('/user/creators')
+  }
+
+  editUser(payload: any) {
+    return this.webService.post<any>('/user/edit', payload)
+  }
+
+  editUserById(userId: number, payload: any) {
+    return this.webService.post<any>(`/user/edit/${userId}`, payload)
+  }
+
+  deleteUser() {
+    return this.webService.delete<any>('/user/delete')
+  }
+
+  deleteUserById(userId: number) {
+    return this.webService.delete<any>(`/user/delete${userId}`)
+  }
+
+
+
 }

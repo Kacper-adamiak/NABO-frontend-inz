@@ -18,7 +18,7 @@
 
     <div style="width: 100%;">
       <mat-form-field appearance="fill" style="width: 100%;">
-        <mat-label>Odpowiedź poprawna</mat-label>
+        <mat-label>Odpowiedź</mat-label>
         <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="expression" required>
         <mat-error *ngIf="expression.invalid">Nazwa musi być wypełniona</mat-error>
       </mat-form-field>
@@ -55,8 +55,8 @@
     </div>
 
     <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
-      <button mat-raised-button color="primary" (click)="openDialog()" [disabled]="false">Save changes</button>
-      <button mat-raised-button color="warn" (click)="deleteExercise()">Delete course</button>
+      <button mat-raised-button color="primary" (click)="openDialog()" [disabled]="false">Zapisz zmiany</button>
+      <button mat-raised-button color="warn" (click)="deleteExercise()">Usuń</button>
     </div>
 
   </div>

@@ -1,5 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {DictionaryService} from "../../../services/dictionary.service";
 
 @Component({
   selector: 'app-data-difference-dialog',
@@ -12,6 +13,7 @@ export class DataDifferenceDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<DataDifferenceDialogComponent>,
+    public dictionaryService: DictionaryService,
     @Inject(MAT_DIALOG_DATA) public data: {originalData: any, editedData: any},
   ) {
       this.objectKeys = Object.keys(this.data.originalData).filter((value) => {
@@ -35,4 +37,7 @@ export class DataDifferenceDialogComponent implements OnInit {
     return str.charAt(0).toUpperCase() + str.slice(1)
   }
 
+  translate(key: string) {
+    return this.dictionaryService.translate(key);
+  }
 }

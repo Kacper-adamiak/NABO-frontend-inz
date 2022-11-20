@@ -72,7 +72,7 @@ export class LevelGeneralPageComponent implements OnInit {
     this.openDialog()
   }
 
-  deleteCourse(){
+  deleteLevel(){
     if(this.courseId && this.levelId){
       this.levelService.deleteLevelById(this.courseId, this.levelId).subscribe(
         {

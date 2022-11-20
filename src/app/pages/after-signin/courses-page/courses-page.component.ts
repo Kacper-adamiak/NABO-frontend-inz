@@ -8,6 +8,9 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {DialogService} from "../../../services/dialog/dialog.service";
 import {AuthService} from "../../../services/auth/auth.service";
+import {
+  NewPotentialCategoryDialogComponent
+} from "./new-potential-category-dialog/new-potential-category-dialog.component";
 
 @Component({
   selector: 'app-courses-page',
@@ -65,8 +68,6 @@ export class CoursesPageComponent implements OnInit, AfterViewInit {
         }
       }
     })
-
-
   }
 
   getCoursesForSuperAdmin() {
@@ -101,8 +102,19 @@ export class CoursesPageComponent implements OnInit, AfterViewInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(NewCourseDialogComponent, {
-      width: '90%',
-      height: '90%'
+      width: '80%',
+      height: '80%'
+    });
+
+    dialogRef.afterClosed().subscribe(result =>  {
+      console.log(`The dialog was closed ${result}`);
+    });
+  }
+
+  openNewPotentialCategoryDialog() {
+    const dialogRef = this.dialog.open(NewPotentialCategoryDialogComponent, {
+      width: '80%',
+      height: 'fit-content',
     });
 
     dialogRef.afterClosed().subscribe(result =>  {

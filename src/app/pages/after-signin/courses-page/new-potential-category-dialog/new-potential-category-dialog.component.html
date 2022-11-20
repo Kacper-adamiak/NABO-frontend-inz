@@ -1,0 +1,13 @@
+<div mat-dialog-content>
+
+  <h2>Zasugeruj nową kategorię</h2>
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Kategoria</mat-label>
+      <input matInput placeholder="Tu wprowadź nazwę kategorii" [formControl]="newCategoryForm" required>
+      <mat-error *ngIf="newCategoryForm.invalid" style="padding: 3px">Nazwa musi być wypełniona</mat-error>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Anuluj</button>
+  <button mat-button (click)="addNewPotentialCategory()" [disabled]="newCategoryForm.invalid">Wyślij propozycję</button>
+</div>

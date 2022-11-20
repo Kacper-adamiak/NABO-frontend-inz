@@ -5,8 +5,8 @@
       <h3>Przed zmianą:</h3>
       <div style="margin-left: 1rem;">
         <ng-container *ngFor="let key of objectKeys">
-          <p *ngIf="key!='imageUrl'" [class.different]="data.originalData[key]!=data.editedData[key]"><b>{{firstLetterToUpperCase(key)}}: </b>{{data.originalData[key]}}</p>
-          <p *ngIf="key=='imageUrl'"><b>Image: </b></p>
+          <p *ngIf="key!='imageUrl'" [class.different]="data.originalData[key]!=data.editedData[key]"><b>{{firstLetterToUpperCase(translate(key))}}: </b>{{data.originalData[key]}}</p>
+          <p *ngIf="key=='imageUrl'"><b>Zdjęcie: </b></p>
           <img *ngIf="key=='imageUrl'" src="{{data.originalData[key]}}" height="200px"/>
         </ng-container>
       </div>
@@ -16,8 +16,8 @@
       <h3>Po zmianie:</h3>
       <div style="margin-left: 1rem;">
         <ng-container *ngFor="let key of objectKeys">
-          <p *ngIf="key!='imageUrl'" [class.different]="data.originalData[key]!=data.editedData[key]"><b>{{firstLetterToUpperCase(key)}}: </b>{{data.editedData[key]}}</p>
-          <p *ngIf="key=='imageUrl'"><b>Image: </b></p>
+          <p *ngIf="key!='imageUrl'" [class.different]="data.originalData[key]!=data.editedData[key]"><b>{{firstLetterToUpperCase(translate(key))}}: </b>{{data.editedData[key]}}</p>
+          <p *ngIf="key=='imageUrl'"><b>Zdjęcie: </b></p>
           <img *ngIf="key=='imageUrl'" src="{{data.editedData[key]}}" height="200px"/>
         </ng-container>
       </div>

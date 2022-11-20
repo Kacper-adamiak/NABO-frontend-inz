@@ -33,7 +33,7 @@ export class NewTestQuestionDialogComponent implements OnInit {
   }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(false)
   }
 
   onAccept() {
@@ -43,15 +43,17 @@ export class NewTestQuestionDialogComponent implements OnInit {
 
     this.testQuestionService.addTestQuestion(this.data.courseId, this.data.levelId ,this.newTestQuestion).subscribe({
       next: res => {
-        let tempTestQuestion: TestQuestion = res;
+        this.dialogRef.close(true)
         this.snackBarService.openSuccessSnackBar(res.message)
+
       },
       error: err => {
+        this.dialogRef.close(false)
         this.snackBarService.openErrorSnackBar(err)
       }
     })
-    this.dialogRef.close()
   }
+
   openImagePicker() {
     const dialog = this.dialogService.openImagePicker()
     dialog.afterClosed().subscribe({

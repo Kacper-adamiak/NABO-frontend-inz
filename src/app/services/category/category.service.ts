@@ -21,7 +21,7 @@ export class CategoryService {
   }
 
   editCategory(categoryId: number, categoryName: string) {
-    return this.webService.patch<any>(`/StatusCategory/addCategory/${categoryId}`, {
+    return this.webService.patch<any>(`/StatusCategory/editCategory/${categoryId}`, {
       name: categoryName
     })
   }

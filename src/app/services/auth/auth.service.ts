@@ -72,7 +72,7 @@ export class AuthService {
      this.router.navigate(['/'])
    }
 
-  signin(login: String, password: String) {
+  signin(login: string, password: string) {
     return this.webService.post<signinResponse>("/auth/signin", {
       login: login,
       password: password
@@ -102,12 +102,14 @@ export class AuthService {
     )
   }
 
-  signup(login: String, password: String) {
-    this.webService.post("/auth/signup", {
+  signup(login: string, email: string, password: string) {
+    return this.webService.post<any>("/auth/signup", {
       login: login,
+      email: email,
+      role: [
+        Role.Admin
+      ],
       password: password
-    }).subscribe((res) => {
-      console.log("signup: ", res);
     })
   }
 

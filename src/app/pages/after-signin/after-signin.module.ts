@@ -38,6 +38,13 @@ import {CategoriesPanelComponent} from './admin-panel-page/components/categories
 import {
   EditCourseDialogComponent
 } from './admin-panel-page/components/categories-panel/edit-course-dialog/edit-course-dialog.component';
+import {UsersPanelComponent} from './admin-panel-page/components/users-panel/users-panel.component';
+import {
+  AddNewCreatorPanelComponent
+} from './admin-panel-page/components/add-new-creator-panel/add-new-creator-panel.component';
+import {
+  NewPotentialCategoryDialogComponent
+} from './courses-page/new-potential-category-dialog/new-potential-category-dialog.component';
 
 
 @NgModule({
@@ -67,7 +74,10 @@ import {
     AddNewCategoryPanelComponent,
     PotentialCategoriesPanelComponent,
     CategoriesPanelComponent,
-    EditCourseDialogComponent
+    EditCourseDialogComponent,
+    UsersPanelComponent,
+    AddNewCreatorPanelComponent,
+    NewPotentialCategoryDialogComponent
   ],
   imports: [
     CommonModule,

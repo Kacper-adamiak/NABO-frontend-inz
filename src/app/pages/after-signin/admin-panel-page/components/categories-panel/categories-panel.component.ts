@@ -6,6 +6,8 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {Category} from "../../../../../models/category";
+import {MatDialog} from "@angular/material/dialog";
+import {EditCourseDialogComponent} from "./edit-course-dialog/edit-course-dialog.component";
 
 @Component({
   selector: 'app-categories-panel',
@@ -21,7 +23,8 @@ export class CategoriesPanelComponent implements OnInit, AfterViewInit {
 
   constructor(private potentialCategoryService: PotentialCategoryService,
               private categoryService: CategoryService,
-              private snackbarService: SnackbarService) { }
+              private snackbarService: SnackbarService,
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getCategories()
@@ -41,7 +44,7 @@ export class CategoriesPanelComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private getCategories() {
+  getCategories() {
     this.categoryService.getCategories().subscribe({
       next: value => {
         this.categoriesDataSource.data = value
@@ -54,12 +57,27 @@ export class CategoriesPanelComponent implements OnInit, AfterViewInit {
     })
   }
 
-  deleteCategory() {
+  deleteCategory(categoryId: number) {
 
   }
 
-  editCategory() {
+  editCategory(category: Category) {
+    const dialog = this.dialog.open(EditCourseDialogComponent, {
+      width: '80%',
+      height: '80%',
+      data: { category: category }
+    })
 
+    dialog.afterClosed().subscribe({
+      next: value => {
+        if(value) {
+          this.getCategories()
+        }
+      },
+      error: err => {
+
+      }
+    })
   }
 
 }

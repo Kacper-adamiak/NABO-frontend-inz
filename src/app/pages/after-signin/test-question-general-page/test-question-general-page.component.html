@@ -10,7 +10,7 @@
 
     <div style="width: 100%;">
       <mat-form-field appearance="fill" style="width: 100%;">
-        <mat-label>Pytanie testowe</mat-label>
+        <mat-label>Pytanie</mat-label>
         <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="question" required>
         <mat-error *ngIf="question.invalid">Nazwa musi być wypełniona</mat-error>
       </mat-form-field>
@@ -28,6 +28,11 @@
       <button mat-raised-button color="primary" (click)="openImagePicker()">Wybierz obraz</button>
       <p>{{selectedImage ? selectedImage.name : "nie wybrano obrazu"}}</p>
       <img *ngIf="!!selectedImage" src="{{selectedImage.url}}" width="128px" height="128px">
+    </div>
+
+    <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
+      <button mat-raised-button color="primary" (click)="saveChanges()" [disabled]="false">Save changes</button>
+      <button mat-raised-button color="warn" (click)="deleteTestQuestion()">Delete course</button>
     </div>
   </div>
 </div>

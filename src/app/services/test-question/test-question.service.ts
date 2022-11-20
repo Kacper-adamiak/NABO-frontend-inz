@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {WebService} from "../web/web.service";
 import {Observable} from "rxjs";
-import {HttpResponse} from "@angular/common/http";
 import {TestQuestion} from "../../models/test-question";
 
 @Injectable({
@@ -30,14 +29,14 @@ export class TestQuestionService {
   }
 
   editTestQuestionById(courseId: number, levelId: number, testQuestionId: number, editedTestQuestion: TestQuestion): Observable<any> {
-    return this.webService.patch<any>(`/api/course/${courseId}/level/${levelId}/testquestion/edit/${testQuestionId}`, {
+    return this.webService.patch<any>(`/course/${courseId}/level/${levelId}/testquestion/edit/${testQuestionId}`, {
       question: editedTestQuestion.question,
       answer: editedTestQuestion.answer,
       imageName: editedTestQuestion.imageName
     })
   }
 
-  deleteTestQuestionById(courseId: number, levelId: number, testquestion: number): Observable<HttpResponse<any>> {
-    return this.webService.delete<any>(`/api/course/${courseId}/level/${levelId}/testquestion/delete/${testquestion}`)
+  deleteTestQuestionById(courseId: number, levelId: number, testquestion: number): Observable<any> {
+    return this.webService.delete<any>(`/course/${courseId}/level/${levelId}/testquestion/delete/${testquestion}`)
   }
 }

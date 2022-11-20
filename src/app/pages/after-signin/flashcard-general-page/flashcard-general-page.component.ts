@@ -98,7 +98,7 @@ export class FlashcardGeneralPageComponent implements OnInit {
     });
   }
 
-  deleteCourse() {
+  deleteFlashcard() {
     this.flashcardService.deleteFlashcardById(this.courseId, this.levelId, this.flashcardId).subscribe({
       next: (res) => {
         this.snackBarService.openSuccessSnackBar(res.message)

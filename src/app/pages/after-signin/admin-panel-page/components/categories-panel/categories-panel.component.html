@@ -1,4 +1,4 @@
-<mat-expansion-panel >
+<mat-expansion-panel (opened)="getCategories()">
   <mat-expansion-panel-header>
     <mat-panel-title>
       Lista Dostępnych Kategorii
@@ -21,8 +21,8 @@
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let row" >
           <div style="width: 100%;display: flex; justify-content: end;">
-            <button mat-mini-fab color="primary" (click)="editCategory()"><mat-icon>edit</mat-icon></button>
-            <button mat-mini-fab color="warn" (click)="deleteCategory()"><mat-icon>delete</mat-icon></button>
+            <button mat-mini-fab color="primary" (click)="editCategory(row)"><mat-icon>edit</mat-icon></button>
+            <button mat-mini-fab color="warn" (click)="deleteCategory(row.id)"><mat-icon>delete</mat-icon></button>
           </div>
         </td>
       </ng-container>

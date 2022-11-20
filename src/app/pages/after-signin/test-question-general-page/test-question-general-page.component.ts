@@ -14,7 +14,7 @@ import {SnackbarService} from "../../../services/snack-bar/snackbar.service";
 })
 export class TestQuestionGeneralPageComponent implements OnInit {
 
-  orginalTestQuestion = {} as TestQuestion
+  originalTestQuestion = {} as TestQuestion
   editedTestQuestion = {} as TestQuestion
   question = new UntypedFormControl('', [Validators.required])
   answer = new UntypedFormControl('', [Validators.required])
@@ -42,7 +42,7 @@ export class TestQuestionGeneralPageComponent implements OnInit {
         next: (res: TestQuestion) => {
           const body = res
 
-          this.orginalTestQuestion = JSON.parse(JSON.stringify(body))
+          this.originalTestQuestion = JSON.parse(JSON.stringify(body))
           this.editedTestQuestion = JSON.parse(JSON.stringify(body))
 
           this.question.setValue(this.editedTestQuestion.question)
@@ -76,4 +76,56 @@ export class TestQuestionGeneralPageComponent implements OnInit {
     })
   }
 
+  saveChanges() {
+    this.editedTestQuestion.question = this.question.value
+    this.editedTestQuestion.answer = this.answer.value
+    this.editedTestQuestion.imageName = this.selectedImage.name
+    this.editedTestQuestion.imageUrl = this.selectedImage.url
+
+    const dialogRef = this.dialogService.openDataDiffDialog(this.originalTestQuestion, this.editedTestQuestion)
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.testQuestionService.editTestQuestionById(this.courseId, this.levelId, this.testQuestionId, this.editedTestQuestion).subscribe({
+          next: (res) => {
+            this.snackBarService.openSuccessSnackBar(res.message)
+          },
+          error: (err) => {
+            console.log("error: ", err)
+            if(err.error.name) {
+              this.snackBarService.openErrorSnackBar(err.name)
+            }
+            if(err.error.description) {
+              this.snackBarService.openErrorSnackBar(err.description)
+            }
+            if(err.error.statusName) {
+              this.snackBarService.openErrorSnackBar(err.statusName)
+            }
+          }
+        })
+        this.originalTestQuestion = JSON.parse(JSON.stringify(this.editedTestQuestion))
+      }
+      console.log('The dialog was closed');
+    });
+  }
+
+  deleteTestQuestion() {
+    this.testQuestionService.deleteTestQuestionById(this.courseId, this.levelId, this.testQuestionId).subscribe({
+      next: (res) => {
+        this.snackBarService.openSuccessSnackBar(res.message)
+      },
+      error: (err) => {
+        console.log("error: ", err)
+        if(err.error.name) {
+          this.snackBarService.openErrorSnackBar(err.name)
+        }
+        if(err.error.description) {
+          this.snackBarService.openErrorSnackBar(err.description)
+        }
+        if(err.error.statusName) {
+          this.snackBarService.openErrorSnackBar(err.statusName)
+        }
+      }
+    })
+  }
 }

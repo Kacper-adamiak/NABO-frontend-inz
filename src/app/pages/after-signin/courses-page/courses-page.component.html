@@ -11,6 +11,10 @@
       <span class="underline"></span>
     </div>
 
+    <div style="margin-bottom: 5px">
+      <button mat-raised-button color="primary" (click)="openNewPotentialCategoryDialog()">Zasugeruj Kategorię</button>
+    </div>
+
     <mat-form-field class="find_form" appearance="standard">
       <mat-label>Wyszukaj</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="np. kurs o zwierzętach" #input>

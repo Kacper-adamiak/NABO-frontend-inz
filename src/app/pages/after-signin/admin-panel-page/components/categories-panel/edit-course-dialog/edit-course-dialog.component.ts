@@ -3,6 +3,7 @@ import {UntypedFormControl, Validators} from "@angular/forms";
 import {Category} from "../../../../../../models/category";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {CategoryService} from "../../../../../../services/category/category.service";
+import {SnackbarService} from "../../../../../../services/snack-bar/snackbar.service";
 
 @Component({
   selector: 'app-edit-course-dialog',
@@ -17,6 +18,7 @@ export class EditCourseDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<EditCourseDialogComponent>,
     public categoryService: CategoryService,
+    private snackbarService: SnackbarService,
     @Inject(MAT_DIALOG_DATA) public data: { category: Category },
   ) {}
 
@@ -25,16 +27,18 @@ export class EditCourseDialogComponent implements OnInit {
   }
 
   onNoClick(): void {
-    this.dialogRef.close()
+    this.dialogRef.close(false)
   }
 
   onAccept() {
     this.categoryService.editCategory(this.data.category.id!, this.name.value).subscribe({
       next: value => {
-
+        this.snackbarService.openSuccessSnackBar(value.message)
+        this.dialogRef.close(true)
       },
       error: err => {
-
+        this.snackbarService.openErrorSnackBar(err.error)
+        this.dialogRef.close(false)
       },
       complete: () => {
 

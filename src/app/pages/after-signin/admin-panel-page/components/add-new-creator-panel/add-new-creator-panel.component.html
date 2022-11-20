@@ -1,0 +1,34 @@
+<mat-expansion-panel >
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Dodaj Nowego Twórcę
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div>
+    <div style="width: 100%; margin-bottom: 10px;">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Login</mat-label>
+        <input matInput placeholder="Tu wprowadź nazwę kategorii" [formControl]="login" required>
+        <mat-error *ngIf="login.invalid" style="padding: 3px">Nazwa musi być wypełniona</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div style="width: 100%; margin-bottom: 10px;">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Hasło</mat-label>
+        <input type="password" matInput placeholder="Tu wprowadź nazwę kategorii" [formControl]="password" required>
+        <mat-error *ngIf="password.invalid" style="padding: 3px">Nazwa musi być wypełniona</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div style="width: 100%; margin-bottom: 10px;">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Tu wprowadź nazwę kategorii" [formControl]="email" required>
+        <mat-error *ngIf="email.invalid" style="padding: 3px">Nazwa musi być wypełniona</mat-error>
+      </mat-form-field>
+    </div>
+
+    <button mat-raised-button color="primary" [disabled]="login.invalid" (click)="addNewCreator()">Zapisz kategorię</button>
+  </div>
+</mat-expansion-panel>
