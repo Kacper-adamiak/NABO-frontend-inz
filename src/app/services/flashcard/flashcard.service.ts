@@ -30,7 +30,7 @@ export class FlashcardService {
   }
 
   editFlashcardById(courseId: number, levelId: number, flashcardId: number, editedFlashcard: Flashcard): Observable<any> {
-    return this.webService.patch<any>(`/api/course/${courseId}/level/${levelId}/flashcard/edit/${flashcardId}`, {
+    return this.webService.patch<any>(`/course/${courseId}/level/${levelId}/flashcard/edit/${flashcardId}`, {
       expOriginal: editedFlashcard.expOriginal,
       expTranslation: editedFlashcard.expTranslation,
       expDescription: editedFlashcard.expDescription,
@@ -39,6 +39,6 @@ export class FlashcardService {
   }
 
   deleteFlashcardById(courseId: number, levelId: number, flashcardId: number): Observable<any> {
-    return this.webService.delete<any>(`/api/course/${courseId}/level/${levelId}/flashcard/delete/${flashcardId}`)
+    return this.webService.delete<any>(`/course/${courseId}/level/${levelId}/flashcard/delete/${flashcardId}`)
   }
 }

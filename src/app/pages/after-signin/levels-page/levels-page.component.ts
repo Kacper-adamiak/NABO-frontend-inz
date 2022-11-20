@@ -17,7 +17,7 @@ import {DialogService} from "../../../services/dialog/dialog.service";
 })
 export class LevelsPageComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ["name", "difficulty", "status" ];
+  displayedColumns: string[] = ["name", "difficulty", "statusName" ];
   dataSource: MatTableDataSource<Level> = new MatTableDataSource<Level>([] as Level[])
   courseId!: number
 
@@ -70,8 +70,9 @@ export class LevelsPageComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result =>  {
-      console.log(`The dialog was closed ${result}`);
-      this.getLevels();
+      if(result){
+        this.getLevels()
+      }
     });
   }
 

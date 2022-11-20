@@ -19,23 +19,18 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="expOriginal">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Wyrażenie </th>
         <td mat-cell *matCellDef="let row"> {{row.expOriginal}} </td>
       </ng-container>
 
       <ng-container matColumnDef="expTranslation">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Poziom trudności </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tłumaczenie </th>
         <td mat-cell *matCellDef="let row"> {{row.expTranslation}} </td>
       </ng-container>
 
       <ng-container matColumnDef="expDescription">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Opis </th>
         <td mat-cell *matCellDef="let row"> {{row.expDescription}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="imageName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-        <td mat-cell *matCellDef="let row"> {{row.imageName}} </td>
       </ng-container>
 
       <ng-container matColumnDef="imageUrl">

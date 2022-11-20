@@ -15,7 +15,7 @@ import {Image} from "../../../models/image";
 })
 export class FlashcardGeneralPageComponent implements OnInit {
 
-  orginalData = {} as Flashcard
+  originalData = {} as Flashcard
   editedData = {} as Flashcard
   expOriginal = new UntypedFormControl('', [Validators.required])
   expTranslation = new UntypedFormControl('', [Validators.required])
@@ -45,7 +45,7 @@ export class FlashcardGeneralPageComponent implements OnInit {
           const body = res
 
           this.editedData = JSON.parse(JSON.stringify(body))
-          this.orginalData = JSON.parse(JSON.stringify(body))
+          this.originalData = JSON.parse(JSON.stringify(body))
 
           this.expOriginal.setValue(this.editedData.expOriginal)
           this.expTranslation.setValue(this.editedData.expTranslation)
@@ -64,12 +64,52 @@ export class FlashcardGeneralPageComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  saveChanges() {
+    this.editedData.expOriginal = this.expOriginal.value
+    this.editedData.expTranslation = this.expTranslation.value
+    this.editedData.expDescription = this.expDescription.value
+    this.editedData.imageName = this.selectedImage.name
+    this.editedData.imageUrl = this.selectedImage.url
 
+    const dialogRef = this.dialogService.openDataDiffDialog(this.originalData, this.editedData)
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.flashcardService.editFlashcardById(this.courseId, this.levelId, this.flashcardId, this.editedData).subscribe({
+          next: (res) => {
+            this.snackBarService.openSuccessSnackBar(res.message)
+          },
+          error: (err) => {
+            console.log("error: ", err)
+            if(err.error.name) {
+              this.snackBarService.openErrorSnackBar(err.name)
+            }
+            if(err.error.description) {
+              this.snackBarService.openErrorSnackBar(err.description)
+            }
+            if(err.error.statusName) {
+              this.snackBarService.openErrorSnackBar(err.statusName)
+            }
+          }
+        })
+        this.originalData = JSON.parse(JSON.stringify(this.editedData))
+      }
+      console.log('The dialog was closed');
+    });
   }
 
   deleteCourse() {
-
+    this.flashcardService.deleteFlashcardById(this.courseId, this.levelId, this.flashcardId).subscribe({
+      next: (res) => {
+        this.snackBarService.openSuccessSnackBar(res.message)
+      },
+      error: (err) => {
+        this.snackBarService.openErrorSnackBar(err)
+      },
+      complete: () => {
+        this.router.navigate([`/home/courses/${this.courseId}/levels/${this.levelId}/flashcards`])
+      }
+    })
   }
 
   openImagePicker() {

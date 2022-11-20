@@ -1,11 +1,13 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {UntypedFormBuilder, UntypedFormControl} from "@angular/forms";
+import {UntypedFormBuilder, UntypedFormControl, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {SnackbarService} from "../../../services/snack-bar/snackbar.service";
 import {ImageService} from "../../../services/image/image.service";
 import {HttpClient, HttpEvent, HttpEventType, HttpProgressEvent, HttpResponse} from "@angular/common/http";
 import {map} from "rxjs";
 import {ProgressSpinnerMode} from "@angular/material/progress-spinner";
+import {CategoryService} from "../../../services/category/category.service";
+import {Category} from "../../../models/category";
 
 @Component({
   selector: 'app-upload-image-dialog',
@@ -14,8 +16,10 @@ import {ProgressSpinnerMode} from "@angular/material/progress-spinner";
 })
 export class UploadImageDialogComponent implements OnInit {
 
+  category = new UntypedFormControl('', [Validators.required])
   image = new UntypedFormControl(null)
   name = new UntypedFormControl('')
+  categories = [] as Category[]
   spinnerValue = 0;
   spinnerShow = false;
   spinnerMode: ProgressSpinnerMode = 'determinate'
@@ -27,9 +31,15 @@ export class UploadImageDialogComponent implements OnInit {
     private imageService: ImageService,
     private snackBarService: SnackbarService,
     private formBuilder: UntypedFormBuilder,
+    private categoryService: CategoryService,
     private http: HttpClient,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
+    this.categoryService.getCategories().subscribe({
+      next: res => {
+        this.categories = res
+      }
+    })
   }
 
   ngOnInit(): void {
@@ -61,7 +71,7 @@ export class UploadImageDialogComponent implements OnInit {
     var formData: any = new FormData();
     formData.append('image', this.selectedFile);
     formData.append('name', this.name.value);
-    formData.append('categoryName', 'KAT1');
+    formData.append('categoryName', this.category.value);
     console.log(formData.get('image'))
     this.http.post<any>("http://localhost:8081/api/image/uploadImage", formData, {
       reportProgress: true,
@@ -89,6 +99,7 @@ export class UploadImageDialogComponent implements OnInit {
         next: res => {
           if(this.isHttpResponse(res)) {
             console.log("res",res)
+            this.dialogRef.close(res.body.image)
           }
         },
         error: error => {
@@ -97,11 +108,10 @@ export class UploadImageDialogComponent implements OnInit {
         },
         complete: () => {
           this.spinnerShow = false
-          console.log("complete")
-          this.dialogRef.close({imageName: this.name.value})
         }
       })
   }
+
 }
 
 

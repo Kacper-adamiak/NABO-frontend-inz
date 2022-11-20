@@ -1,10 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
-@use "@angular/material" as mat;
+
 @use 'sass:map';
+@use "@angular/material" as mat;
+
 
 @import url('https://fonts.googleapis.com/css2?family=Martel+Sans:wght@300;400;700;800&display=swap');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-//@include mat.core();
+@include mat.core();
 
 * { margin: 0; padding: 0; box-sizing: border-box;}
 
@@ -34,8 +36,12 @@ body {
   font-family: 'Martel Sans', sans-serif;
 }
 
+$color-config:    mat.get-color-config($my-app-theme);
+$primary-palette: map.get($color-config, 'primary');
+$accent-palette:  map.get($color-config, 'accent');
+$warn-palette:    map.get($color-config, 'warn');
 
-$primary: #313193;
+$primary: mat.get-color-from-palette($primary-palette, 500);
 $secondary: #4F4FB7;
 $blue-light: #3FADF8;
 $blue-light-darker: #2795df;

@@ -22,7 +22,7 @@ export class WebService {
     )
   }
 
-  post<T>(uri: string, payload: any) {
+  post<T>(uri: string, payload?: any) {
     return this.http.post<T>(`${this.ROOT_URL}${uri}`, payload).pipe(
       tap(
         res => console.log('Post: ',res)
@@ -30,7 +30,7 @@ export class WebService {
     )
   }
 
-  patch<T>(uri: string, payload: any) {
+  patch<T>(uri: string, payload?: any) {
     return this.http.patch<T>(`${this.ROOT_URL}${uri}`, payload).pipe(
       tap(
         res => console.log(res)

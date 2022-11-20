@@ -1,0 +1,18 @@
+<div mat-dialog-content >
+
+  <h2>Edytuj kategorię</h2>
+
+  <div style="width: 100%;">
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Nazwa</mat-label>
+      <input matInput placeholder="Tu wprowadź nazwę kategorii" [formControl]="name" required>
+      <mat-error *ngIf="name.invalid">Nazwa musi być wypełniona</mat-error>
+    </mat-form-field>
+  </div>
+
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Anuluj</button>
+  <button mat-button (click)="onAccept()" [disabled]="!(name.valid)">Zapisz zmiany</button>
+</div>

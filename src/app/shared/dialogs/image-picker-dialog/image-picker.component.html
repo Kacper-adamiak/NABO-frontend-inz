@@ -1,5 +1,7 @@
 <div mat-dialog-content >
 
+  <button mat-raised-button color="primary" (click)="openUploadImageDialog()">Dodaj zdjęcie</button>
+
   <div style="width: 100%;">
     <mat-form-field appearance="fill" style="width: 100%;">
       <mat-label>Kategoria</mat-label>
@@ -15,7 +17,7 @@
   </mat-form-field>
 
   <div *ngIf="filteredData.length != 0" class="img_container">
-    <div class="img_data" *ngFor="let image of slicedData" (click)="chooseImage(image)" [class.chosen_image]="image === this.chosenImage">
+    <div class="img_data" *ngFor="let image of slicedData" (click)="chooseImage(image)" [class.chosen_image]="image.name == this.chosenImage.name">
       <p>{{image.name}}</p>
       <img src="{{image.url}}" style="height: 128px;">
     </div>
@@ -30,6 +32,8 @@
                  (page)="paginatorPageEvent($event)"
                  aria-label="Select page">
   </mat-paginator>
+
+  <h2>Wybrane zdjęcie: {{chosenImage.name || 'nie wybrano'}}</h2>
 </div>
 <div mat-dialog-actions style="position: relative; bottom: 0px;">
   <button mat-button (click)="onNoClick()">Anuluj</button>

@@ -1,7 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
-import {MatSort} from "@angular/material/sort";
+import {MatSort, MatSortable} from "@angular/material/sort";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogService} from "../../../services/dialog/dialog.service";
 import {StatsService} from "../../../services/stats/stats.service";
@@ -24,13 +24,16 @@ export class StatsPageComponent implements OnInit {
     private statsService: StatsService,
     public dialog: MatDialog,
     public dialogService: DialogService,
-    public authService: AuthService) {
+    public authService: AuthService,
+    private cdref: ChangeDetectorRef) {
 
   }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
+    this.sort.sort(({ id: 'usersInCourse', start: 'desc'}) as MatSortable)
     this.dataSource.sort = this.sort;
+    this.cdref.detectChanges();
   }
 
   ngOnInit(): void {
@@ -38,6 +41,7 @@ export class StatsPageComponent implements OnInit {
     this.dataSource.filterPredicate = function(data, filter: string): boolean {
       return data.name.toLowerCase().includes(filter) || data.categoryName.toLowerCase().includes(filter) || data.statusName.toLowerCase().includes(filter) || data.authorLogin.toLowerCase().includes(filter);
     };
+
   }
 
   applyFilter(event: Event) {

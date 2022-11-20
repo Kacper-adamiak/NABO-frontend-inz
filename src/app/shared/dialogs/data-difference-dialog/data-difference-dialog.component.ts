@@ -14,7 +14,10 @@ export class DataDifferenceDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<DataDifferenceDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {originalData: any, editedData: any},
   ) {
-      this.objectKeys = Object.keys(this.data.originalData)
+      this.objectKeys = Object.keys(this.data.originalData).filter((value) => {
+        const hiddenKeys = ['id', 'created', 'modified', 'authorId', 'authorLogin', 'exerciseNumber', 'flashcardNumber', 'testQuestionNumber']
+        return !hiddenKeys.includes(value)
+      })
   }
 
   onDecline(): void {

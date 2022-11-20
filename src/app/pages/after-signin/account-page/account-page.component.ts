@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../../services/user.service";
 import {DialogService} from "../../../services/dialog/dialog.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -8,7 +8,7 @@ import {MatDialog} from "@angular/material/dialog";
   templateUrl: './account-page.component.html',
   styleUrls: ['./account-page.component.scss']
 })
-export class AccountPageComponent implements OnInit, OnDestroy {
+export class AccountPageComponent implements OnInit {
 
   data = {
     login: "",
@@ -21,6 +21,11 @@ export class AccountPageComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private dialogService: DialogService
   ) {
+
+  }
+
+  ngOnInit(): void {
+
     const spinner = this.dialogService.openSpinner()
     const userData = this.userService.getUserData().subscribe({
       next: res => {
@@ -34,15 +39,6 @@ export class AccountPageComponent implements OnInit, OnDestroy {
         userData.unsubscribe()
       }
     })
-
-  }
-
-  ngOnInit(): void {
-
-  }
-
-  ngOnDestroy(): void {
-    console.log("on Destroy AccountPageComponent")
   }
 
 }

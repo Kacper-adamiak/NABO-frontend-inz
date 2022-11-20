@@ -7,6 +7,7 @@ import {PageEvent} from "@angular/material/paginator";
 import {Category} from "../../../models/category";
 import {CategoryService} from "../../../services/category/category.service";
 import {UntypedFormControl, Validators} from "@angular/forms";
+import {DialogService} from "../../../services/dialog/dialog.service";
 
 @Component({
   selector: 'app-image-picker-dialog',
@@ -15,7 +16,7 @@ import {UntypedFormControl, Validators} from "@angular/forms";
 })
 export class ImagePickerComponent implements OnInit, AfterViewInit{
 
-  chosenImage!: Image
+  chosenImage: Image = {} as Image
   data: Image[] = [] as Image[]
   filteredData: Image[] = [] as Image[]
   slicedData!: Image[]
@@ -32,7 +33,8 @@ export class ImagePickerComponent implements OnInit, AfterViewInit{
     public dialogRef: MatDialogRef<ImagePickerComponent>,
     private imageService: ImageService,
     private snackBarService: SnackbarService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private dialogService: DialogService
   ) {
     this.categoryService.getCategories().subscribe({
       next: res => {
@@ -95,5 +97,16 @@ export class ImagePickerComponent implements OnInit, AfterViewInit{
     console.log(this.filteredData)
   }
 
+  openUploadImageDialog() {
+    const dialog = this.dialogService.openUploadImage()
+    dialog.afterClosed().subscribe({
+      next: value => {
+        if(value) {
+          this.chooseImage(value)
+          console.log("imageUploadInPicker: ",value)
+        }
+      }
+    })
+  }
 
 }

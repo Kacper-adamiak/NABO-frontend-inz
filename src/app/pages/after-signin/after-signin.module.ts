@@ -27,6 +27,17 @@ import {StatDetailPageComponent} from './stat-detail-page/stat-detail-page.compo
 import {NgChartsConfiguration, NgChartsModule} from "ng2-charts";
 import {AdminPanelPageComponent} from './admin-panel-page/admin-panel-page.component';
 import {TestQuestionGeneralPageComponent} from './test-question-general-page/test-question-general-page.component';
+import {AccountEditPageComponent} from './account-page/account-edit-page/account-edit-page.component';
+import {
+  AddNewCategoryPanelComponent
+} from './admin-panel-page/components/add-new-category-panel/add-new-category-panel.component';
+import {
+  PotentialCategoriesPanelComponent
+} from './admin-panel-page/components/potential-categories-panel/potential-categories-panel.component';
+import {CategoriesPanelComponent} from './admin-panel-page/components/categories-panel/categories-panel.component';
+import {
+  EditCourseDialogComponent
+} from './admin-panel-page/components/categories-panel/edit-course-dialog/edit-course-dialog.component';
 
 
 @NgModule({
@@ -51,7 +62,12 @@ import {TestQuestionGeneralPageComponent} from './test-question-general-page/tes
     StatsPageComponent,
     StatDetailPageComponent,
     AdminPanelPageComponent,
-    TestQuestionGeneralPageComponent
+    TestQuestionGeneralPageComponent,
+    AccountEditPageComponent,
+    AddNewCategoryPanelComponent,
+    PotentialCategoriesPanelComponent,
+    CategoriesPanelComponent,
+    EditCourseDialogComponent
   ],
   imports: [
     CommonModule,

@@ -6,6 +6,7 @@ import {Flashcard} from "../../../../models/flashcard";
 import {FlashcardService} from "../../../../services/flashcard/flashcard.service";
 import {DialogService} from "../../../../services/dialog/dialog.service";
 import {Image} from "../../../../models/image";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-new-flashcard-dialog',
@@ -25,6 +26,7 @@ export class NewFlashcardDialogComponent implements OnInit {
     private flashcardService: FlashcardService,
     private snackBarService: SnackbarService,
     private dialogService: DialogService,
+    private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: { courseId: number, levelId: number },
   ) {
   }
@@ -34,7 +36,7 @@ export class NewFlashcardDialogComponent implements OnInit {
   }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 
   onAccept() {
@@ -45,14 +47,16 @@ export class NewFlashcardDialogComponent implements OnInit {
 
     this.flashcardService.addFlashcard(this.data.courseId, this.data.levelId ,this.newFlashcard).subscribe({
       next: res => {
-        let tempFlashcard: Flashcard = res;
+        let tempFlashcard: Flashcard = res.flashcard;
         this.snackBarService.openSuccessSnackBar(res.message)
+        this.dialogRef.close(true)
       },
       error: err => {
         this.snackBarService.openErrorSnackBar(err)
-      }
+        this.dialogRef.close(false)
+      },
+      complete: () => {}
     })
-    this.dialogRef.close()
   }
 
   openImagePicker() {

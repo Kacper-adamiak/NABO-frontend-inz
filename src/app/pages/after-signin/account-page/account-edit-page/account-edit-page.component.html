@@ -1,0 +1,50 @@
+<div class="segment">
+  <div class="elevated_box">
+    <button mat-icon-button class="elevated_box_top_left" color="primary" routerLink="..">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="elevated_box_header">
+      <h1 class="elevated_box_header_content">Edycja konta</h1>
+      <span class="underline"></span>
+    </div>
+
+    <div style="width: 100%; margin-bottom: 10px;">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Login</mat-label>
+        <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="login" required>
+        <mat-error *ngIf="login.invalid" style="padding: 3px">Nazwa musi być wypełniona</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div style="width: 100%; margin-bottom: 10px;">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="email" required>
+        <mat-error *ngIf="email.invalid" style="padding: 3px">Nazwa musi być wypełniona</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div style="width: 100%; margin-bottom: 10px;">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Imię</mat-label>
+        <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="firstName" required>
+        <mat-error *ngIf="firstName.invalid" style="padding: 3px">Nazwa musi być wypełniona</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div style="width: 100%; margin-bottom: 10px;">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Nazwisko</mat-label>
+        <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="lastName" required>
+        <mat-error *ngIf="lastName.invalid" style="padding: 3px">Nazwa musi być wypełniona</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
+      <button mat-raised-button color="primary">Edytuj dane</button>
+      <button mat-raised-button color="warn">Usuń konto</button>
+    </div>
+
+
+  </div>
+</div>

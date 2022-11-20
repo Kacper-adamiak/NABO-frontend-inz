@@ -26,10 +26,10 @@ import {ToastModule} from "primeng/toast";
         ReactiveFormsModule,
         BrowserAnimationsModule,
         MaterialExampleModule,
+        ButtonModule,
+        ToastModule,
         AuthModule,
         AfterSigninModule,
-        ButtonModule,
-        ToastModule
     ]
 })
 export class PagesModule { }

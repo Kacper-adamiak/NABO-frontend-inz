@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {DialogService} from "../../../services/dialog/dialog.service";
 import {ExerciseService} from "../../../services/exercise/exercise.service";
 import {Exercise} from "../../../models/exercise";
+import {Image} from "../../../models/image";
 
 @Component({
   selector: 'app-exercise-general-page',
@@ -21,7 +22,7 @@ export class ExerciseGeneralPageComponent implements OnInit {
   bad_answer1 = new UntypedFormControl('', [Validators.required])
   bad_answer2 = new UntypedFormControl('', [Validators.required])
   bad_answer3 = new UntypedFormControl('', [Validators.required])
-  imageName = new UntypedFormControl('', [Validators.required])
+  selectedImage!: Image
 
   courseId!: number
   levelId!: number
@@ -52,12 +53,12 @@ export class ExerciseGeneralPageComponent implements OnInit {
           this.bad_answer1.setValue(this.editedData.bad_answer1)
           this.bad_answer2.setValue(this.editedData.bad_answer2)
           this.bad_answer3.setValue(this.editedData.bad_answer3)
-          this.imageName.setValue(this.editedData.imageName)
+          this.selectedImage = {name: this.editedData.imageName, url: this.editedData.imageUrl}
         },
         error: error => {
           spinner.close()
           this.snackBarService.openSnackBar(error.message)
-          this.router.navigate([`/home/courses/${this.courseId}/levels/${this.levelId}/exercises`])
+          this.router.navigate([`..`], {relativeTo: this.route})
         },
         complete: () => {
           spinner.close()
@@ -67,13 +68,28 @@ export class ExerciseGeneralPageComponent implements OnInit {
   }
 
   deleteExercise() {
-
+    this.exerciseService.deleteExerciseById(this.courseId, this.levelId, this.exerciseId).subscribe({
+      next: res => {
+        this.snackBarService.openSuccessSnackBar(res.message)
+        this.router.navigate([`..`], {relativeTo: this.route})
+      },
+      error: err => {
+        this.snackBarService.openErrorSnackBar(err.error)
+      }
+    })
   }
 
   openDialog(): void {
 
-    const dialogRef = this.dialogService.openDataDiffDialog(this.originalData, this.editedData)
+    this.editedData.question = this.question.value
+    this.editedData.expression = this.expression.value
+    this.editedData.bad_answer1 = this.bad_answer1.value
+    this.editedData.bad_answer2 = this.bad_answer2.value
+    this.editedData.bad_answer3 = this.bad_answer3.value
+    this.editedData.imageName = this.selectedImage.name
+    this.editedData.imageUrl = this.selectedImage.url
 
+    const dialogRef = this.dialogService.openDataDiffDialog(this.originalData, this.editedData)
 
     dialogRef.afterClosed().subscribe(value => {
       if(value) {
@@ -96,6 +112,21 @@ export class ExerciseGeneralPageComponent implements OnInit {
       }
       console.log('The dialog was closed');
     });
+  }
+
+  openImagePicker() {
+    const dialog = this.dialogService.openImagePicker()
+    dialog.afterClosed().subscribe({
+      next: value => {
+        if(value){
+          this.selectedImage = value
+          console.log("after close picker: ",value)
+        }
+      },
+      error: err => {
+        console.log('something went wrong')
+      }
+    })
   }
 
 }

@@ -4,13 +4,13 @@
       <mat-icon>arrow_back</mat-icon>
     </button>
     <div class="elevated_box_header">
-      <h1>Fiszka</h1>
+      <h1>Fiszka: {{originalData.expOriginal}}</h1>
       <span class="underline"></span>
     </div>
 
     <div style="width: 100%;">
       <mat-form-field appearance="fill" style="width: 100%;">
-        <mat-label>Słowo [Ang]</mat-label>
+        <mat-label>Wyrażenie [Ang]</mat-label>
         <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="expOriginal" required>
         <mat-error *ngIf="expOriginal.invalid">Nazwa musi być wypełniona</mat-error>
       </mat-form-field>
@@ -18,7 +18,7 @@
 
     <div style="width: 100%;">
       <mat-form-field appearance="fill" style="width: 100%;">
-        <mat-label>Słowo [Pol]</mat-label>
+        <mat-label>Tłumaczenie [Pol]</mat-label>
         <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="expTranslation" required>
         <mat-error *ngIf="expTranslation.invalid">Nazwa musi być wypełniona</mat-error>
       </mat-form-field>
@@ -26,7 +26,7 @@
 
     <div style="width: 100%;">
       <mat-form-field appearance="fill" style="width: 100%;">
-        <mat-label>Definicja</mat-label>
+        <mat-label>Opis</mat-label>
         <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="expDescription" required>
         <mat-error *ngIf="expDescription.invalid">Nazwa musi być wypełniona</mat-error>
       </mat-form-field>
@@ -39,7 +39,7 @@
     </div>
 
     <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
-      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="false">Save changes</button>
+      <button mat-raised-button color="primary" (click)="saveChanges()" [disabled]="false">Save changes</button>
       <button mat-raised-button color="warn" (click)="deleteCourse()">Delete course</button>
     </div>
 

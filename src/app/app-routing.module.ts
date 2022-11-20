@@ -24,12 +24,16 @@ import {
   TestQuestionGeneralPageComponent
 } from "./pages/after-signin/test-question-general-page/test-question-general-page.component";
 import {ExerciseGeneralPageComponent} from "./pages/after-signin/exercise-general-page/exercise-general-page.component";
+import {
+  AccountEditPageComponent
+} from "./pages/after-signin/account-page/account-edit-page/account-edit-page.component";
 
 const routes: Routes = [
   {path: "", component: StartingPageComponent},
   {path: "home", component: AfterSigninComponent, children: [
     {path: "", component: HomePageComponent},
     {path: 'account', component: AccountPageComponent},
+    {path: 'account/edit', component: AccountEditPageComponent},
     {path: 'courses', component: CoursesPageComponent},
     {path: 'courses/:courseId', component: CourseGeneralPageComponent},
     {path: 'courses/:courseId/levels', component: LevelsPageComponent},

@@ -17,7 +17,7 @@ import {NewFlashcardDialogComponent} from "./new-flashcard-dialog/new-flashcard-
 })
 export class FlashcardsPageComponent implements OnInit {
 
-  displayedColumns: string[] = ["expOriginal", "expTranslation", "expDescription", "imageName", "imageUrl"];
+  displayedColumns: string[] = ["expOriginal", "expTranslation", "expDescription", "imageUrl"];
   dataSource: MatTableDataSource<Flashcard> = new MatTableDataSource<Flashcard>([] as Flashcard[])
   courseId!: number
   levelId!: number
@@ -69,7 +69,9 @@ export class FlashcardsPageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result =>  {
-      console.log(`The dialog was closed ${result}`);
+      if(result) {
+        this.getFlashcards()
+      }
     });
   }
 

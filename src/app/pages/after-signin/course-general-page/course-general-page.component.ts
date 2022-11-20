@@ -78,6 +78,8 @@ export class CourseGeneralPageComponent implements OnInit {
     this.editedData.name = this.name.value
     this.editedData.description = this.description.value
     this.editedData.statusName = this.status.value
+    this.editedData.categoryName = this.category.value
+
     this.openDialog()
   }
 

@@ -19,7 +19,6 @@ export class CoursesPageComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ["name", "categoryName", "statusName", 'modified', 'created' ];
   dataSource: MatTableDataSource<Course> = new MatTableDataSource<Course>([] as Course[])
-  isSuperAdmin = false
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

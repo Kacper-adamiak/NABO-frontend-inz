@@ -1,0 +1,17 @@
+<mat-expansion-panel >
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Dodaj Nową Kategorię
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div>
+    <div style="width: 100%; margin-bottom: 10px;">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Kategoria</mat-label>
+        <input matInput placeholder="Tu wprowadź nazwę kategorii" [formControl]="newCategoryForm" required>
+        <mat-error *ngIf="newCategoryForm.invalid" style="padding: 3px">Nazwa musi być wypełniona</mat-error>
+      </mat-form-field>
+    </div>
+    <button mat-raised-button color="primary" [disabled]="newCategoryForm.invalid" (click)="addNewCategory()">Zapisz kategorię</button>
+  </div>
+</mat-expansion-panel>

@@ -19,6 +19,7 @@ export class NewCourseDialogComponent implements OnInit {
   newCourse = {} as Course
   name = new UntypedFormControl('', [Validators.required])
   description = new UntypedFormControl('', [Validators.required])
+  category = new UntypedFormControl('', [Validators.required])
   categories = [] as Category[]
 
   constructor(
@@ -47,6 +48,7 @@ export class NewCourseDialogComponent implements OnInit {
   onAccept() {
     this.newCourse.name = this.name.value
     this.newCourse.description = this.description.value
+    this.newCourse.categoryName = this.category.value
     console.log(this.newCourse)
     this.courseService.addCourse(this.newCourse).subscribe({
       next: res => {

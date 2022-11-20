@@ -6,6 +6,7 @@ import {Exercise} from "../../../../models/exercise";
 import {ExerciseService} from "../../../../services/exercise/exercise.service";
 import {Image} from "../../../../models/image";
 import {DialogService} from "../../../../services/dialog/dialog.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-new-exercise-dialog',
@@ -27,6 +28,7 @@ export class NewExerciseDialogComponent implements OnInit {
     private exerciseService: ExerciseService,
     private snackBarService: SnackbarService,
     private dialogService: DialogService,
+    private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: { courseId: number, levelId: number, exerciseId: number },
   ) {
   }
@@ -36,7 +38,7 @@ export class NewExerciseDialogComponent implements OnInit {
   }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 
   onAccept() {
@@ -50,14 +52,16 @@ export class NewExerciseDialogComponent implements OnInit {
 
     this.exerciseService.addExercise(this.data.courseId, this.data.levelId ,this.newExercise).subscribe({
       next: res => {
-        this.snackBarService.openSuccessSnackBar(res.body!.message!)
+        this.snackBarService.openSuccessSnackBar(res.message)
+        this.dialogRef.close(true)
       },
       error: err => {
         console.log("exerciseService", err)
         this.snackBarService.openErrorSnackBar(err.error)
+        this.dialogRef.close(false)
       },
       complete: () => {
-        this.dialogRef.close()
+
       }
     })
 

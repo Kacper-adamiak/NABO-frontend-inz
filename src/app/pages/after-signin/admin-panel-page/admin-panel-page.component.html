@@ -3,5 +3,32 @@
     <button mat-icon-button class="elevated_box_top_left" color="primary" routerLink="..">
       <mat-icon>arrow_back</mat-icon>
     </button>
+    <div class="elevated_box_header">
+      <h1 class="elevated_box_header_content">Panel Admina</h1>
+      <span class="underline"></span>
+    </div>
+
+    <mat-accordion>
+      <mat-expansion-panel style="background-color: #eeeeee;">
+
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Kategorie
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <mat-accordion>
+
+          <app-potential-categories-panel></app-potential-categories-panel>
+
+          <app-add-new-category-panel></app-add-new-category-panel>
+
+          <app-categories-panel></app-categories-panel>
+
+        </mat-accordion>
+
+      </mat-expansion-panel>
+
+    </mat-accordion>
   </div>
 </div>

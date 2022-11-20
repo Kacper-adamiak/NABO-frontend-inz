@@ -4,7 +4,7 @@
       <mat-icon>arrow_back</mat-icon>
     </button>
     <div class="elevated_box_header">
-      <h1 class="elevated_box_header_content">Your account</h1>
+      <h1 class="elevated_box_header_content">Twoje konto</h1>
       <span class="underline"></span>
     </div>
       <div class="elevated_box_label">
@@ -24,7 +24,7 @@
         <p class="elevated_box_label_value">{{data.lastName || " - "}}</p>
       </div>
     <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
-      <button mat-raised-button color="primary">Edytuj dane</button>
+      <button mat-raised-button color="primary" [routerLink]="['edit']">Edytuj dane</button>
       <button mat-raised-button color="warn">Usuń konto</button>
     </div>
 
