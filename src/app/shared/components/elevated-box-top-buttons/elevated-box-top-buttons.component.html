@@ -1,0 +1,6 @@
+<button *ngIf="!leftButtonHidden" mat-icon-button class="elevated_box_top_left" color="primary" routerLink="..">
+  <mat-icon>arrow_back</mat-icon>
+</button>
+<button *ngIf="!rightButtonHidden" mat-fab class="elevated_box_top_right" color="primary" (click)="emitOnClick($event)">
+  <mat-icon>{{rightButtonIcon}}</mat-icon>
+</button>

@@ -23,7 +23,7 @@ export class ExerciseService {
   addExercise(courseId: number, levelId: number, newExorcise: Exercise){
     return this.webService.post<any>(`/course/${courseId}/level/${levelId}/exercise/add`, {
       question: newExorcise.question,
-      expression: newExorcise.expression,
+      answer: newExorcise.answer,
       bad_answer1: newExorcise.bad_answer1,
       bad_answer2: newExorcise.bad_answer2,
       bad_answer3: newExorcise.bad_answer3,
@@ -34,7 +34,7 @@ export class ExerciseService {
   editExerciseById(courseId: number, levelId: number, editedExorcise: Exercise): Observable<any> {
     return this.webService.patch<any>(`/course/${courseId}/level/${levelId}/exercise/edit/${editedExorcise.id}`, {
       question: editedExorcise.question,
-      expression: editedExorcise.expression,
+      answer: editedExorcise.answer,
       bad_answer1: editedExorcise.bad_answer1,
       bad_answer2: editedExorcise.bad_answer2,
       bad_answer3: editedExorcise.bad_answer3,

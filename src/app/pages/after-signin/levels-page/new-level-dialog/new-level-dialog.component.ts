@@ -16,6 +16,8 @@ export class NewLevelDialogComponent implements OnInit {
   newLevel = {} as Level
   name = new UntypedFormControl('', [Validators.required])
   difficulty = new UntypedFormControl('', [Validators.required])
+  status = new UntypedFormControl('', [Validators.required])
+
 
   constructor(
     public dialogRef: MatDialogRef<NewLevelDialogComponent>,
@@ -29,7 +31,9 @@ export class NewLevelDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.status.disable()
+    this.status.setValue('STATUS_SUSPENDED')
+    this.difficulty.setValue(1)
   }
 
   onNoClick(): void {
@@ -39,6 +43,7 @@ export class NewLevelDialogComponent implements OnInit {
   onAccept() {
     this.newLevel.name = this.name.value
     this.newLevel.difficulty = Number(this.difficulty.value)
+    this.newLevel.statusName = this.status.value
     console.log(this.newLevel)
     this.levelService.addLevel(this.data.courseId ,this.newLevel).subscribe({
       next: res => {

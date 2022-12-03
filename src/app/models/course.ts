@@ -9,3 +9,11 @@ export interface Course {
   statusName: string;
   categoryName: string
 }
+
+/*
+  Validation:
+    name: required, min: 4, max: 24
+    TODO:: LOWERCASE MA BYĆ
+    description: required: min: 30, max: 255
+    TODO:: NADAĆ WALIDATORY
+*/

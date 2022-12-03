@@ -57,22 +57,7 @@ export class StartingPageComponent implements OnInit {
   }
 
   openDiffDialog() {
-    const dialog = this.dialogService.openDataDiffDialog({name: "nazwa1", name2: "nazwa2", name3: "nazwa3", name4: "nazwa3", name5: "nazwa3"}, {name: "nazwa1", name2: "nazwa2", name3: "nazwa3", name4: "nazwa3", name5: "nazwa3"})
 
-    dialog.afterClosed().subscribe({
-      next: value => {
-        if(value){
-          console.log("after close picker: ",value)
-        }
-        else {
-          console.log("picker canceled: ", value)
-        }
-
-      },
-      error: err => {
-        console.log('something went wrong')
-      }
-    })
   }
 
 }

@@ -39,7 +39,7 @@ export class StatsPageComponent implements OnInit {
   ngOnInit(): void {
     this.getCourses();
     this.dataSource.filterPredicate = function(data, filter: string): boolean {
-      return data.name.toLowerCase().includes(filter) || data.categoryName.toLowerCase().includes(filter) || data.statusName.toLowerCase().includes(filter) || data.authorLogin.toLowerCase().includes(filter);
+      return data.courseName.toLowerCase().includes(filter);
     };
 
   }

@@ -1,17 +1,10 @@
 <div class="segment">
   <div class="elevated_box">
-    <button mat-icon-button class="elevated_box_top_left" color="primary" routerLink="..">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
-    <button mat-fab class="elevated_box_top_right" color="primary" (click)="openDialog()">
-      <mat-icon>add</mat-icon>
-    </button>
-    <div class="elevated_box_header">
-      <h1>Pytania testowe</h1>
-      <span class="underline"></span>
-    </div>
 
-    <mat-form-field appearance="standard">
+    <app-elevated-box-top-buttons (rightButtonOnClick)="openDialog()" ></app-elevated-box-top-buttons>
+    <app-elevated-box-header>Pytania testowe</app-elevated-box-header>
+
+    <mat-form-field class="find_form" appearance="fill">
       <mat-label>Wyszukaj</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="np. kurs o zwierzętach" #input>
     </mat-form-field>

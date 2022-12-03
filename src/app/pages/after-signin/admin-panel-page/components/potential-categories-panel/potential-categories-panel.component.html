@@ -5,29 +5,35 @@
     </mat-panel-title>
   </mat-expansion-panel-header>
   <div>
-    <mat-form-field class="find_form" appearance="standard">
+    <mat-form-field class="find_form" appearance="fill">
       <mat-label>Wyszukaj</mat-label>
-      <input matInput (keyup)="applyFilterPotentialCategories($event)" placeholder="np. kurs o zwierzętach">
+      <input matInput (keyup)="applyFilterPotentialCategories($event)" placeholder="np. kurs o zwierzętach" #input>
+      <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
 
-    <table mat-table [dataSource]="potentialCategoriesDataSource" #sortPotentialCategories='matSort' matSort style="width: 100%;">
+    <table mat-table [dataSource]="potentialCategoriesDataSource" #sortPotentialCategories='matSort' matSort
+           style="width: 100%;">
 
       <ng-container matColumnDef="authorLogin">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Autor </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Autor</th>
         <td mat-cell *matCellDef="let row"> {{row.authorLogin}} </td>
       </ng-container>
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa</th>
         <td mat-cell *matCellDef="let row"> {{row.name}} </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let row" >
+        <td mat-cell *matCellDef="let row">
           <div style="width: 100%;display: flex; justify-content: end;">
-            <button mat-mini-fab color="primary" (click)="acceptPotentialCategory(row.id)"><mat-icon>done</mat-icon></button>
-            <button mat-mini-fab color="warn" (click)="declinePotentialCategory(row.id)"><mat-icon>close</mat-icon></button>
+            <button mat-mini-fab color="primary" (click)="acceptPotentialCategory(row.id)">
+              <mat-icon>done</mat-icon>
+            </button>
+            <button mat-mini-fab color="warn" (click)="declinePotentialCategory(row.id)">
+              <mat-icon>close</mat-icon>
+            </button>
           </div>
         </td>
       </ng-container>
@@ -41,6 +47,7 @@
       </tr>
     </table>
 
-    <mat-paginator #paginatorPotentialCategories="matPaginator" [pageSizeOptions]="[5, 10, 25]" aria-label="Select page of users"></mat-paginator>
+    <mat-paginator #paginatorPotentialCategories="matPaginator" [pageSizeOptions]="[5, 10, 25]"
+                   aria-label="Select page of users"></mat-paginator>
   </div>
 </mat-expansion-panel>

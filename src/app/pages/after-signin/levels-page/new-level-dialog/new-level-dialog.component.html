@@ -1,6 +1,6 @@
 <div mat-dialog-content>
 
-  <h2>Dodaj nowe ćwiczenie</h2>
+  <h2>Dodaj nowy poziom</h2>
 
   <div style="width: 100%;">
     <mat-form-field appearance="fill" style="width: 100%;">
@@ -13,7 +13,7 @@
   <div style="width: 100%;">
     <mat-form-field appearance="fill" style="width: 100%;">
       <mat-label>Poziom trudności</mat-label>
-      <mat-select matInputd [formControl]="difficulty" value="1" required>
+      <mat-select [formControl]="difficulty" required>
         <mat-option *ngFor="let i of [0,1,2,3,4,5,6,7,8,9]" [value]="i">{{i}}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -22,10 +22,10 @@
   <div style="width: 100%;">
     <mat-form-field appearance="fill" style="width: 100%;">
       <mat-label>Status</mat-label>
-      <mat-select matInputd value="STATUS_SUSPENDED" disabled>
-        <mat-option value="STATUS_ACTIVE">Active</mat-option>
-        <mat-option value="STATUS_SUSPENDED">Suspended</mat-option>
-        <mat-option value="STATUS_ARCHIVED">Archived</mat-option>
+      <mat-select [formControl]="status">
+        <mat-option [value]="'STATUS_ACTIVE'">Active</mat-option>
+        <mat-option [value]="'STATUS_SUSPENDED'">Suspended</mat-option>
+        <mat-option [value]="'STATUS_ARCHIVED'">Archived</mat-option>
       </mat-select>
     </mat-form-field>
   </div>

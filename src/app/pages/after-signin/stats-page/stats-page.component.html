@@ -1,37 +1,30 @@
 <div class="segment">
   <div class="elevated_box">
-    <button mat-icon-button class="elevated_box_top_left" color="primary" routerLink="..">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
-    <div class="elevated_box_header">
-      <h1>Statstyki kursów</h1>
-      <span class="underline"></span>
-    </div>
 
-    <mat-form-field class="find_form" appearance="standard">
-      <mat-label>Wyszukaj</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="np. kurs o zwierzętach" #input>
-    </mat-form-field>
+    <app-elevated-box-top-buttons [rightButtonHidden]="true" ></app-elevated-box-top-buttons>
+    <app-elevated-box-header>Statstyki kursów</app-elevated-box-header>
+
+    <app-search-field (onKeyUp)="applyFilter($event)"></app-search-field>
 
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="courseName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="courseName"> Nazwa </th>
         <td mat-cell *matCellDef="let row"> {{row.courseName}} </td>
       </ng-container>
 
       <ng-container matColumnDef="usersInCourse">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Łączna liczba użytkowników </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="usersInCourse"> Łączna liczba użytkowników </th>
         <td mat-cell *matCellDef="let row"> {{row.usersInCourse}} </td>
       </ng-container>
 
       <ng-container matColumnDef="avgScoreInCourse">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Średni wynik </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="avgScoreInCourse"> Średni wynik </th>
         <td mat-cell *matCellDef="let row"> {{row.avgScoreInCourse}} </td>
       </ng-container>
 
       <ng-container matColumnDef="author">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Autor </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="author"> Autor </th>
         <td mat-cell *matCellDef="let row"> {{row.author}} </td>
       </ng-container>
 
@@ -44,7 +37,7 @@
       </tr>
     </table>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    <mat-paginator [showFirstLastButtons]="true" [pageSizeOptions]="[5, 10, 25]" aria-label="Select page of users"></mat-paginator>
 
   </div>
 

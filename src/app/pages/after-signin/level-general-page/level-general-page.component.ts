@@ -32,20 +32,15 @@ export class LevelGeneralPageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     this.courseId = Number(this.route.snapshot.paramMap.get('courseId'))
     this.levelId = Number(this.route.snapshot.paramMap.get('levelId'))
     if(!!this.courseId && !!this.levelId){
       const spinner = this.dialogService.openSpinner()
       this.levelService.getLevelById(this.courseId, this.levelId).subscribe({
         next: (res: Level) => {
-          const body = res
-
-          this.editedData = JSON.parse(JSON.stringify(body))
-          this.originalData = JSON.parse(JSON.stringify(body))
-
+          this.editedData = res
+          this.originalData = JSON.parse(JSON.stringify(res))
           this.setFormFields(this.editedData)
-
         },
         error: error => {
           spinner.close()
@@ -89,13 +84,10 @@ export class LevelGeneralPageComponent implements OnInit {
   }
 
   openDialog(): void {
-
     const dialogRef = this.dialogService.openDataDiffDialog(this.originalData, this.editedData)
-
 
     dialogRef.afterClosed().subscribe(value => {
       if(value) {
-
         this.levelService.editLevelById(this.courseId, this.levelId, this.editedData).subscribe({
           next: res => {
             this.originalData = JSON.parse(JSON.stringify(this.editedData))
@@ -105,12 +97,10 @@ export class LevelGeneralPageComponent implements OnInit {
             this.snackBarService.openSuccessSnackBar(err.error)
           },
           complete: () => {
-
           }
         })
       }
       else {
-
       }
       console.log('The dialog was closed');
     });

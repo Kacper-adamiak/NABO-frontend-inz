@@ -18,7 +18,7 @@ export class ExerciseGeneralPageComponent implements OnInit {
   originalData = {} as Exercise
   editedData = {} as Exercise
   question = new UntypedFormControl('', [Validators.required])
-  expression = new UntypedFormControl('', [Validators.required])
+  answer = new UntypedFormControl('', [Validators.required])
   bad_answer1 = new UntypedFormControl('', [Validators.required])
   bad_answer2 = new UntypedFormControl('', [Validators.required])
   bad_answer3 = new UntypedFormControl('', [Validators.required])
@@ -49,7 +49,7 @@ export class ExerciseGeneralPageComponent implements OnInit {
           this.originalData = JSON.parse(JSON.stringify(res))
 
           this.question.setValue(this.editedData.question)
-          this.expression.setValue(this.editedData.expression)
+          this.answer.setValue(this.editedData.answer)
           this.bad_answer1.setValue(this.editedData.bad_answer1)
           this.bad_answer2.setValue(this.editedData.bad_answer2)
           this.bad_answer3.setValue(this.editedData.bad_answer3)
@@ -82,7 +82,7 @@ export class ExerciseGeneralPageComponent implements OnInit {
   openDialog(): void {
 
     this.editedData.question = this.question.value
-    this.editedData.expression = this.expression.value
+    this.editedData.answer = this.answer.value
     this.editedData.bad_answer1 = this.bad_answer1.value
     this.editedData.bad_answer2 = this.bad_answer2.value
     this.editedData.bad_answer3 = this.bad_answer3.value

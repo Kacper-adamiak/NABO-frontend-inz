@@ -1,12 +1,8 @@
 <div class="segment">
   <div class="elevated_box">
-    <button mat-icon-button class="elevated_box_top_left" color="primary" routerLink="..">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
-    <div class="elevated_box_header">
-      <h1>Fiszka: {{originalData.expOriginal}}</h1>
-      <span class="underline"></span>
-    </div>
+
+    <app-elevated-box-top-buttons [rightButtonHidden]="true" ></app-elevated-box-top-buttons>
+    <app-elevated-box-header>Fiszka: {{originalData.expOriginal}}</app-elevated-box-header>
 
     <div style="width: 100%;">
       <mat-form-field appearance="fill" style="width: 100%;">
@@ -38,7 +34,7 @@
       <img *ngIf="!!selectedImage" src="{{selectedImage.url}}" width="128px" height="128px">
     </div>
 
-    <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
+    <div class="elevated_box_button_container">
       <button mat-raised-button color="primary" (click)="saveChanges()" [disabled]="false">Zapisz zmiany</button>
       <button mat-raised-button color="warn" (click)="deleteFlashcard()">Usuń</button>
     </div>

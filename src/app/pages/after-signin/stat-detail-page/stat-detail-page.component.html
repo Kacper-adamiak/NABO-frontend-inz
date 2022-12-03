@@ -2,7 +2,17 @@
 
 <div class="segment">
   <div class="elevated_box">
-    <canvas baseChart [type]="'line'" [data]="dataChart" [options]="options" width="90%">
+
+    <button mat-icon-button class="elevated_box_top_left" color="primary" routerLink="..">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+
+    <div class="elevated_box_header">
+      <h1>Bilnans nowych użytkowników</h1>
+      <span class="underline"></span>
+    </div>
+
+    <canvas style="width: 100%; max-height: 80%;" baseChart [type]="'bar'" [data]="dataChart" [options]="options" width="90%">
     </canvas>
   </div>
 </div>

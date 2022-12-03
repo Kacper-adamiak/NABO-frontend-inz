@@ -42,7 +42,7 @@ export class NewFlashcardDialogComponent implements OnInit {
   onAccept() {
     this.newFlashcard.expOriginal = this.expOriginal.value
     this.newFlashcard.expTranslation = this.expTranslation.value
-    this.newFlashcard.expDescription = this.expTranslation.value
+    this.newFlashcard.expDescription = this.expDescription.value
     this.newFlashcard.imageName = this.selectedImage.name
 
     this.flashcardService.addFlashcard(this.data.courseId, this.data.levelId ,this.newFlashcard).subscribe({

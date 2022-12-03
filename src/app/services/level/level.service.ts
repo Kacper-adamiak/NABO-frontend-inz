@@ -24,7 +24,7 @@ export class LevelService {
     return this.webService.post<any>(`/course/${courseId}/level/add`, {
       name: newLevel.name,
       difficulty: newLevel.difficulty,
-      statusName: "STATUS_ACTIVE"
+      statusName: newLevel.statusName
     })
   }
 

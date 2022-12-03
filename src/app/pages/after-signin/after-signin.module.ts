@@ -45,6 +45,7 @@ import {
 import {
   NewPotentialCategoryDialogComponent
 } from './courses-page/new-potential-category-dialog/new-potential-category-dialog.component';
+import {SharedModule} from "../../shared/shared.module";
 
 
 @NgModule({
@@ -77,7 +78,7 @@ import {
     EditCourseDialogComponent,
     UsersPanelComponent,
     AddNewCreatorPanelComponent,
-    NewPotentialCategoryDialogComponent
+    NewPotentialCategoryDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -85,11 +86,12 @@ import {
     ReactiveFormsModule,
     MaterialExampleModule,
     FormsModule,
-    NgChartsModule
+    NgChartsModule,
+    SharedModule
 
   ],
   providers: [
-    { provide: NgChartsConfiguration, useValue: { generateColors: true }}
+    {provide: NgChartsConfiguration, useValue: {generateColors: true}}
   ]
 })
 export class AfterSigninModule { }

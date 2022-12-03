@@ -11,6 +11,7 @@ import {AuthService} from "../../../services/auth/auth.service";
 import {
   NewPotentialCategoryDialogComponent
 } from "./new-potential-category-dialog/new-potential-category-dialog.component";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-courses-page',
@@ -22,6 +23,7 @@ export class CoursesPageComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ["name", "categoryName", "statusName", 'modified', 'created' ];
   dataSource: MatTableDataSource<Course> = new MatTableDataSource<Course>([] as Course[])
+  data: any[] = []
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -29,7 +31,10 @@ export class CoursesPageComponent implements OnInit, AfterViewInit {
   constructor(private courseServ: CourseService,
               public dialog: MatDialog,
               public dialogService: DialogService,
-              public authService: AuthService) {
+              public authService: AuthService,
+              private router: Router,
+              private activeRoute: ActivatedRoute
+  ) {
   }
 
   ngAfterViewInit(): void {
@@ -75,6 +80,7 @@ export class CoursesPageComponent implements OnInit, AfterViewInit {
     this.courseServ.getAllCourses().subscribe({
       next: res => {
         this.dataSource.data = res
+        this.data = res
       },
       error: err => {
         spinner.close()
@@ -90,6 +96,7 @@ export class CoursesPageComponent implements OnInit, AfterViewInit {
     this.courseServ.getCoursesCreatedByAdmin().subscribe({
       next: res => {
         this.dataSource.data = res
+        this.data = res
       },
       error: err => {
         spinner.close()
@@ -123,5 +130,7 @@ export class CoursesPageComponent implements OnInit, AfterViewInit {
   }
 
 
-
+  rowClicked(event: any) {
+      this.router.navigate([`${event.id}`], {relativeTo: this.activeRoute})
+  }
 }

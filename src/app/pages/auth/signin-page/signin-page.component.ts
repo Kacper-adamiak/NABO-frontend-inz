@@ -26,6 +26,7 @@ export class SigninPageComponent implements OnInit {
     let spinner = this.dialogService.openSpinner()
     this.authService.signin(this.email.value, this.password.value).subscribe({
       next: res => {
+        console.log(res)
       },
       error: err => {
         spinner.close()

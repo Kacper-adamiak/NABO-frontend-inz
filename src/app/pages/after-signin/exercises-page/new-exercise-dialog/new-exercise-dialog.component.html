@@ -1,6 +1,6 @@
 <div mat-dialog-content>
 
-  <h2>Dodaj nowy poziom</h2>
+  <h2>Dodaj nowe ćwiczenie</h2>
 
   <div style="width: 100%;">
     <mat-form-field appearance="fill" style="width: 100%;">
@@ -13,8 +13,8 @@
   <div style="width: 100%;">
     <mat-form-field appearance="fill" style="width: 100%;">
       <mat-label>Odpowiedź</mat-label>
-      <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="expression" required>
-      <mat-error *ngIf="expression.invalid">Nazwa musi być wypełniona</mat-error>
+      <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="answer" required>
+      <mat-error *ngIf="answer.invalid">Nazwa musi być wypełniona</mat-error>
     </mat-form-field>
   </div>
 
@@ -51,5 +51,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Anuluj</button>
-  <button mat-button (click)="onAccept()" [disabled]="!(question.valid && expression.valid)">Utwórz fiszkę</button>
+  <button mat-button (click)="onAccept()" [disabled]="!(question.valid && answer.valid)">Utwórz ćwiczenie</button>
 </div>

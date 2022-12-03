@@ -1,12 +1,8 @@
 <div class="segment">
   <div class="elevated_box">
-    <button mat-icon-button class="elevated_box_top_left" color="primary" routerLink="..">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
-    <div class="elevated_box_header">
-      <h1>Ćwiczenie: {{originalData.question}}</h1>
-      <span class="underline"></span>
-    </div>
+
+    <app-elevated-box-top-buttons [rightButtonHidden]="true" ></app-elevated-box-top-buttons>
+    <app-elevated-box-header>Ćwiczenie: {{originalData.question}}</app-elevated-box-header>
 
     <div style="width: 100%;">
       <mat-form-field appearance="fill" style="width: 100%;">
@@ -19,8 +15,8 @@
     <div style="width: 100%;">
       <mat-form-field appearance="fill" style="width: 100%;">
         <mat-label>Odpowiedź</mat-label>
-        <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="expression" required>
-        <mat-error *ngIf="expression.invalid">Nazwa musi być wypełniona</mat-error>
+        <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="answer" required>
+        <mat-error *ngIf="answer.invalid">Nazwa musi być wypełniona</mat-error>
       </mat-form-field>
     </div>
 
