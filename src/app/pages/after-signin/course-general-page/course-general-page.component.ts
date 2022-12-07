@@ -101,12 +101,12 @@ export class CourseGeneralPageComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialogService.openDataDiffDialog(this.originalData, this.editedData)
-
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
         this.courseService.editCourseById(this.editedData.id!, this.editedData).subscribe({
           next: (res) => {
             this.snackBarService.openSuccessSnackBar(res.message)
+            this.originalData = JSON.parse(JSON.stringify(this.editedData))
           },
           error: (err) => {
             console.log("error: ", err)
@@ -119,11 +119,10 @@ export class CourseGeneralPageComponent implements OnInit {
             if(err.error.statusName) {
               this.snackBarService.openErrorSnackBar(err.statusName)
             }
+            this.editedData = JSON.parse(JSON.stringify(this.originalData))
           }
         })
-        this.originalData = JSON.parse(JSON.stringify(this.editedData))
       }
-      console.log('The dialog was closed');
     });
   }
 

@@ -26,5 +26,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onDecline()">Anuluj</button>
-  <button mat-button (click)="onAccept()">Zatwierdź</button>
+  <button mat-button (click)="onAccept()" [disabled]="acceptIsDisabled">Zatwierdź</button>
 </div>

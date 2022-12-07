@@ -47,9 +47,11 @@ export class CategoriesPanelComponent implements OnInit, AfterViewInit {
   getCategories() {
     this.categoryService.getCategories().subscribe({
       next: value => {
+        console.log("kategorie:", value)
         this.categoriesDataSource.data = value
       },
       error: err => {
+        this.snackbarService.openErrorSnackBar(err.message)
       },
       complete: () => {
 

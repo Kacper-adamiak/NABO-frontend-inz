@@ -10,6 +10,7 @@ import {DictionaryService} from "../../../services/dictionary.service";
 export class DataDifferenceDialogComponent implements OnInit {
 
   objectKeys: string[] = []
+  acceptIsDisabled = true
 
   constructor(
     public dialogRef: MatDialogRef<DataDifferenceDialogComponent>,
@@ -20,6 +21,13 @@ export class DataDifferenceDialogComponent implements OnInit {
         const hiddenKeys = ['id', 'created', 'modified', 'authorId', 'authorLogin', 'exerciseNumber', 'flashcardNumber', 'testQuestionNumber']
         return !hiddenKeys.includes(value)
       })
+
+      for (const key of this.objectKeys) {
+        if(this.data.editedData[key] != this.data.originalData[key]){
+          this.acceptIsDisabled = false
+          break
+        }
+      }
   }
 
   onDecline(): void {

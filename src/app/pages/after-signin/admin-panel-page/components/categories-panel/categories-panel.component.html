@@ -7,7 +7,7 @@
   <div>
     <mat-form-field class="find_form" appearance="fill">
       <mat-label>Wyszukaj</mat-label>
-      <input matInput (keyup)="applyFilterCategories($event)" placeholder="np. kurs o zwierzętach" #input>
+      <input matInput name="search-categories" id="search-categories" (keyup)="applyFilterCategories($event)" placeholder="kategoria">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
 
