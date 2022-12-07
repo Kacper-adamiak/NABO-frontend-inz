@@ -11,10 +11,14 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MaterialExampleModule} from "../../material.module";
 import {ButtonModule} from "primeng/button";
 import {ToastModule} from "primeng/toast";
+import {AfterSigninModule} from "./after-signin/after-signin.module";
+import {ResetPasswordPageComponent} from './reset-password-page/reset-password-page.component';
+import {SharedModule} from "../shared/shared.module";
 
 @NgModule({
   declarations: [
-    StartingPageComponent
+    StartingPageComponent,
+    ResetPasswordPageComponent
   ],
     imports: [
         CommonModule,
@@ -28,6 +32,8 @@ import {ToastModule} from "primeng/toast";
         ButtonModule,
         ToastModule,
         AuthModule,
+        AfterSigninModule,
+        SharedModule
     ]
 })
 export class PagesModule { }

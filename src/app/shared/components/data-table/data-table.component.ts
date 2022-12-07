@@ -19,7 +19,6 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     this.setTableDataSource(data)
   }
   @Input() filterFormHidden: boolean = false
-  @Input() applyFilter:  (event: Event) => void = (event: Event) => {}
   @Input() paginatorHidden: boolean = false;
   @Output() onRowClick = new EventEmitter()
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([])
@@ -48,6 +47,17 @@ export class DataTableComponent implements OnInit, AfterViewInit {
 
   isDate(object: any) {
     return moment(object, true).isValid();
+  }
+
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    console.log(filterValue.trim().toLowerCase())
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   onRowClickEmit(row: any) {

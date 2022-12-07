@@ -12,19 +12,24 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
-    request = this.addAuthHeader(request)
     console.log("Interceptor: ", request);
-      return next.handle(request).pipe(catchError(err => {
-        console.log(err)
-        if (err.status == 401) {
-          this.authService.logout();
-        }
+    if(request.url != "http://localhost:8081/api/user/resetPassword"){
+      request = this.addAuthHeader(request)
 
-        const error = err;
-        return throwError(error);
-      })
-    )
+      return next.handle(request).pipe(catchError(err => {
+          console.log(err)
+          if (err.status == 401) {
+            this.authService.logout();
+          }
+
+          const error = err;
+          return throwError(error);
+        })
+      )
+    }
+    else {
+      return next.handle(request)
+    }
   }
 
   refreshAccessToken() {

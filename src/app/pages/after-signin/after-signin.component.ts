@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../../services/auth/auth.service";
+import {LocalStorageService} from "../../services/local-storage/local-storage.service";
 
 @Component({
   selector: 'app-after-signin',
@@ -12,6 +13,7 @@ export class AfterSigninComponent implements OnInit {
   constructor(
     private router: Router,
     public authService: AuthService,
+    public localStorageService: LocalStorageService
   ) { }
 
   ngOnInit(): void {

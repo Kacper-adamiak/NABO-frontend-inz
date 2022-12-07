@@ -49,6 +49,12 @@ export class LocalStorageService {
     return null
   }
 
+  getUsernameFromLocalStorage() {
+    const user_data = this.getUserDataFromLocalStorage()
+    if (user_data && user_data.username) return user_data.username
+    return null
+  }
+
   getRefreshTokenFromLocalStorage() {
     const user_data = this.getUserDataFromLocalStorage()
     if (!!(user_data) && !!(user_data.refreshToken)) return user_data.refreshToken

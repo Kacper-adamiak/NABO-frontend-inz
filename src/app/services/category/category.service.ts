@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {WebService} from "../web/web.service";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class CategoryService {
     })
   }
 
-  editCategory(categoryId: number, categoryName: string) {
+  editCategory(categoryId: number, categoryName: string): Observable<any> {
     return this.webService.patch<any>(`/StatusCategory/editCategory/${categoryId}`, {
       name: categoryName
     })

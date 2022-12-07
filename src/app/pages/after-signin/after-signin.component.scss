@@ -23,6 +23,22 @@ $topbar-background-color: #4F4FB7;
  */
 
 $main_segment-height: calc(100vh - $topbar-height);
+.logo-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+  width: $sidebar-width-large;
+  z-index: 2;
+  .logo {
+    display: inline-block;
+    height: 3rem;
+    fill: white;
+  }
+  @media (max-width: 950px) {
+    width: $sidebar-width-small;
+  }
+}
 
 
 .topbar {
@@ -35,7 +51,7 @@ $main_segment-height: calc(100vh - $topbar-height);
   width: 100%;
   background-color: $topbar-background-color;
 
-  ::before {
+  &::before {
     content: "";
     position: absolute;
     top: 0;
@@ -51,9 +67,9 @@ $main_segment-height: calc(100vh - $topbar-height);
   }
 
   .topbar_icon {
-    height: 2em;
-    width: 2em;
-    margin: 0.2em;
+    height: 2rem;
+    width: 2rem;
+    margin: 0.2rem;
     fill: white;
 
     cursor: pointer;

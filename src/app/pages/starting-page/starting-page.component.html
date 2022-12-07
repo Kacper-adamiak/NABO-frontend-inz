@@ -1,7 +1,35 @@
-<a routerLink="/auth/signin">Zaloguj się do swojego panelu</a>
-<button pButton (click)="openDialog()">Dialog dodana</button>
-<button mat-raised-button (click)="openSnackbar()">Snackbar</button>
-<button (click)="openImagePicker()">Image Picker</button>
-<button (click)="addSingle()">ngPrime toast</button>
-<button (click)="openDiffDialog()">openDiffDialog</button>
-<p-toast></p-toast>
+<a routerLink="/auth/signin" class="top-right-link">PANEL TWÓRCY ></a>
+<section class="section title-section">
+  <div>
+    <object type="image/svg+xml" data="../../../assets/logo-white.svg" class="logo">
+    </object>
+    <h1 class="title">
+      NABO
+    </h1>
+    <h2>Ucz się języka na własnych warunkach. Wiedza idzie w parze z nauką!</h2>
+  </div>
+</section>
+<section class="section about_section">
+  <div class="section_content">
+    <div class="section_segment" #apearOnScroll>
+      <h2>O aplikacji</h2>
+      <p>Nauka z nami jest, taka jaka powinna zawsze być. Szybkie i krótkie lekcje pozwalają przyswoić nowe słówka.
+        Diszki dają ci możliwość nauczenia się słówek, kiedy chcesz i gdzie chcesz. Na końcu czeka ciebie test, który
+        sprawdzi twój postęp.</p>
+      <p>Ucz się bez zbędnych przerw, ograniczeń czy zapychaczy! <b>Nauka to przyjemność!</b></p>
+    </div>
+    <div class="section_segment" #apearOnScroll>
+      <h2>Bądź twórcą</h2>
+      <p>Chcesz zostać twórcą kursów angielskiego?</p>
+      <p>Chcesz pomagać innym w rozwoju swoich umiejętności?</p>
+      <p>Zgłoś się do nas aby dołączyć do rozwijającego się zespołu twórców.</p>
+      <p>Napisz do nas: <b>
+        kakcpc@gmail.com
+      </b></p>
+    </div>
+  </div>
+</section>
+<footer>
+  Copyright &copy; 2022 NaboDev. All Rights Reserved
+</footer>
+

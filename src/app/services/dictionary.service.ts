@@ -24,6 +24,7 @@ export class DictionaryService {
     ['bad_answer3', 'zła odpowiedź [3]'],
     ['answer', 'odpowiedź'],
     ['imageName', 'nazwa zdjęcia'],
+    ['imageUrl', 'zdjęcie'],
   ])
 
   constructor() { }

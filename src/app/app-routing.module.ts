@@ -27,9 +27,11 @@ import {ExerciseGeneralPageComponent} from "./pages/after-signin/exercise-genera
 import {
   AccountEditPageComponent
 } from "./pages/after-signin/account-page/account-edit-page/account-edit-page.component";
+import {ResetPasswordPageComponent} from "./pages/reset-password-page/reset-password-page.component";
 
 const routes: Routes = [
   {path: "", component: StartingPageComponent},
+  {path: "reset", component: ResetPasswordPageComponent},
   {path: "home", component: AfterSigninComponent, children: [
     {path: "", component: HomePageComponent},
     {path: 'account', component: AccountPageComponent},

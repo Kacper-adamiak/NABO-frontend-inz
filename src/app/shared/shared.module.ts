@@ -32,13 +32,14 @@ import {FirstToUppercasePipe} from './first-to-uppercase.pipe';
         ElevatedBoxHeaderComponent,
         ElevatedBoxTopButtonsComponent,
         DataTableComponent,
-        FirstToUppercasePipe],
-  exports: [
-    SearchFieldComponent,
-    ElevatedBoxHeaderComponent,
-    ElevatedBoxTopButtonsComponent,
-    DataTableComponent
-  ],
+        FirstToUppercasePipe,
+        ],
+    exports: [
+        SearchFieldComponent,
+        ElevatedBoxHeaderComponent,
+        ElevatedBoxTopButtonsComponent,
+        DataTableComponent,
+    ],
     imports: [
         CommonModule,
         BrowserModule,

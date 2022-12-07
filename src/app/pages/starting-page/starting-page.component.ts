@@ -1,63 +1,44 @@
-import {Component, OnInit} from '@angular/core';
-import {DialogService} from "../../services/dialog/dialog.service";
-import {SnackbarService} from "../../services/snack-bar/snackbar.service";
-import {MessageService} from "primeng/api";
+import {Component, ElementRef, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {gsap} from 'gsap';
+import Draggable from 'gsap/Draggable';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 
 @Component({
   selector: 'app-starting-page',
   templateUrl: './starting-page.component.html',
   styleUrls: ['./starting-page.component.scss'],
-  providers: [MessageService]
 })
 export class StartingPageComponent implements OnInit {
 
-  constructor(private dialogService: DialogService,
-              private snackbarService: SnackbarService,
-              private messageService: MessageService
+  constructor(
 
   ) { }
 
+  @ViewChildren('apearOnScroll') apearOnScroll!: QueryList<ElementRef>;
+
   ngOnInit(): void {
+    gsap.registerPlugin(ScrollTrigger, Draggable);
+    setTimeout(() => {
+      this.isAnimation();
+    }, 100);
   }
 
-  openDialog() {
-    const dialog = this.dialogService.openUploadImage()
-    dialog.afterClosed().subscribe({
-      next: value => {
-        if(value){
-          console.log(value)
-        }
-      },
-      error: err => {
-        console.log('something went wrong')
-      }
-    })
+  isAnimation(): void {
+    let items = this.apearOnScroll.map((elem) => elem.nativeElement);
+    items.forEach((box) => {
+      const scrollBox = gsap.timeline({
+        scrollTrigger: {
+          trigger: box,
+          // pin: false,
+          start: 'top 70%',
+          end: 'bottom bottom',
+          // markers: true,
+          toggleActions: 'play none none reverse',
+        },
+      });
+      scrollBox.from(box, { y: 0, x: 50, opacity: 0 });
+    });
   }
 
-  openSnackbar() {
-    this.snackbarService.openSuccessSnackBar("działa")
-  }
-
-  openImagePicker() {
-    const dialog = this.dialogService.openImagePicker()
-    dialog.afterClosed().subscribe({
-      next: value => {
-        if(value){
-          console.log("after close picker: ",value)
-        }
-      },
-      error: err => {
-        console.log('something went wrong')
-      }
-    })
-  }
-
-  addSingle() {
-    this.messageService.add({severity:'success', summary:'Service Message', detail:'Via MessageService'});
-  }
-
-  openDiffDialog() {
-
-  }
 
 }

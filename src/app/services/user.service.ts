@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {WebService} from "./web/web.service";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +9,8 @@ import {WebService} from "./web/web.service";
 export class UserService {
 
   constructor(
-    private webService: WebService
+    private webService: WebService,
+    private http: HttpClient
   ) { }
 
   getUserData() {
@@ -32,6 +35,16 @@ export class UserService {
 
   deleteUserById(userId: number) {
     return this.webService.delete<any>(`/user/delete${userId}`)
+  }
+
+  resetPassword(token: string, userPassword: string): Observable<{ message: string }> {
+    return this.http.patch<{ message: string }>(`http://localhost:8081/api/user/resetPassword`,{
+      password: userPassword
+    }, {
+      headers: new HttpHeaders({
+        'authorization': `Bearer ${token}`
+      },)
+    })
   }
 
 

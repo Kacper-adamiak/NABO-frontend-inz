@@ -4,7 +4,7 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {UntypedFormControl} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {DialogService} from "../../../services/dialog/dialog.service";
 import {ExerciseService} from "../../../services/exercise/exercise.service";
 import {Exercise} from "../../../models/exercise";
@@ -17,8 +17,9 @@ import {NewExerciseDialogComponent} from "./new-exercise-dialog/new-exercise-dia
 })
 export class ExercisesPageComponent implements OnInit {
 
-  displayedColumns: string[] = ["question", "expression", "bad_answer1", "bad_answer2", "bad_answer3", "imageName", "imageUrl"];
+  displayedColumns: string[] = ["question", "answer", "bad_answer1", "bad_answer2", "bad_answer3", "imageUrl"];
   dataSource: MatTableDataSource<Exercise> = new MatTableDataSource<Exercise>([] as Exercise[])
+  data: Exercise[] = []
   courseId!: number
   levelId!: number
 
@@ -30,27 +31,26 @@ export class ExercisesPageComponent implements OnInit {
   constructor(
     private exerciseService: ExerciseService,
     public dialog: MatDialog,
-    private route: ActivatedRoute,
-    private dialogService: DialogService) {
+    private dialogService: DialogService,
+    private router: Router,
+    private activeRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.courseId = Number(this.route.snapshot.paramMap.get('courseId'))
-    this.levelId = Number(this.route.snapshot.paramMap.get('levelId'))
+    this.courseId = Number(this.activeRoute.snapshot.paramMap.get('courseId'))
+    this.levelId = Number(this.activeRoute.snapshot.paramMap.get('levelId'))
     this.getExercises();
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   getExercises() {
     const spinner = this.dialogService.openSpinner()
     this.exerciseService.getAllExercises(this.courseId, this.levelId).subscribe({
       next: res => {
-        let data: Exercise[] = res
-        this.dataSource.data = data
+        this.dataSource.data = res
+        this.data = res
       },
       error: err => {
         spinner.close()
@@ -75,14 +75,9 @@ export class ExercisesPageComponent implements OnInit {
     });
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    console.log(filterValue.trim().toLowerCase())
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  rowClicked(event: any) {
+    this.router.navigate([`${event.id}`], {relativeTo: this.activeRoute})
   }
 
 }
