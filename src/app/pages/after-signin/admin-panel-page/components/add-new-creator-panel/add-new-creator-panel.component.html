@@ -29,6 +29,6 @@
       </mat-form-field>
     </div>
 
-    <button mat-raised-button color="primary" [disabled]="login.invalid" (click)="addNewCreator()">Dodaj</button>
+    <button mat-raised-button color="primary" [disabled]="login.invalid || password.invalid || email.invalid" (click)="addNewCreator()">Dodaj</button>
   </div>
 </mat-expansion-panel>
