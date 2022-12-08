@@ -3,6 +3,7 @@ import {UntypedFormControl} from '@angular/forms';
 import {AuthService} from 'src/app/services/auth/auth.service';
 import {DialogService} from "../../../services/dialog/dialog.service";
 import {SnackbarService} from "../../../services/snack-bar/snackbar.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-signin-page',
@@ -14,9 +15,11 @@ export class SigninPageComponent implements OnInit {
   constructor(
               private authService: AuthService,
               private dialogService: DialogService,
-              private snackbarService: SnackbarService) { }
+              private snackbarService: SnackbarService,
+              private router: Router) { }
 
   ngOnInit(): void {
+    this.chceckIfUserLoggedIn()
   }
 
   email = new UntypedFormControl('')
@@ -37,6 +40,13 @@ export class SigninPageComponent implements OnInit {
         this.snackbarService.openSuccessSnackBar("Pomyślnie zalogowano!")
       }
     });
+  }
+
+  chceckIfUserLoggedIn() {
+    let data = this.authService.getUserData()
+    if(data != null && data != ""){
+      this.router.navigate(['home'])
+    }
   }
 
 }
