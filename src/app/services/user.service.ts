@@ -22,11 +22,11 @@ export class UserService {
   }
 
   editUser(payload: any) {
-    return this.webService.post<any>('/user/edit', payload)
+    return this.webService.patch<any>('/user/edit', payload)
   }
 
   editUserById(userId: number, payload: any) {
-    return this.webService.post<any>(`/user/edit/${userId}`, payload)
+    return this.webService.patch<any>(`/user/edit/${userId}`, payload)
   }
 
   deleteUser() {
