@@ -12,8 +12,11 @@ export class AddNewCreatorPanelComponent implements OnInit {
 
   @Output() afterAdd = new EventEmitter<any>()
 
+
+  //Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
+  passwordRegexp: RegExp = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/)
   login = new UntypedFormControl('', [Validators.required])
-  password = new UntypedFormControl('', [Validators.required])
+  password = new UntypedFormControl('', [Validators.required, Validators.pattern(this.passwordRegexp)])
   email = new UntypedFormControl('', [Validators.required])
 
   constructor(

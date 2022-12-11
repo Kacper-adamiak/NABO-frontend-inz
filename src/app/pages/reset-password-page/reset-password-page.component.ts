@@ -11,25 +11,39 @@ import {SnackbarService} from "../../services/snack-bar/snackbar.service";
 })
 export class ResetPasswordPageComponent implements OnInit {
 
-  hide = true;
+  hide = true
   spinner = false
+  passwordMismatch = false
 
   token: string = ""
 
-  password = new UntypedFormControl("", [Validators.required]);
-  passwordConfirm = new UntypedFormControl("", [Validators.required]);
+  //Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
+  passwordRegexp: RegExp = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/)
+  password = new UntypedFormControl("",
+    [
+      Validators.pattern(this.passwordRegexp)
+  ]);
+  passwordConfirm = new UntypedFormControl("",
+    [
+      Validators.pattern(this.passwordRegexp)
+    ]
+  );
 
-  form: FormGroup = new FormGroup({})
+  form: FormGroup = this.fb.group({
+    password: this.password,
+    passwordConfirm: this.passwordConfirm
+  })
 
-  constructor(private userService: UserService, private route: ActivatedRoute, private snackbarService: SnackbarService,private fb: FormBuilder) {
-    this.form = this.fb.group({
-      password: ['', [Validators.required]],
-      passwordConfirm: ['', [Validators.required]]
-    })
+  constructor(private userService: UserService, private route: ActivatedRoute, private snackbarService: SnackbarService, private fb: FormBuilder) {
   }
 
-  get f(){
+  get f() {
     return this.form.controls;
+  }
+
+  comparePasswords() {
+    if(this.f["password"].value != this.f["passwordConfirm"].value) this.passwordMismatch = true
+    this.passwordMismatch = false
   }
 
   ngOnInit(): void {

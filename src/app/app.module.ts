@@ -17,7 +17,6 @@ import {NoopScrollStrategy} from "@angular/cdk/overlay";
 @NgModule({
   declarations: [
     AppComponent,
-
   ],
   imports: [
     CommonModule,

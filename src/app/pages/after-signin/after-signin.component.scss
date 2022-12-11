@@ -84,7 +84,7 @@ $main_segment-height: calc(100vh - $topbar-height);
 .main_box {
 
   display: flex;
-  min-height: 450px;
+  min-height: 700px;
   .sidebar {
     width: $sidebar-width-large;
     padding: 1em;

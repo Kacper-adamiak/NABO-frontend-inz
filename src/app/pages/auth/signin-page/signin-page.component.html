@@ -1,16 +1,16 @@
 <div class="login-center">
   <div class="login_form">
-    <h2>Zaloguj się na konto</h2>
+    <h2 style="margin-bottom: 30px;">Zaloguj się na swoje konto</h2>
 
-    <mat-form-field appearance="fill" style="width: 100%;">
+    <mat-form-field appearance="fill" style="margin-bottom: 10px;">
       <mat-label>Login</mat-label>
-      <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="email"  required>
-      <mat-error *ngIf="email.invalid">Login musi być wypełniona</mat-error>
+      <input matInput placeholder="Tu wprowadź login" [formControl]="email"  required>
+      <mat-error *ngIf="email.invalid">Podaj login</mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="fill" style="width: 100%;">
-      <mat-label>Enter your password</mat-label>
-      <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password" required>
+    <mat-form-field appearance="fill" style="margin-bottom: 10px;">
+      <mat-label>Hasło</mat-label>
+      <input matInput placeholder="Tu wprowadź hasło" [type]="hide ? 'password' : 'text'" [formControl]="password" required>
       <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" >
         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>

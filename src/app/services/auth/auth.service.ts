@@ -4,6 +4,7 @@ import {BehaviorSubject, first, map, tap} from 'rxjs';
 import {WebService} from '../web/web.service';
 import {Role} from "../../enums/role";
 import {LocalStorageService} from "../local-storage/local-storage.service";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -30,14 +31,14 @@ export class AuthService {
     })
       .pipe(
         map((response) => {
-          this.localStorageService.saveUserDataToLocalStorage(response)
           if (this.userWithRoleHasAccessToSite(response.roles)) {
+            this.localStorageService.saveUserDataToLocalStorage(response)
             this.checkAndUpdateIsLoggedIn()
             this.checkAndUpdateRoleStatuses()
             this.router.navigate(["/home"])
             return response
           }
-          throw new Error("Nie masz dostępu do panelu twórcy")
+          throw new HttpErrorResponse( {error: {message:"Nie masz dostępu do panelu twórcy"}})
         })
       )
   }

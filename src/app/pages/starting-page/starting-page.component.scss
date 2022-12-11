@@ -12,7 +12,8 @@
   display: inline-block;
   width: 150px;
   height: 150px;
-  fill: white;
+  fill: #4287b0;
+  color: #4287b0;
 }
 
 .section {
@@ -101,10 +102,10 @@
         @include underline(top, 10px, $color:#c5c5d7);
       }
 
-      &::after {
-        content: "";
-        @include underline(bottom, 20px, $color:#c5c5d7);
-      }
+      //&::after {
+      //  content: "";
+      //  @include underline(bottom, 20px, $color:#c5c5d7);
+      //}
     }
   }
 }

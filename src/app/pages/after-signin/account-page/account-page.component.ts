@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../../services/user.service";
 import {DialogService} from "../../../services/dialog/dialog.service";
 import {MatDialog} from "@angular/material/dialog";
+import {DelateAccountDialogComponent} from "./delate-account-dialog/delate-account-dialog.component";
 
 @Component({
   selector: 'app-account-page',
@@ -38,6 +39,13 @@ export class AccountPageComponent implements OnInit {
         spinner.close()
         userData.unsubscribe()
       }
+    })
+  }
+
+  openDeleteDialog() {
+    const dialogRef =this.dialog.open(DelateAccountDialogComponent, {
+      width: 'fit-content',
+      height: 'fit-content'
     })
   }
 

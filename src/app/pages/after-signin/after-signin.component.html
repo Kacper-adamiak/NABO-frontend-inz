@@ -20,25 +20,25 @@
         <li>
         <span routerLink='account' routerLinkActive="active">
           <mat-icon style="font-size: 40px; width: 40px; height: 40px;">account_circle</mat-icon>
-          <p>Konto</p>
+          <p style="font-size: 1rem; margin-left: 6px;">Konto</p>
         </span>
         </li>
         <li>
         <span routerLink='courses'routerLinkActive="active">
           <mat-icon style="font-size: 40px; width: 40px; height: 40px;">bookmark</mat-icon>
-          <p>Kursy</p>
+          <p style="font-size: 1rem; margin-left: 6px;">Kursy</p>
         </span>
         </li>
         <li>
         <span routerLink='stats' routerLinkActive="active">
           <mat-icon style="font-size: 40px; width: 40px; height: 40px;">insights</mat-icon>
-          <p>Statystyki</p>
+          <p style="font-size: 1rem; margin-left: 6px;">Statystyki</p>
         </span>
         </li>
         <li *ngIf="authService.isSuperAdmin$ | async">
         <span routerLink='adminpanel' routerLinkActive="active">
             <mat-icon style="font-size: 40px; width: 40px; height: 40px;">wysiwyg</mat-icon>
-            <p>Panel Admina</p>
+            <p style="font-size: 1rem; margin-left: 6px;">Panel Administatora</p>
         </span>
         </li>
       </ul>

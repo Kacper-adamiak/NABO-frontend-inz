@@ -1,5 +1,5 @@
 <div class="segment">
-  <div class="elevated_box">
+  <div class="elevated_box" style="overflow-y: auto;">
     <button mat-icon-button class="elevated_box_top_left" color="primary" routerLink="..">
       <mat-icon>arrow_back</mat-icon>
     </button>
@@ -8,8 +8,9 @@
       <span class="underline"></span>
     </div>
 
-    <mat-accordion>
-      <mat-expansion-panel style="background-color: #eeeeee;">
+
+    <div style="height: fit-content;">
+      <mat-expansion-panel style="background-color: #eeeeee; height: fit-content;" >
 
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -28,7 +29,6 @@
         </mat-accordion>
 
       </mat-expansion-panel>
-
       <mat-expansion-panel style="background-color: #eeeeee;">
 
         <mat-expansion-panel-header>
@@ -45,7 +45,6 @@
         </mat-accordion>
 
       </mat-expansion-panel>
-
-    </mat-accordion>
+    </div>
   </div>
 </div>

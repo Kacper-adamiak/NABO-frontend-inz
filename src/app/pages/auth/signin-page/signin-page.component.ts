@@ -33,7 +33,14 @@ export class SigninPageComponent implements OnInit {
       },
       error: err => {
         spinner.close()
-        this.snackbarService.openErrorSnackBar(err.message)
+        console.log(err)
+        if(err.status == 401){
+          this.snackbarService.openErrorSnackBar("Konto o podanym loginie i haśle nie istnieje")
+        }
+        else {
+          this.snackbarService.openErrorSnackBar(err.error.message)
+        }
+
       },
       complete: () => {
         spinner.close()

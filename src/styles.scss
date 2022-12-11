@@ -53,7 +53,19 @@ $secondary-20:rgba(79, 79, 183, 0.2);
 
 
 
+*::-webkit-scrollbar {
+  width: 10px;
+}
 
+*::-webkit-scrollbar-track {
+  background: #363636;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #858585;
+  border-radius: 6px;
+  border: 0px none #ffffff;
+}
 
 * {
   font-family: 'Martel Sans', sans-serif;
@@ -70,7 +82,7 @@ $secondary-20:rgba(79, 79, 183, 0.2);
   width: 100%;
   height: 100%;
   min-width: 400px;
-  min-height: 400px;
+  min-height: 700px;
 
   padding: 10px;
 
@@ -101,8 +113,6 @@ $secondary-20:rgba(79, 79, 183, 0.2);
   padding: 2%;
   border-radius: 5px;
   box-shadow: 3px 3px 20px 1px rgb(208, 208, 208);
-
-  overflow: hidden;
 
   overflow-y: auto;
 
@@ -360,6 +370,10 @@ $secondary-20:rgba(79, 79, 183, 0.2);
   &:hover, &:focus {
     background-color: #d7d7d7;
   }
+}
+
+.mat-form-field {
+  line-height: 2 !important;
 }
 
 mat-error {

@@ -17,7 +17,7 @@
       <mat-form-field appearance="fill" style="width: 100%;">
         <mat-label>Hasło</mat-label>
         <input type="password" matInput placeholder="Tu wprowadź nazwę kategorii" [formControl]="password" required>
-        <mat-error *ngIf="password.invalid" style="padding: 3px">Nazwa musi być wypełniona</mat-error>
+        <mat-error *ngIf="password.invalid" style="padding: 3px">Hasło musi zawierać przynajmniej 8 znaków, przynajmniej 1 dużą literę, przynajmniej 1 małą literę, przynajmniej 1 cyfrę oraz przynajmniej jeden znak specjalny</mat-error>
       </mat-form-field>
     </div>
 

@@ -7,8 +7,15 @@
         mat-sort-header="{{column}}"> {{dictionaryService.translate(column) | firstToUppercase}} </th>
     <td mat-cell *matCellDef="let row">
       <ng-container *ngIf="column != 'imageUrl'">
-        <span *ngIf="!isDate(row[column])"> {{row[column]}}</span>
-        <span *ngIf="isDate(row[column])"> {{row[column] | date:'d-M-yy, h:mm'}}</span>
+
+        <ng-container *ngIf="column == 'statusName'; else elseStatusName">
+          <span>{{row.statusName.split('_')[1]}}</span>
+        </ng-container>
+        <ng-template #elseStatusName>
+          <span *ngIf="!isDate(row[column])"> {{row[column]}}</span>
+          <span *ngIf="isDate(row[column])"> {{row[column] | date:'d-M-yy, h:mm'}}</span>
+        </ng-template>
+
       </ng-container>
       <ng-container *ngIf="column == 'imageUrl'">
         <img src="{{row.imageUrl}}" style="height: 38px;">

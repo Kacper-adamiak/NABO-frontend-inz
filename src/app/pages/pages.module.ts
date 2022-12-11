@@ -6,7 +6,7 @@ import {BrowserModule} from "@angular/platform-browser";
 import {AppRoutingModule} from "../app-routing.module";
 import {RouterModule} from "@angular/router";
 import {HttpClientModule} from "@angular/common/http";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MaterialExampleModule} from "../../material.module";
 import {ButtonModule} from "primeng/button";
@@ -18,22 +18,23 @@ import {SharedModule} from "../shared/shared.module";
 @NgModule({
   declarations: [
     StartingPageComponent,
-    ResetPasswordPageComponent
+    ResetPasswordPageComponent,
   ],
-    imports: [
-        CommonModule,
-        BrowserModule,
-        AppRoutingModule,
-        RouterModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-        MaterialExampleModule,
-        ButtonModule,
-        ToastModule,
-        AuthModule,
-        AfterSigninModule,
-        SharedModule
-    ]
+  imports: [
+    CommonModule,
+    BrowserModule,
+    AppRoutingModule,
+    RouterModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MaterialExampleModule,
+    ButtonModule,
+    ToastModule,
+    AuthModule,
+    AfterSigninModule,
+    SharedModule,
+    FormsModule
+  ]
 })
 export class PagesModule { }

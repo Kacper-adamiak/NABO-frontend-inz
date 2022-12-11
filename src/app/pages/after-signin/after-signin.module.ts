@@ -46,6 +46,7 @@ import {
   NewPotentialCategoryDialogComponent
 } from './courses-page/new-potential-category-dialog/new-potential-category-dialog.component';
 import {SharedModule} from "../../shared/shared.module";
+import {DelateAccountDialogComponent} from './account-page/delate-account-dialog/delate-account-dialog.component';
 
 
 @NgModule({
@@ -79,6 +80,7 @@ import {SharedModule} from "../../shared/shared.module";
     UsersPanelComponent,
     AddNewCreatorPanelComponent,
     NewPotentialCategoryDialogComponent,
+    DelateAccountDialogComponent,
   ],
   imports: [
     CommonModule,
