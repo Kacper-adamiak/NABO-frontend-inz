@@ -7,15 +7,12 @@ import {tap} from 'rxjs';
 })
 export class WebService {
 
-  readonly ROOT_URL;
+  readonly SOURCE = 'http://localhost:8081/api';
 
-  constructor(private http: HttpClient) {
-    // this.ROOT_URL = 'https://springforinz-testapp1.azuremicroservices.io/api'
-    this.ROOT_URL = 'http://localhost:8081/api'
-   }
+  constructor(private http: HttpClient) {}
 
   get<T>(uri: string) {
-    return this.http.get<T>(`${this.ROOT_URL}${uri}`).pipe(
+    return this.http.get<T>(`${this.SOURCE}${uri}`).pipe(
       tap(
         res => console.log('get: ',res)
       )
@@ -23,7 +20,7 @@ export class WebService {
   }
 
   post<T>(uri: string, payload?: any) {
-    return this.http.post<T>(`${this.ROOT_URL}${uri}`, payload).pipe(
+    return this.http.post<T>(`${this.SOURCE}${uri}`, payload).pipe(
       tap(
         res => console.log('Post: ',res)
       )
@@ -31,7 +28,7 @@ export class WebService {
   }
 
   patch<T>(uri: string, payload?: any) {
-    return this.http.patch<T>(`${this.ROOT_URL}${uri}`, payload).pipe(
+    return this.http.patch<T>(`${this.SOURCE}${uri}`, payload).pipe(
       tap(
         res => console.log(res)
       )
@@ -39,7 +36,7 @@ export class WebService {
   }
 
   delete<T>(uri: string) {
-    return this.http.delete<T>(`${this.ROOT_URL}${uri}`).pipe(
+    return this.http.delete<T>(`${this.SOURCE}${uri}`).pipe(
       tap(
         res => console.log(res)
       )

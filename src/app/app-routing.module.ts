@@ -7,7 +7,6 @@ import {CoursesPageComponent} from './pages/after-signin/courses-page/courses-pa
 import {HomePageComponent} from './pages/after-signin/home-page/home-page.component';
 import {AuthComponent} from './pages/auth/auth.component';
 import {SigninPageComponent} from './pages/auth/signin-page/signin-page.component';
-import {IsAuthenticatedGuard} from './guards/is-authenticated.guard';
 import {StartingPageComponent} from './pages/starting-page/starting-page.component';
 import {LevelsPageComponent} from "./pages/after-signin/levels-page/levels-page.component";
 import {LevelGeneralPageComponent} from "./pages/after-signin/level-general-page/level-general-page.component";
@@ -28,6 +27,9 @@ import {
   AccountEditPageComponent
 } from "./pages/after-signin/account-page/account-edit-page/account-edit-page.component";
 import {ResetPasswordPageComponent} from "./pages/reset-password-page/reset-password-page.component";
+import {Role} from "./enums/role";
+import {LoginGuard} from "./guards/login.guard";
+import {RoleGuard} from "./guards/role.guard";
 
 const routes: Routes = [
   {path: "", component: StartingPageComponent},
@@ -48,12 +50,12 @@ const routes: Routes = [
     {path: 'courses/:courseId/levels/:levelId/testquestions/:testQuestionId', component: TestQuestionGeneralPageComponent},
     {path: 'stats', component: StatsPageComponent},
     {path: 'stats/:courseId', component: StatDetailPageComponent},
-    {path: 'adminpanel', component: AdminPanelPageComponent},
-  ], canActivate: [IsAuthenticatedGuard]},
+    {path: 'adminpanel', component: AdminPanelPageComponent, canActivate: [RoleGuard], data: {role: Role.ROLE_SUPERADMIN}},
+  ], canActivate: [LoginGuard]},
   {path: "auth", component: AuthComponent, children: [
     {path: "signin", component: SigninPageComponent}
   ]},
-  // {path: "**", redirectTo: '/'}
+   {path: "**", redirectTo: '/'}
 
 ];
 

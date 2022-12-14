@@ -24,6 +24,36 @@ export class AuthService {
     private localStorageService: LocalStorageService) {
   }
 
+  get isLoggedIn() {
+    let _isLoggedIn = false
+    this.isLoggedIn$.subscribe({
+      next: value => {
+        _isLoggedIn = value
+      }
+    })
+    return _isLoggedIn
+  }
+
+  get isAdmin() {
+    let _isAdmin = false
+    this.isAdmin$.subscribe({
+      next: value => {
+        _isAdmin = value
+      }
+    })
+    return _isAdmin
+  }
+
+  get isSuperAdmin() {
+    let _isSuperAdmin = false
+    this.isSuperAdmin$.subscribe({
+      next: value => {
+        _isSuperAdmin = value
+      }
+    })
+    return _isSuperAdmin
+  }
+
   signin(login: string, password: string) {
     return this.webService.post<any>("/auth/signin", {
       login: login,
@@ -68,7 +98,7 @@ export class AuthService {
       login: login,
       email: email,
       role: [
-        Role.Admin
+        Role.ROLE_ADMIN
       ],
       password: password
     })
@@ -76,8 +106,8 @@ export class AuthService {
 
 
   checkAndUpdateRoleStatuses() {
-    this._isAdmin$.next(this.hasRole(Role.Admin))
-    this._isSuperAdmin$.next(this.hasRole(Role.SuperAdmin))
+    this._isAdmin$.next(this.hasRole(Role.ROLE_ADMIN))
+    this._isSuperAdmin$.next(this.hasRole(Role.ROLE_SUPERADMIN))
   }
 
   checkAndUpdateIsLoggedIn() {
@@ -87,6 +117,9 @@ export class AuthService {
 
   hasRole(role: Role) {
     const roles = this.getRoles()
+    console.log("role: ", role)
+    console.log("getRoles: ", roles)
+    console.log("hasRole: ", roles.includes(role))
     if (roles) return roles.includes(role)
     return false
   }
@@ -120,7 +153,7 @@ export class AuthService {
   }
 
   userWithRoleHasAccessToSite(roles: Role[]) {
-    return roles.includes(Role.Admin) || roles.includes(Role.SuperAdmin)
+    return roles.includes(Role.ROLE_ADMIN) || roles.includes(Role.ROLE_SUPERADMIN)
   }
 
 
