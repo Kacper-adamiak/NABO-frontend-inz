@@ -36,8 +36,8 @@ import {
 } from './admin-panel-page/components/potential-categories-panel/potential-categories-panel.component';
 import {CategoriesPanelComponent} from './admin-panel-page/components/categories-panel/categories-panel.component';
 import {
-  EditCourseDialogComponent
-} from './admin-panel-page/components/categories-panel/edit-course-dialog/edit-course-dialog.component';
+  EditCategoryDialogComponent
+} from './admin-panel-page/components/categories-panel/edit-category-dialog/edit-category-dialog.component';
 import {UsersPanelComponent} from './admin-panel-page/components/users-panel/users-panel.component';
 import {
   AddNewCreatorPanelComponent
@@ -76,7 +76,7 @@ import {DelateAccountDialogComponent} from './account-page/delate-account-dialog
     AddNewCategoryPanelComponent,
     PotentialCategoriesPanelComponent,
     CategoriesPanelComponent,
-    EditCourseDialogComponent,
+    EditCategoryDialogComponent,
     UsersPanelComponent,
     AddNewCreatorPanelComponent,
     NewPotentialCategoryDialogComponent,

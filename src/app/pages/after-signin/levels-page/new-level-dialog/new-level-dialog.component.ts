@@ -1,9 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {UntypedFormControl, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {SnackbarService} from "../../../../services/snack-bar/snackbar.service";
+import {SnackbarService} from "../../../../services/snackbar.service";
 import {Router} from "@angular/router";
-import {LevelService} from "../../../../services/level/level.service";
+import {LevelService} from "../../../../services/level.service";
 import {Level} from "../../../../models/level";
 
 @Component({

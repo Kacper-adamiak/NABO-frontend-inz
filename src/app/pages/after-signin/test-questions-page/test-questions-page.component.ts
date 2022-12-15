@@ -5,10 +5,12 @@ import {MatSort} from "@angular/material/sort";
 import {UntypedFormControl} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {ActivatedRoute} from "@angular/router";
-import {DialogService} from "../../../services/dialog/dialog.service";
-import {TestQuestionService} from "../../../services/test-question/test-question.service";
+import {DialogService} from "../../../services/dialog.service";
+import {TestQuestionService} from "../../../services/test-question.service";
 import {TestQuestion} from "../../../models/test-question";
 import {NewTestQuestionDialogComponent} from "./new-test-question-dialog/new-test-question-dialog.component";
+import {LoadingState} from "../../../utils/loading-state";
+import {finalize} from "rxjs";
 
 @Component({
   selector: 'app-test-questions-page',
@@ -16,6 +18,8 @@ import {NewTestQuestionDialogComponent} from "./new-test-question-dialog/new-tes
   styleUrls: ['./test-questions-page.component.scss']
 })
 export class TestQuestionsPageComponent implements OnInit {
+
+  dataLoadingState = new LoadingState()
 
   displayedColumns: string[] = ["question", "answer", "imageUrl"];
   dataSource: MatTableDataSource<TestQuestion> = new MatTableDataSource<TestQuestion>([] as TestQuestion[])
@@ -46,16 +50,20 @@ export class TestQuestionsPageComponent implements OnInit {
   }
 
   getTestQuestions() {
-    const spinner = this.dialogService.openSpinner()
-    this.testQuestionService.getAllTestQuestions(this.courseId, this.levelId).subscribe({
+    this.dataLoadingState.setLoading()
+    this.testQuestionService.getAllTestQuestions(this.courseId, this.levelId)
+      .pipe(
+        finalize(() => {
+          this.dataLoadingState.setNotLoading()
+        })
+      )
+      .subscribe({
       next: res => {
         this.dataSource.data = res
       },
       error: err => {
-        spinner.close()
       },
       complete: () => {
-        spinner.close()
       }
     })
   }

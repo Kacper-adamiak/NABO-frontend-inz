@@ -2,11 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {Flashcard} from "../../../models/flashcard";
 import {UntypedFormControl, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
-import {SnackbarService} from "../../../services/snack-bar/snackbar.service";
+import {SnackbarService} from "../../../services/snackbar.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {DialogService} from "../../../services/dialog/dialog.service";
-import {FlashcardService} from "../../../services/flashcard/flashcard.service";
+import {DialogService} from "../../../services/dialog.service";
+import {FlashcardService} from "../../../services/flashcard.service";
 import {Image} from "../../../models/image";
+import {LoadingState} from "../../../utils/loading-state";
+import {finalize} from "rxjs";
 
 @Component({
   selector: 'app-flashcard-general-page',
@@ -14,6 +16,8 @@ import {Image} from "../../../models/image";
   styleUrls: ['./flashcard-general-page.component.scss']
 })
 export class FlashcardGeneralPageComponent implements OnInit {
+
+  dataLoadingState = new LoadingState()
 
   originalData = {} as Flashcard
   editedData = {} as Flashcard
@@ -39,8 +43,14 @@ export class FlashcardGeneralPageComponent implements OnInit {
     this.levelId = Number(this.route.snapshot.paramMap.get('levelId'))
     this.flashcardId = Number(this.route.snapshot.paramMap.get('flashcardId'))
     if(!!this.courseId && !!this.levelId && !!this.flashcardId){
-      const spinner = this.dialogService.openSpinner()
-      this.flashcardService.getFlashcardById(this.courseId, this.levelId, this.flashcardId).subscribe({
+      this.dataLoadingState.setLoading()
+      this.flashcardService.getFlashcardById(this.courseId, this.levelId, this.flashcardId)
+        .pipe(
+          finalize(() => {
+            this.dataLoadingState.setNotLoading()
+          })
+        )
+        .subscribe({
         next: (res: Flashcard) => {
           const body = res
 
@@ -53,12 +63,10 @@ export class FlashcardGeneralPageComponent implements OnInit {
           this.selectedImage = {name: this.editedData.imageName, url: this.editedData.imageUrl}
         },
         error: error => {
-          spinner.close()
           this.snackBarService.openSnackBar(error.message)
           this.router.navigate([`/home/courses/${this.courseId}/levels/${this.levelId}/flashcards`])
         },
         complete: () => {
-          spinner.close()
         }
       })
     }

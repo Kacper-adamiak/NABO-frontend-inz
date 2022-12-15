@@ -1,12 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {UntypedFormControl, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
-import {SnackbarService} from "../../../services/snack-bar/snackbar.service";
+import {SnackbarService} from "../../../services/snackbar.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {DialogService} from "../../../services/dialog/dialog.service";
-import {ExerciseService} from "../../../services/exercise/exercise.service";
+import {DialogService} from "../../../services/dialog.service";
+import {ExerciseService} from "../../../services/exercise.service";
 import {Exercise} from "../../../models/exercise";
 import {Image} from "../../../models/image";
+import {LoadingState} from "../../../utils/loading-state";
+import {finalize} from "rxjs";
 
 @Component({
   selector: 'app-exercise-general-page',
@@ -14,6 +16,8 @@ import {Image} from "../../../models/image";
   styleUrls: ['./exercise-general-page.component.scss']
 })
 export class ExerciseGeneralPageComponent implements OnInit {
+
+  dataLoadingState = new LoadingState()
 
   originalData = {} as Exercise
   editedData = {} as Exercise
@@ -41,8 +45,14 @@ export class ExerciseGeneralPageComponent implements OnInit {
     this.levelId = Number(this.route.snapshot.paramMap.get('levelId'))
     this.exerciseId = Number(this.route.snapshot.paramMap.get('exerciseId'))
     if(!!this.courseId && !!this.levelId){
-      const spinner = this.dialogService.openSpinner()
-      this.exerciseService.getExerciseById(this.courseId, this.levelId, this.exerciseId).subscribe({
+      this.dataLoadingState.setLoading()
+      this.exerciseService.getExerciseById(this.courseId, this.levelId, this.exerciseId)
+        .pipe(
+          finalize(() => {
+            this.dataLoadingState.setNotLoading()
+          })
+        )
+        .subscribe({
         next: (res: Exercise) => {
 
           this.editedData = JSON.parse(JSON.stringify(res))
@@ -56,12 +66,10 @@ export class ExerciseGeneralPageComponent implements OnInit {
           this.selectedImage = {name: this.editedData.imageName, url: this.editedData.imageUrl}
         },
         error: error => {
-          spinner.close()
           this.snackBarService.openSnackBar(error.message)
           this.router.navigate([`..`], {relativeTo: this.route})
         },
         complete: () => {
-          spinner.close()
         }
       })
     }

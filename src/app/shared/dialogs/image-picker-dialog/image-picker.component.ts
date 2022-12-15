@@ -1,13 +1,13 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
-import {SnackbarService} from "../../../services/snack-bar/snackbar.service";
-import {ImageService} from "../../../services/image/image.service";
+import {SnackbarService} from "../../../services/snackbar.service";
+import {ImageService} from "../../../services/image.service";
 import {Image} from "../../../models/image";
 import {PageEvent} from "@angular/material/paginator";
 import {Category} from "../../../models/category";
-import {CategoryService} from "../../../services/category/category.service";
+import {CategoryService} from "../../../services/category.service";
 import {UntypedFormControl, Validators} from "@angular/forms";
-import {DialogService} from "../../../services/dialog/dialog.service";
+import {DialogService} from "../../../services/dialog.service";
 
 @Component({
   selector: 'app-image-picker-dialog',

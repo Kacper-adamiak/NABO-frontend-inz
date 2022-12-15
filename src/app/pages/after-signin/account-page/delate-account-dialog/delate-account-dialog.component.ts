@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
-import {SnackbarService} from "../../../../services/snack-bar/snackbar.service";
-import {AuthService} from "../../../../services/auth/auth.service";
+import {SnackbarService} from "../../../../services/snackbar.service";
+import {AuthService} from "../../../../services/auth.service";
 import {UserService} from "../../../../services/user.service";
 
 @Component({

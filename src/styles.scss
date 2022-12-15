@@ -51,22 +51,6 @@ $blue-light-darker: #2795df;
 $secondary-60:rgba(79, 79, 183, 0.60 );
 $secondary-20:rgba(79, 79, 183, 0.2);
 
-
-
-*::-webkit-scrollbar {
-  width: 10px;
-}
-
-*::-webkit-scrollbar-track {
-  background: #363636;
-}
-
-*::-webkit-scrollbar-thumb {
-  background-color: #858585;
-  border-radius: 6px;
-  border: 0px none #ffffff;
-}
-
 * {
   font-family: 'Martel Sans', sans-serif;
 }
@@ -83,8 +67,6 @@ $secondary-20:rgba(79, 79, 183, 0.2);
   height: 100%;
   min-width: 400px;
   min-height: 700px;
-
-  padding: 10px;
 
   &_header {
     position: relative;
@@ -108,9 +90,10 @@ $secondary-20:rgba(79, 79, 183, 0.2);
   align-self: center;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
+  width: 98%;
+  height: 98%;
   padding: 2%;
+  margin: 1%;
   border-radius: 5px;
   box-shadow: 3px 3px 20px 1px rgb(208, 208, 208);
 
@@ -276,7 +259,7 @@ $secondary-20:rgba(79, 79, 183, 0.2);
   &_button_container {
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: flex-end;
     margin-bottom: 10px;
 
     button {
@@ -406,24 +389,22 @@ mat-error {
   max-width: 600px;
 }
 
-.transparent .mat-dialog-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: none;
-  background: rgba(0, 0, 0, 0.0);
-}
-
 .mat-dialog-content {
   position: relative;
   height: 100%;
+
 }
 
 .mat-dialog-actions {
   display: flex;
   justify-content: center;
+}
+
+.custom-spinner{
+  &.mat-progress-spinner circle,
+  &.mat-spinner circle {
+    stroke: #9fc9ef !important;
+  }
 }
 
 

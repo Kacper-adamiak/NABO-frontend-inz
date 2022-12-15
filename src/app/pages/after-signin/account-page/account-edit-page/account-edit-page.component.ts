@@ -2,8 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {UntypedFormControl, Validators} from "@angular/forms";
 import {UserService} from "../../../../services/user.service";
 import {MatDialog} from "@angular/material/dialog";
-import {DialogService} from "../../../../services/dialog/dialog.service";
-import {SnackbarService} from "../../../../services/snack-bar/snackbar.service";
+import {DialogService} from "../../../../services/dialog.service";
+import {SnackbarService} from "../../../../services/snackbar.service";
+import {LoadingState} from "../../../../utils/loading-state";
+import {finalize} from "rxjs";
 
 @Component({
   selector: 'app-account-edit-page',
@@ -12,6 +14,7 @@ import {SnackbarService} from "../../../../services/snack-bar/snackbar.service";
 })
 export class AccountEditPageComponent implements OnInit {
 
+  dataLoadingState = new LoadingState()
   hide = true;
   data = {
     firstName: "",
@@ -27,12 +30,19 @@ export class AccountEditPageComponent implements OnInit {
   constructor(private userService: UserService,
               public dialog: MatDialog,
               private dialogService: DialogService,
-              private snackbarService: SnackbarService) { }
+              private snackbarService: SnackbarService
+              ) { }
 
   ngOnInit(): void {
 
-    const spinner = this.dialogService.openSpinner()
-    const userData = this.userService.getUserData().subscribe({
+    this.dataLoadingState.setLoading()
+    const userData = this.userService.getUserData()
+      .pipe(
+        finalize(()=>{
+          this.dataLoadingState.setNotLoading()
+        })
+      )
+      .subscribe({
       next: res => {
         this.data = res
         this.firstName.setValue(res.firstName)
@@ -40,11 +50,8 @@ export class AccountEditPageComponent implements OnInit {
       },
       error: err => {
         this.snackbarService.openErrorSnackBar(err.error)
-        spinner.close()
       },
       complete: () => {
-        spinner.close()
-        userData.unsubscribe()
       }
     })
   }

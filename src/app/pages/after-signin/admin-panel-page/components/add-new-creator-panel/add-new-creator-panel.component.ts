@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {UntypedFormControl, Validators} from "@angular/forms";
-import {AuthService} from "../../../../../services/auth/auth.service";
-import {SnackbarService} from "../../../../../services/snack-bar/snackbar.service";
+import {AuthService} from "../../../../../services/auth.service";
+import {SnackbarService} from "../../../../../services/snackbar.service";
 
 @Component({
   selector: 'app-add-new-creator-panel',

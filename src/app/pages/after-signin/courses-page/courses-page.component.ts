@@ -1,17 +1,19 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {Course} from 'src/app/models/course';
-import {CourseService} from 'src/app/services/course/course.service';
+import {CourseService} from 'src/app/services/course.service';
 import {NewCourseDialogComponent} from "./new-course-dialog/new-course-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-import {DialogService} from "../../../services/dialog/dialog.service";
-import {AuthService} from "../../../services/auth/auth.service";
+import {DialogService} from "../../../services/dialog.service";
+import {AuthService} from "../../../services/auth.service";
 import {
   NewPotentialCategoryDialogComponent
 } from "./new-potential-category-dialog/new-potential-category-dialog.component";
 import {ActivatedRoute, Router} from "@angular/router";
+import {LoadingState} from "../../../utils/loading-state";
+import {finalize} from "rxjs";
 
 @Component({
   selector: 'app-courses-page',
@@ -20,6 +22,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 
 export class CoursesPageComponent implements OnInit, AfterViewInit {
+
+  dataState = new LoadingState()
 
   displayedColumns: string[] = ["name", "categoryName", "statusName", 'modified', 'created' ];
   dataSource: MatTableDataSource<Course> = new MatTableDataSource<Course>([] as Course[])
@@ -62,7 +66,7 @@ export class CoursesPageComponent implements OnInit, AfterViewInit {
 
 
   getCourses() {
-    this.authService.isSuperAdmin$.subscribe({
+    this.authService.isAdmin$.subscribe({
       next: value => {
         if(value) {
           this.displayedColumns.push('authorLogin')
@@ -76,33 +80,37 @@ export class CoursesPageComponent implements OnInit, AfterViewInit {
   }
 
   getCoursesForSuperAdmin() {
-    let spinner = this.dialogService.openSpinner()
-    this.courseServ.getAllCourses().subscribe({
+    this.dataState.setLoading()
+    this.courseServ.getAllCourses()
+      .pipe(finalize(() => {
+        this.dataState.setNotLoading()
+      }))
+      .subscribe({
       next: res => {
         this.dataSource.data = res
         this.data = res
       },
       error: err => {
-        spinner.close()
       },
       complete: () => {
-        spinner.close()
       }
     })
   }
 
   getCoursesForAdmin() {
-    let spinner = this.dialogService.openSpinner()
-    this.courseServ.getCoursesCreatedByAdmin().subscribe({
+    this.dataState.setLoading()
+    this.courseServ.getCoursesCreatedByAdmin()
+      .pipe(finalize(() => {
+        this.dataState.setNotLoading()
+      }))
+      .subscribe({
       next: res => {
         this.dataSource.data = res
         this.data = res
       },
       error: err => {
-        spinner.close()
       },
       complete: () => {
-        spinner.close()
       }
     })
   }

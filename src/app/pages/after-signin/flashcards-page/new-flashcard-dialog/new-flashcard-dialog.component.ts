@@ -1,10 +1,10 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {UntypedFormControl, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {SnackbarService} from "../../../../services/snack-bar/snackbar.service";
+import {SnackbarService} from "../../../../services/snackbar.service";
 import {Flashcard} from "../../../../models/flashcard";
-import {FlashcardService} from "../../../../services/flashcard/flashcard.service";
-import {DialogService} from "../../../../services/dialog/dialog.service";
+import {FlashcardService} from "../../../../services/flashcard.service";
+import {DialogService} from "../../../../services/dialog.service";
 import {Image} from "../../../../models/image";
 import {Router} from "@angular/router";
 

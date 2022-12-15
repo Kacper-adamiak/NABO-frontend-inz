@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {UntypedFormControl} from '@angular/forms';
-import {AuthService} from 'src/app/services/auth/auth.service';
-import {DialogService} from "../../../services/dialog/dialog.service";
-import {SnackbarService} from "../../../services/snack-bar/snackbar.service";
+import {AuthService} from 'src/app/services/auth.service';
+import {DialogService} from "../../../services/dialog.service";
+import {SnackbarService} from "../../../services/snackbar.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -26,13 +26,11 @@ export class SigninPageComponent implements OnInit {
   password = new UntypedFormControl('')
 
   onSubmit() {
-    let spinner = this.dialogService.openSpinner()
     this.authService.signin(this.email.value, this.password.value).subscribe({
       next: res => {
         console.log(res)
       },
       error: err => {
-        spinner.close()
         console.log(err)
         if(err.status == 401){
           this.snackbarService.openErrorSnackBar("Konto o podanym loginie i haśle nie istnieje")
@@ -43,7 +41,6 @@ export class SigninPageComponent implements OnInit {
 
       },
       complete: () => {
-        spinner.close()
         this.snackbarService.openSuccessSnackBar("Pomyślnie zalogowano!")
       }
     });

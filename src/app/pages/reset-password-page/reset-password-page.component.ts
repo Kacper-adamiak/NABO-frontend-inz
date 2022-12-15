@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, UntypedFormControl, Validators} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 import {ActivatedRoute} from "@angular/router";
-import {SnackbarService} from "../../services/snack-bar/snackbar.service";
+import {SnackbarService} from "../../services/snackbar.service";
 
 @Component({
   selector: 'app-reset-password-page',

@@ -1,13 +1,15 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {PotentialCategoryService} from "../../../../../services/potential-category/potential-category.service";
-import {CategoryService} from "../../../../../services/category/category.service";
-import {SnackbarService} from "../../../../../services/snack-bar/snackbar.service";
+import {PotentialCategoryService} from "../../../../../services/potential-category.service";
+import {CategoryService} from "../../../../../services/category.service";
+import {SnackbarService} from "../../../../../services/snackbar.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {Category} from "../../../../../models/category";
 import {MatDialog} from "@angular/material/dialog";
-import {EditCourseDialogComponent} from "./edit-course-dialog/edit-course-dialog.component";
+import {EditCategoryDialogComponent} from "./edit-category-dialog/edit-category-dialog.component";
+import {LoadingState} from "../../../../../utils/loading-state";
+import {finalize} from "rxjs";
 
 @Component({
   selector: 'app-categories-panel',
@@ -15,6 +17,8 @@ import {EditCourseDialogComponent} from "./edit-course-dialog/edit-course-dialog
   styleUrls: ['./categories-panel.component.scss']
 })
 export class CategoriesPanelComponent implements OnInit, AfterViewInit {
+
+  dataLoadingState = new LoadingState()
 
   categoriesDisplayedColumns: string[] = ["name", 'actions' ];
   categoriesDataSource: MatTableDataSource<Category> = new MatTableDataSource<Category>([] as Category[])
@@ -45,7 +49,12 @@ export class CategoriesPanelComponent implements OnInit, AfterViewInit {
   }
 
   getCategories() {
-    this.categoryService.getCategories().subscribe({
+    this.dataLoadingState.setLoading()
+    this.categoryService.getCategories()
+      .pipe(finalize(() => {
+        this.dataLoadingState.setNotLoading()
+      }))
+      .subscribe({
       next: value => {
         console.log("kategorie:", value)
         this.categoriesDataSource.data = value
@@ -64,7 +73,7 @@ export class CategoriesPanelComponent implements OnInit, AfterViewInit {
   }
 
   editCategory(category: Category) {
-    const dialog = this.dialog.open(EditCourseDialogComponent, {
+    const dialog = this.dialog.open(EditCategoryDialogComponent, {
       width: '80%',
       height: '80%',
       data: { category: category }

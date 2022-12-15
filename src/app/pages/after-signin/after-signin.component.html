@@ -35,7 +35,7 @@
           <p style="font-size: 1rem; margin-left: 6px;">Statystyki</p>
         </span>
         </li>
-        <li *ngIf="authService.isSuperAdmin$ | async">
+        <li *ngIf="authService.isAdmin$ | async">
         <span routerLink='adminpanel' routerLinkActive="active">
             <mat-icon style="font-size: 40px; width: 40px; height: 40px;">wysiwyg</mat-icon>
             <p style="font-size: 1rem; margin-left: 6px;">Panel Administatora</p>

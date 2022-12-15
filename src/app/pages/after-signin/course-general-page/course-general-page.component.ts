@@ -1,13 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {CourseService} from "../../../services/course/course.service";
+import {CourseService} from "../../../services/course.service";
 import {Course} from "../../../models/course";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UntypedFormControl, Validators} from "@angular/forms";
-import {SnackbarService} from "../../../services/snack-bar/snackbar.service";
-import {DialogService} from "../../../services/dialog/dialog.service";
-import {CategoryService} from "../../../services/category/category.service";
+import {SnackbarService} from "../../../services/snackbar.service";
+import {DialogService} from "../../../services/dialog.service";
+import {CategoryService} from "../../../services/category.service";
 import {Category} from "../../../models/category";
+import {LoadingState} from "../../../utils/loading-state";
+import {finalize} from "rxjs";
 
 @Component({
   selector: 'app-course-general-page',
@@ -15,6 +17,8 @@ import {Category} from "../../../models/category";
   styleUrls: ['./course-general-page.component.scss']
 })
 export class CourseGeneralPageComponent implements OnInit {
+
+  dataLoadingState = new LoadingState()
 
   originalData = {} as Course
   editedData = {} as Course
@@ -39,14 +43,21 @@ export class CourseGeneralPageComponent implements OnInit {
         this.categories = res
       }
     })
+    console.log(typeof this.originalData)
   }
 
   ngOnInit(): void {
 
     this.courseId = Number(this.route.snapshot.paramMap.get('courseId'))
     if(!!this.courseId){
-      const spinner = this.dialogService.openSpinner()
-      this.courseService.getCourseById(this.courseId).subscribe({
+      this.dataLoadingState.setLoading()
+      this.courseService.getCourseById(this.courseId)
+        .pipe(
+          finalize(() => {
+            this.dataLoadingState.setNotLoading()
+          })
+        )
+        .subscribe({
         next: (res: Course) => {
           const body = res
 
@@ -56,12 +67,10 @@ export class CourseGeneralPageComponent implements OnInit {
           this.setFromValues(this.editedData)
         },
         error: error => {
-          spinner.close()
           this.snackBarService.openSnackBar(error.message)
           this.router.navigate(["/home/courses"])
         },
         complete: () => {
-          spinner.close()
         }
       })
     }

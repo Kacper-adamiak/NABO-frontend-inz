@@ -38,4 +38,6 @@
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"></mat-paginator>
 
   </div>
+  <app-spinner-hero style="position: absolute; width: 100%; height: 100%" *ngIf="this.dataLoadingState.loading$ | async"></app-spinner-hero>
+
 </div>

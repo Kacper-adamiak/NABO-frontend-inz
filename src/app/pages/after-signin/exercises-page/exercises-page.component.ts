@@ -5,10 +5,12 @@ import {MatSort} from "@angular/material/sort";
 import {UntypedFormControl} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {ActivatedRoute, Router} from "@angular/router";
-import {DialogService} from "../../../services/dialog/dialog.service";
-import {ExerciseService} from "../../../services/exercise/exercise.service";
+import {DialogService} from "../../../services/dialog.service";
+import {ExerciseService} from "../../../services/exercise.service";
 import {Exercise} from "../../../models/exercise";
 import {NewExerciseDialogComponent} from "./new-exercise-dialog/new-exercise-dialog.component";
+import {finalize} from "rxjs";
+import {LoadingState} from "../../../utils/loading-state";
 
 @Component({
   selector: 'app-exercises-page',
@@ -16,6 +18,8 @@ import {NewExerciseDialogComponent} from "./new-exercise-dialog/new-exercise-dia
   styleUrls: ['./exercises-page.component.scss']
 })
 export class ExercisesPageComponent implements OnInit {
+
+  dataLoadingState = new LoadingState()
 
   displayedColumns: string[] = ["question", "answer", "bad_answer1", "bad_answer2", "bad_answer3", "imageUrl"];
   dataSource: MatTableDataSource<Exercise> = new MatTableDataSource<Exercise>([] as Exercise[])
@@ -46,17 +50,21 @@ export class ExercisesPageComponent implements OnInit {
   }
 
   getExercises() {
-    const spinner = this.dialogService.openSpinner()
-    this.exerciseService.getAllExercises(this.courseId, this.levelId).subscribe({
+    this.dataLoadingState.setLoading()
+    this.exerciseService.getAllExercises(this.courseId, this.levelId)
+      .pipe(
+        finalize(() => {
+          this.dataLoadingState.setNotLoading()
+        })
+      )
+      .subscribe({
       next: res => {
         this.dataSource.data = res
         this.data = res
       },
       error: err => {
-        spinner.close()
       },
       complete: () => {
-        spinner.close()
       }
     })
   }

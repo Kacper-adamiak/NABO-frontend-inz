@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../../services/user.service";
-import {DialogService} from "../../../services/dialog/dialog.service";
 import {MatDialog} from "@angular/material/dialog";
 import {DelateAccountDialogComponent} from "./delate-account-dialog/delate-account-dialog.component";
+import {LoadingState} from "../../../utils/loading-state";
+import {finalize} from "rxjs";
+
 
 @Component({
   selector: 'app-account-page',
@@ -11,39 +13,41 @@ import {DelateAccountDialogComponent} from "./delate-account-dialog/delate-accou
 })
 export class AccountPageComponent implements OnInit {
 
+  dataLoadingState = new LoadingState()
+
   data = {
     login: "",
     email: "",
     firstName: "",
     lastName: ""
   }
+
   constructor(
     private userService: UserService,
-    public dialog: MatDialog,
-    private dialogService: DialogService
+    public dialog: MatDialog
   ) {
-
   }
 
   ngOnInit(): void {
 
-    const spinner = this.dialogService.openSpinner()
-    const userData = this.userService.getUserData().subscribe({
-      next: res => {
-        this.data = res
-      },
-      error: err => {
-        spinner.close()
-      },
-      complete: () => {
-        spinner.close()
-        userData.unsubscribe()
-      }
-    })
+    this.dataLoadingState.setLoading()
+    const userData = this.userService.getUserData()
+      .pipe(finalize(() => {
+        this.dataLoadingState.setNotLoading()
+      }))
+      .subscribe({
+        next: res => {
+          this.data = res
+        },
+        error: err => {
+        },
+        complete: () => {
+        }
+      })
   }
 
   openDeleteDialog() {
-    const dialogRef =this.dialog.open(DelateAccountDialogComponent, {
+    const dialogRef = this.dialog.open(DelateAccountDialogComponent, {
       width: 'fit-content',
       height: 'fit-content'
     })

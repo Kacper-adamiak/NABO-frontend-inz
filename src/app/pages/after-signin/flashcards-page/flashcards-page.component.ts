@@ -5,10 +5,12 @@ import {MatSort} from "@angular/material/sort";
 import {UntypedFormControl} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {ActivatedRoute} from "@angular/router";
-import {DialogService} from "../../../services/dialog/dialog.service";
-import {FlashcardService} from "../../../services/flashcard/flashcard.service";
+import {DialogService} from "../../../services/dialog.service";
+import {FlashcardService} from "../../../services/flashcard.service";
 import {Flashcard} from "../../../models/flashcard";
 import {NewFlashcardDialogComponent} from "./new-flashcard-dialog/new-flashcard-dialog.component";
+import {finalize} from "rxjs";
+import {LoadingState} from "../../../utils/loading-state";
 
 @Component({
   selector: 'app-flashcards-page',
@@ -16,6 +18,8 @@ import {NewFlashcardDialogComponent} from "./new-flashcard-dialog/new-flashcard-
   styleUrls: ['./flashcards-page.component.scss']
 })
 export class FlashcardsPageComponent implements OnInit {
+
+  dataLoadingState = new LoadingState()
 
   displayedColumns: string[] = ["expOriginal", "expTranslation", "expDescription", "imageUrl"];
   dataSource: MatTableDataSource<Flashcard> = new MatTableDataSource<Flashcard>([] as Flashcard[])
@@ -46,17 +50,21 @@ export class FlashcardsPageComponent implements OnInit {
   }
 
   getFlashcards() {
-    const spinner = this.dialogService.openSpinner()
-    this.flashcardService.getAllFlashcards(this.courseId, this.levelId).subscribe({
+    this.dataLoadingState.setLoading()
+    this.flashcardService.getAllFlashcards(this.courseId, this.levelId)
+      .pipe(
+        finalize(() => {
+          this.dataLoadingState.setNotLoading()
+        })
+      )
+      .subscribe({
       next: res => {
         let data: Flashcard[] = res
         this.dataSource.data = data
       },
       error: err => {
-        spinner.close()
       },
       complete: () => {
-        spinner.close()
       }
     })
   }

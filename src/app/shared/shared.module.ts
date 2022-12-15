@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {SuccessSnackbarComponent} from "./snackbars/success-snackbar/success-snackbar.component";
 import {ErrorSnackbarComponent} from "./snackbars/error-snackbar/error-snackbar.component";
-import {SpinnerDialogComponent} from "../services/dialog/spinner-dialog/spinner-dialog.component";
 import {ImagePickerComponent} from "./dialogs/image-picker-dialog/image-picker.component";
 import {UploadImageDialogComponent} from "./dialogs/upload-image-dialog/upload-image-dialog.component";
 import {BrowserModule} from "@angular/platform-browser";
@@ -17,14 +16,14 @@ import {SearchFieldComponent} from './components/search-field/search-field.compo
 import {ElevatedBoxHeaderComponent} from './components/elevated-box-header/elevated-box-header.component';
 import {ElevatedBoxTopButtonsComponent} from './components/elevated-box-top-buttons/elevated-box-top-buttons.component';
 import {DataTableComponent} from './components/data-table/data-table.component';
-import {FirstToUppercasePipe} from './first-to-uppercase.pipe';
+import {FirstToUppercasePipe} from '../pipes/first-to-uppercase.pipe';
+import {SpinnerHeroComponent} from './components/spinner-hero/spinner-hero.component';
 
 
 @NgModule({
     declarations: [
         SuccessSnackbarComponent,
         ErrorSnackbarComponent,
-        SpinnerDialogComponent,
         ImagePickerComponent,
         UploadImageDialogComponent,
         DataDifferenceDialogComponent,
@@ -33,12 +32,14 @@ import {FirstToUppercasePipe} from './first-to-uppercase.pipe';
         ElevatedBoxTopButtonsComponent,
         DataTableComponent,
         FirstToUppercasePipe,
+        SpinnerHeroComponent,
         ],
     exports: [
         SearchFieldComponent,
         ElevatedBoxHeaderComponent,
         ElevatedBoxTopButtonsComponent,
         DataTableComponent,
+        SpinnerHeroComponent,
     ],
     imports: [
         CommonModule,

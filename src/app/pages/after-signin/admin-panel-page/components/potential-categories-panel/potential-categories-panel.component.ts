@@ -3,9 +3,9 @@ import {MatTableDataSource} from "@angular/material/table";
 import {PotentialCategory} from "../../../../../models/potential-category";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
-import {PotentialCategoryService} from "../../../../../services/potential-category/potential-category.service";
-import {CategoryService} from "../../../../../services/category/category.service";
-import {SnackbarService} from "../../../../../services/snack-bar/snackbar.service";
+import {PotentialCategoryService} from "../../../../../services/potential-category.service";
+import {CategoryService} from "../../../../../services/category.service";
+import {SnackbarService} from "../../../../../services/snackbar.service";
 
 @Component({
   selector: 'app-potential-categories-panel',

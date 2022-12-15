@@ -50,7 +50,7 @@ const routes: Routes = [
     {path: 'courses/:courseId/levels/:levelId/testquestions/:testQuestionId', component: TestQuestionGeneralPageComponent},
     {path: 'stats', component: StatsPageComponent},
     {path: 'stats/:courseId', component: StatDetailPageComponent},
-    {path: 'adminpanel', component: AdminPanelPageComponent, canActivate: [RoleGuard], data: {role: Role.ROLE_SUPERADMIN}},
+    {path: 'adminpanel', component: AdminPanelPageComponent, canActivate: [RoleGuard], data: {role: Role.ROLE_ADMIN}},
   ], canActivate: [LoginGuard]},
   {path: "auth", component: AuthComponent, children: [
     {path: "signin", component: SigninPageComponent}

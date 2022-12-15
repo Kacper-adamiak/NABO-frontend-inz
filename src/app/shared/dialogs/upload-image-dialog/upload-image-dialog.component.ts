@@ -1,12 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {UntypedFormBuilder, UntypedFormControl, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {SnackbarService} from "../../../services/snack-bar/snackbar.service";
-import {ImageService} from "../../../services/image/image.service";
+import {SnackbarService} from "../../../services/snackbar.service";
+import {ImageService} from "../../../services/image.service";
 import {HttpClient, HttpEvent, HttpEventType, HttpProgressEvent, HttpResponse} from "@angular/common/http";
 import {map} from "rxjs";
 import {ProgressSpinnerMode} from "@angular/material/progress-spinner";
-import {CategoryService} from "../../../services/category/category.service";
+import {CategoryService} from "../../../services/category.service";
 import {Category} from "../../../models/category";
 
 @Component({

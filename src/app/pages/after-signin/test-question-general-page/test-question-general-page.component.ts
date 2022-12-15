@@ -2,10 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {TestQuestion} from "../../../models/test-question";
 import {UntypedFormControl, Validators} from "@angular/forms";
 import {Image} from "../../../models/image";
-import {TestQuestionService} from "../../../services/test-question/test-question.service";
+import {TestQuestionService} from "../../../services/test-question.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {DialogService} from "../../../services/dialog/dialog.service";
-import {SnackbarService} from "../../../services/snack-bar/snackbar.service";
+import {DialogService} from "../../../services/dialog.service";
+import {SnackbarService} from "../../../services/snackbar.service";
+import {LoadingState} from "../../../utils/loading-state";
+import {finalize} from "rxjs";
 
 @Component({
   selector: 'app-test-question-general-page',
@@ -13,6 +15,8 @@ import {SnackbarService} from "../../../services/snack-bar/snackbar.service";
   styleUrls: ['./test-question-general-page.component.scss']
 })
 export class TestQuestionGeneralPageComponent implements OnInit {
+
+  dataLoadingState = new LoadingState()
 
   originalTestQuestion = {} as TestQuestion
   editedTestQuestion = {} as TestQuestion
@@ -37,8 +41,14 @@ export class TestQuestionGeneralPageComponent implements OnInit {
     this.levelId = Number(this.route.snapshot.paramMap.get('levelId'))
     this.testQuestionId = Number(this.route.snapshot.paramMap.get('testQuestionId'))
     if(!!this.courseId && !!this.levelId && !!this.testQuestionId){
-      const spinner = this.dialogService.openSpinner()
-      this.testQuestionService.getTestQuestionById(this.courseId, this.levelId, this.testQuestionId).subscribe({
+      this.dataLoadingState.setLoading()
+      this.testQuestionService.getTestQuestionById(this.courseId, this.levelId, this.testQuestionId)
+        .pipe(
+          finalize(() => {
+            this.dataLoadingState.setNotLoading()
+          })
+        )
+        .subscribe({
         next: (res: TestQuestion) => {
           const body = res
 
@@ -50,12 +60,10 @@ export class TestQuestionGeneralPageComponent implements OnInit {
           this.selectedImage = {name: this.editedTestQuestion.imageName, url: this.editedTestQuestion.imageUrl}
         },
         error: error => {
-          spinner.close()
           this.snackBarService.openSnackBar(error.message)
           this.router.navigate([`/home/courses/${this.courseId}/levels/${this.levelId}/testquestions`])
         },
         complete: () => {
-          spinner.close()
         }
       })
     }

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UntypedFormControl, Validators} from "@angular/forms";
-import {PotentialCategoryService} from "../../../../services/potential-category/potential-category.service";
-import {SnackbarService} from "../../../../services/snack-bar/snackbar.service";
+import {PotentialCategoryService} from "../../../../services/potential-category.service";
+import {SnackbarService} from "../../../../services/snackbar.service";
 import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({

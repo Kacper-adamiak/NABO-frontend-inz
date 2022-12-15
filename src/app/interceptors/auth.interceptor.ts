@@ -1,60 +1,46 @@
 import {Injectable} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {catchError, Observable, Subject, tap, throwError} from 'rxjs';
-import {AuthService} from "../services/auth/auth.service";
+import {catchError, Observable, throwError} from 'rxjs';
+import {AuthService} from "../services/auth.service";
+import {WebService} from "../services/web.service";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  refreshingAccessToken: boolean  = false
-  accessTokenRefreshed: Subject<any> = new Subject()
-
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private web: WebService) {
+  }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     console.log("Interceptor: ", request);
-    if(request.url != "http://localhost:8081/api/user/resetPassword"){
+    if (request.url != this.web.SOURCE + "/user/resetPassword") {
       request = this.addAuthHeader(request)
 
-      return next.handle(request).pipe(catchError(err => {
+      return next.handle(request).pipe(
+        catchError(err => {
           console.log(err)
           if (err.status == 401) {
-            this.authService.logout();
-          }
+            this.authService.refreshAccessToken().subscribe({
+                next: res => {
+                  console.log("Odnowiono access token!")
 
-          const error = err;
-          return throwError(error);
+                },
+                error: err1 => {
+                  this.authService.logout();
+                }
+              }
+            )
+          }
+          return throwError(err);
         })
       )
-    }
-    else {
+    } else {
       return next.handle(request)
     }
   }
 
-  refreshAccessToken() {
-    if (this.refreshingAccessToken){
-      return new Observable(observer => {
-        this.accessTokenRefreshed.subscribe(() => {
-          observer.next();
-          observer.complete();
-        })
-      })
-    }else {
-      this.refreshingAccessToken = true
-      return this.authService.getRefreshToken().pipe(
-        tap(() => {
-          console.log("Odnowiono access token!")
-          this.refreshingAccessToken = false
-          this.accessTokenRefreshed.next(2)
-        })
-      )
-    }
-  }
-
-  addAuthHeader(req: HttpRequest<any>){
+  addAuthHeader(req: HttpRequest<any>) {
     const token = this.authService.getAccessToken()
-    if(token){
+    if (token) {
       return req.clone({
         setHeaders: {
           'authorization': `Bearer ${this.authService.getAccessToken() || ""}`

@@ -1,11 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {UntypedFormControl, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
-import {SnackbarService} from "../../../services/snack-bar/snackbar.service";
+import {SnackbarService} from "../../../services/snackbar.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {DialogService} from "../../../services/dialog/dialog.service";
-import {LevelService} from "../../../services/level/level.service";
+import {DialogService} from "../../../services/dialog.service";
+import {LevelService} from "../../../services/level.service";
 import {Level} from "../../../models/level";
+import {LoadingState} from "../../../utils/loading-state";
+import {finalize} from "rxjs";
 
 @Component({
   selector: 'app-level-general-page',
@@ -13,6 +15,8 @@ import {Level} from "../../../models/level";
   styleUrls: ['./level-general-page.component.scss']
 })
 export class LevelGeneralPageComponent implements OnInit {
+
+  dataLoadingState = new LoadingState()
 
   originalData = {} as Level
   editedData = {} as Level
@@ -35,20 +39,25 @@ export class LevelGeneralPageComponent implements OnInit {
     this.courseId = Number(this.route.snapshot.paramMap.get('courseId'))
     this.levelId = Number(this.route.snapshot.paramMap.get('levelId'))
     if(!!this.courseId && !!this.levelId){
-      const spinner = this.dialogService.openSpinner()
-      this.levelService.getLevelById(this.courseId, this.levelId).subscribe({
+      this.dataLoadingState.setLoading()
+      this.levelService.getLevelById(this.courseId, this.levelId)
+        .pipe(
+          finalize(() => {
+            this.dataLoadingState.setNotLoading()
+          })
+        )
+        .subscribe({
         next: (res: Level) => {
           this.editedData = res
           this.originalData = JSON.parse(JSON.stringify(res))
           this.setFormFields(this.editedData)
         },
         error: error => {
-          spinner.close()
           this.snackBarService.openSnackBar(error.message)
           this.router.navigate([`/home/courses/${this.courseId}/levels`])
         },
         complete: () => {
-          spinner.close()
+
         }
       })
     }

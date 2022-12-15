@@ -3,9 +3,11 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort, MatSortable} from "@angular/material/sort";
 import {MatDialog} from "@angular/material/dialog";
-import {DialogService} from "../../../services/dialog/dialog.service";
-import {StatsService} from "../../../services/stats/stats.service";
-import {AuthService} from "../../../services/auth/auth.service";
+import {DialogService} from "../../../services/dialog.service";
+import {StatsService} from "../../../services/stats.service";
+import {AuthService} from "../../../services/auth.service";
+import {LoadingState} from "../../../utils/loading-state";
+import {finalize} from "rxjs";
 
 @Component({
   selector: 'app-stats-page',
@@ -13,6 +15,8 @@ import {AuthService} from "../../../services/auth/auth.service";
   styleUrls: ['./stats-page.component.scss']
 })
 export class StatsPageComponent implements OnInit {
+
+  dataLoadingState = new LoadingState()
 
   displayedColumns: string[] = ["courseName", "usersInCourse", 'avgScoreInCourse'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([])
@@ -56,32 +60,41 @@ export class StatsPageComponent implements OnInit {
 
   getCourses() {
 
-    let spinner = this.dialogService.openSpinner()
-    this.authService.isSuperAdmin$.subscribe({
+    this.authService.isAdmin$.subscribe({
       next: value => {
         if(value) {
+          this.dataLoadingState.setLoading()
           this.displayedColumns.push('author')
-          this.statsService.getAllCoursesWithStats().subscribe({
+          this.statsService.getAllCoursesWithStats()
+            .pipe(
+              finalize(() => {
+                this.dataLoadingState.setNotLoading()
+              })
+            )
+            .subscribe({
             next: res => {
               this.dataSource.data = res
             },
             error: err => {
-              spinner.close()
             },
             complete: () => {
-              spinner.close()
             }
           })
         }else {
-          this.statsService.getCoursesWithStats().subscribe({
+          this.dataLoadingState.setLoading()
+          this.statsService.getCoursesWithStats()
+            .pipe(
+              finalize(() => {
+                this.dataLoadingState.setNotLoading()
+              })
+            )
+            .subscribe({
             next: res => {
               this.dataSource.data = res
             },
             error: err => {
-              spinner.close()
             },
             complete: () => {
-              spinner.close()
             }
           })
         }

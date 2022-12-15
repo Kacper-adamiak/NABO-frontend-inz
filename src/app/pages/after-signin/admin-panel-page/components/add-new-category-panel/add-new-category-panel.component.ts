@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {PotentialCategoryService} from "../../../../../services/potential-category/potential-category.service";
-import {CategoryService} from "../../../../../services/category/category.service";
-import {SnackbarService} from "../../../../../services/snack-bar/snackbar.service";
+import {PotentialCategoryService} from "../../../../../services/potential-category.service";
+import {CategoryService} from "../../../../../services/category.service";
+import {SnackbarService} from "../../../../../services/snackbar.service";
 import {UntypedFormControl, Validators} from "@angular/forms";
 
 @Component({

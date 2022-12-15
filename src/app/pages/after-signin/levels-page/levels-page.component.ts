@@ -4,11 +4,13 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {UntypedFormControl} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
-import {LevelService} from "../../../services/level/level.service";
+import {LevelService} from "../../../services/level.service";
 import {ActivatedRoute} from "@angular/router";
 import {Level} from "../../../models/level";
 import {NewLevelDialogComponent} from "./new-level-dialog/new-level-dialog.component";
-import {DialogService} from "../../../services/dialog/dialog.service";
+import {DialogService} from "../../../services/dialog.service";
+import {LoadingState} from "../../../utils/loading-state";
+import {finalize} from "rxjs";
 
 @Component({
   selector: 'app-levels-page',
@@ -16,6 +18,8 @@ import {DialogService} from "../../../services/dialog/dialog.service";
   styleUrls: ['./levels-page.component.scss']
 })
 export class LevelsPageComponent implements OnInit, AfterViewInit {
+
+  dataLoadingState = new LoadingState()
 
   displayedColumns: string[] = ["name", "difficulty", "statusName" ];
   dataSource: MatTableDataSource<Level> = new MatTableDataSource<Level>([] as Level[])
@@ -47,17 +51,21 @@ export class LevelsPageComponent implements OnInit, AfterViewInit {
   }
 
   getLevels() {
-    const spinner = this.dialogService.openSpinner()
-    this.levelService.getAllLevels(this.courseId).subscribe({
+    this.dataLoadingState.setLoading()
+    this.levelService.getAllLevels(this.courseId)
+      .pipe(
+        finalize(() => {
+          this.dataLoadingState.setNotLoading()
+        })
+      )
+      .subscribe({
       next: res => {
         let data: Level[] = res
         this.dataSource.data = data
       },
       error: err => {
-        spinner.close()
       },
       complete: () => {
-        spinner.close()
       }
     })
   }

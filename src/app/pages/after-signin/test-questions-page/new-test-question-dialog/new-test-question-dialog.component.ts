@@ -1,11 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {UntypedFormControl, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {SnackbarService} from "../../../../services/snack-bar/snackbar.service";
-import {TestQuestionService} from "../../../../services/test-question/test-question.service";
+import {SnackbarService} from "../../../../services/snackbar.service";
+import {TestQuestionService} from "../../../../services/test-question.service";
 import {TestQuestion} from "../../../../models/test-question";
 import {Image} from "../../../../models/image";
-import {DialogService} from "../../../../services/dialog/dialog.service";
+import {DialogService} from "../../../../services/dialog.service";
 
 @Component({
   selector: 'app-new-test-question-dialog',
