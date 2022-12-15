@@ -57,21 +57,22 @@ export class LocalStorageService {
 
   getRefreshTokenFromLocalStorage() {
     const user_data = this.getUserDataFromLocalStorage()
-    if (!!(user_data) && !!(user_data.refreshToken)) return user_data.refreshToken
+    console.log("-> user_data.refreshToken", user_data.refreshToken);
+    if (user_data && user_data.refreshToken) return user_data.refreshToken
     return null
   }
 
   getAccessTokenFromLocalStorage() {
     const user_data = this.getUserDataFromLocalStorage()
-    if (!!(user_data) && !!(user_data.token)) return user_data.token
+    if (user_data && user_data.token) return user_data.token
     return null
   }
 
   updateAccessTokenInLocalStorage(token: string) {
     let user_data = this.getUserDataFromLocalStorage()
-    if (!!user_data && !!(user_data.token)) {
+    if (user_data && user_data.token) {
       user_data.token = token;
-      localStorage.setItem('user_data', JSON.stringify(user_data))
+      this.saveUserDataToLocalStorage(user_data)
     }
   }
 

@@ -46,6 +46,7 @@ export class AuthService {
 
 
   logout() {
+    console.log("-> logout");
     this.removeUserData()
     this._isLoggedIn$.next(false)
     this._isCreator.next(false)
@@ -111,6 +112,7 @@ export class AuthService {
   }
 
   getRefreshToken() {
+    console.log("-> this.localStorage.getRefreshTokenFromLocalStorage()", this.localStorageService.getRefreshTokenFromLocalStorage());
     return this.localStorageService.getRefreshTokenFromLocalStorage()
   }
 
