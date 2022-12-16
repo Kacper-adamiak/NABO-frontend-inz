@@ -30,18 +30,18 @@ export class AccountPageComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.getUserData()
+  }
+
+  getUserData() {
     this.dataLoadingState.setLoading()
-    const userData = this.userService.getUserData()
+    this.userService.getUserData()
       .pipe(finalize(() => {
         this.dataLoadingState.setNotLoading()
       }))
       .subscribe({
         next: res => {
           this.data = res
-        },
-        error: err => {
-        },
-        complete: () => {
         }
       })
   }

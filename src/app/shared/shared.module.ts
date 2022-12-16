@@ -18,6 +18,7 @@ import {ElevatedBoxTopButtonsComponent} from './components/elevated-box-top-butt
 import {DataTableComponent} from './components/data-table/data-table.component';
 import {FirstToUppercasePipe} from '../pipes/first-to-uppercase.pipe';
 import {SpinnerHeroComponent} from './components/spinner-hero/spinner-hero.component';
+import {TranslatePipe} from "../pipes/translate.pipe";
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import {SpinnerHeroComponent} from './components/spinner-hero/spinner-hero.compo
         ElevatedBoxTopButtonsComponent,
         DataTableComponent,
         FirstToUppercasePipe,
+        TranslatePipe,
         SpinnerHeroComponent,
         ],
     exports: [

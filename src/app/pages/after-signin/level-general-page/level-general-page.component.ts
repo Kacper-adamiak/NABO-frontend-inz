@@ -81,7 +81,7 @@ export class LevelGeneralPageComponent implements OnInit {
       this.levelService.deleteLevelById(this.courseId, this.levelId).subscribe(
         {
           next: (res) => {
-            this.snackBarService.openSuccessSnackBar(res.body.message)
+            this.snackBarService.openSuccessSnackBar(res.message)
             this.router.navigate([`/home/courses/${this.courseId}/levels`])
           },
           error: (err) => {

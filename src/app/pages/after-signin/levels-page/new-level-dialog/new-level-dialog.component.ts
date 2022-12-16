@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {UntypedFormControl, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {SnackbarService} from "../../../../services/snackbar.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {LevelService} from "../../../../services/level.service";
 import {Level} from "../../../../models/level";
 
@@ -24,8 +24,8 @@ export class NewLevelDialogComponent implements OnInit {
     private levelService: LevelService,
     private snackBarService: SnackbarService,
     private router: Router,
+    private route: ActivatedRoute,
     @Inject(MAT_DIALOG_DATA) public data: { courseId: number },
-
   ) {
 
   }
@@ -34,6 +34,9 @@ export class NewLevelDialogComponent implements OnInit {
     this.status.disable()
     this.status.setValue('STATUS_SUSPENDED')
     this.difficulty.setValue(1)
+    console.log("-> this.route", this.route.snapshot.url);
+    console.log("-> this.route.root", this.route.root.snapshot.toString());
+    console.log("-> this.route.parent", this.route.parent);
   }
 
   onNoClick(): void {
@@ -45,13 +48,16 @@ export class NewLevelDialogComponent implements OnInit {
     this.newLevel.difficulty = Number(this.difficulty.value)
     this.newLevel.statusName = this.status.value
     console.log(this.newLevel)
-    this.levelService.addLevel(this.data.courseId ,this.newLevel).subscribe({
+    this.levelService.addLevel(this.data.courseId, this.newLevel).subscribe({
       next: res => {
+        if (res.level) {
+          console.log("-> level.id", res.level.id);
+          this.router.navigate([`/home/courses/${this.data.courseId}/levels`, res.level.id])
+        }
         this.dialogRef.close(true)
         this.snackBarService.openSuccessSnackBar(res.message)
       },
       error: err => {
-        this.dialogRef.close(false)
         this.snackBarService.openErrorSnackBar(err.error)
       }
     })

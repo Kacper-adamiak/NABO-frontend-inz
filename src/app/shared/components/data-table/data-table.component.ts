@@ -3,7 +3,6 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {DictionaryService} from "../../../services/dictionary.service";
-import * as moment from "moment";
 
 
 @Component({
@@ -46,9 +45,9 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   }
 
   isDate(object: any) {
-    return moment(object, true).isValid();
+    let dateInputs = ['modified', 'created']
+    return dateInputs.includes(object)
   }
-
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

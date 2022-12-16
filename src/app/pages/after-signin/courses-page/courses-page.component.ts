@@ -1,11 +1,8 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Course} from 'src/app/models/course';
 import {CourseService} from 'src/app/services/course.service';
 import {NewCourseDialogComponent} from "./new-course-dialog/new-course-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
 import {DialogService} from "../../../services/dialog.service";
 import {AuthService} from "../../../services/auth.service";
 import {
@@ -21,16 +18,12 @@ import {finalize} from "rxjs";
   styleUrls: ['./courses-page.component.scss']
 })
 
-export class CoursesPageComponent implements OnInit, AfterViewInit {
+export class CoursesPageComponent implements OnInit {
 
   dataState = new LoadingState()
 
   displayedColumns: string[] = ["name", "categoryName", "statusName", 'modified', 'created' ];
-  dataSource: MatTableDataSource<Course> = new MatTableDataSource<Course>([] as Course[])
-  data: any[] = []
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  data: Course[] = []
 
   constructor(private courseServ: CourseService,
               public dialog: MatDialog,
@@ -41,29 +34,9 @@ export class CoursesPageComponent implements OnInit, AfterViewInit {
   ) {
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
   ngOnInit(): void {
     this.getCourses();
-    this.dataSource.filterPredicate = function(data, filter: string): boolean {
-      return data.name.toLowerCase().includes(filter) || data.categoryName.toLowerCase().includes(filter) || data.statusName.toLowerCase().includes(filter);
-    };
-
   }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    console.log(filterValue.trim().toLowerCase())
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
 
   getCourses() {
     this.authService.isAdmin$.subscribe({
@@ -87,7 +60,6 @@ export class CoursesPageComponent implements OnInit, AfterViewInit {
       }))
       .subscribe({
       next: res => {
-        this.dataSource.data = res
         this.data = res
       },
       error: err => {
@@ -105,7 +77,6 @@ export class CoursesPageComponent implements OnInit, AfterViewInit {
       }))
       .subscribe({
       next: res => {
-        this.dataSource.data = res
         this.data = res
       },
       error: err => {

@@ -56,6 +56,7 @@ export class NewCourseDialogComponent implements OnInit {
         console.log("courseadd", res)
         let tempCourse: Course = res.course!;
         if (tempCourse) {
+          this.dialogRef.close()
           this.router.navigate(['/home/courses', `${tempCourse!.id}`])
         }
       },
@@ -64,7 +65,7 @@ export class NewCourseDialogComponent implements OnInit {
         this.snackBarService.openErrorSnackBar(err.error)
       }
     })
-    this.dialogRef.close()
+
   }
 
 }

@@ -1,10 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatTableDataSource} from "@angular/material/table";
-import {MatPaginator} from "@angular/material/paginator";
-import {MatSort} from "@angular/material/sort";
+import {Component, OnInit} from '@angular/core';
 import {UntypedFormControl} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {DialogService} from "../../../services/dialog.service";
 import {FlashcardService} from "../../../services/flashcard.service";
 import {Flashcard} from "../../../models/flashcard";
@@ -22,12 +19,9 @@ export class FlashcardsPageComponent implements OnInit {
   dataLoadingState = new LoadingState()
 
   displayedColumns: string[] = ["expOriginal", "expTranslation", "expDescription", "imageUrl"];
-  dataSource: MatTableDataSource<Flashcard> = new MatTableDataSource<Flashcard>([] as Flashcard[])
+  data: Flashcard[] = []
   courseId!: number
   levelId!: number
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
 
   filterValue = new UntypedFormControl('');
 
@@ -35,21 +29,17 @@ export class FlashcardsPageComponent implements OnInit {
     private flashcardService: FlashcardService,
     public dialog: MatDialog,
     private route: ActivatedRoute,
-    private dialogService: DialogService) {
+    private dialogService: DialogService,
+    private router: Router) {
   }
 
   ngOnInit(): void {
-    this.courseId = Number(this.route.snapshot.paramMap.get('courseId'))
-    this.levelId = Number(this.route.snapshot.paramMap.get('levelId'))
     this.getFlashcards();
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
   getFlashcards() {
+    this.courseId = Number(this.route.snapshot.paramMap.get('courseId'))
+    this.levelId = Number(this.route.snapshot.paramMap.get('levelId'))
     this.dataLoadingState.setLoading()
     this.flashcardService.getAllFlashcards(this.courseId, this.levelId)
       .pipe(
@@ -59,8 +49,7 @@ export class FlashcardsPageComponent implements OnInit {
       )
       .subscribe({
       next: res => {
-        let data: Flashcard[] = res
-        this.dataSource.data = data
+        this.data = res
       },
       error: err => {
       },
@@ -83,14 +72,8 @@ export class FlashcardsPageComponent implements OnInit {
     });
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    console.log(filterValue.trim().toLowerCase())
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  rowClicked(event: any) {
+    this.router.navigate([`${event.id}`], {relativeTo: this.route})
   }
 
 }

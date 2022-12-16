@@ -1,5 +1,4 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {UntypedFormControl} from "@angular/forms";
@@ -22,7 +21,6 @@ export class ExercisesPageComponent implements OnInit {
   dataLoadingState = new LoadingState()
 
   displayedColumns: string[] = ["question", "answer", "bad_answer1", "bad_answer2", "bad_answer3", "imageUrl"];
-  dataSource: MatTableDataSource<Exercise> = new MatTableDataSource<Exercise>([] as Exercise[])
   data: Exercise[] = []
   courseId!: number
   levelId!: number
@@ -59,12 +57,7 @@ export class ExercisesPageComponent implements OnInit {
       )
       .subscribe({
       next: res => {
-        this.dataSource.data = res
         this.data = res
-      },
-      error: err => {
-      },
-      complete: () => {
       }
     })
   }

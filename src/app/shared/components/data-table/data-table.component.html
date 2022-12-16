@@ -4,7 +4,7 @@
 
   <ng-container *ngFor="let column of displayedColumns" matColumnDef="{{column}}">
     <th mat-header-cell *matHeaderCellDef
-        mat-sort-header="{{column}}"> {{dictionaryService.translate(column) | firstToUppercase}} </th>
+        mat-sort-header="{{column}}"> {{column | translate | firstToUppercase}} </th>
     <td mat-cell *matCellDef="let row">
       <ng-container *ngIf="column != 'imageUrl'">
 
@@ -12,8 +12,10 @@
           <span>{{row.statusName.split('_')[1]}}</span>
         </ng-container>
         <ng-template #elseStatusName>
-          <span *ngIf="!isDate(row[column])"> {{row[column]}}</span>
-          <span *ngIf="isDate(row[column])"> {{row[column] | date:'d-M-yy, h:mm'}}</span>
+          <span *ngIf="isDate(column); else elseIsDate" > {{row[column] | date:'d-M-yy, h:mm'}} </span>
+          <ng-template #elseIsDate>
+            <span> {{row[column]}}</span>
+          </ng-template>
         </ng-template>
 
       </ng-container>

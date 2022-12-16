@@ -1,11 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {UntypedFormControl} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
-import {ActivatedRoute} from "@angular/router";
-import {DialogService} from "../../../services/dialog.service";
+import {ActivatedRoute, Router} from "@angular/router";
 import {TestQuestionService} from "../../../services/test-question.service";
 import {TestQuestion} from "../../../models/test-question";
 import {NewTestQuestionDialogComponent} from "./new-test-question-dialog/new-test-question-dialog.component";
@@ -22,7 +20,7 @@ export class TestQuestionsPageComponent implements OnInit {
   dataLoadingState = new LoadingState()
 
   displayedColumns: string[] = ["question", "answer", "imageUrl"];
-  dataSource: MatTableDataSource<TestQuestion> = new MatTableDataSource<TestQuestion>([] as TestQuestion[])
+  data: TestQuestion[] = []
   courseId!: number
   levelId!: number
 
@@ -34,22 +32,17 @@ export class TestQuestionsPageComponent implements OnInit {
   constructor(
     private testQuestionService: TestQuestionService,
     public dialog: MatDialog,
-    private route: ActivatedRoute,
-    private dialogService: DialogService) {
+    private router: Router,
+    private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.courseId = Number(this.route.snapshot.paramMap.get('courseId'))
-    this.levelId = Number(this.route.snapshot.paramMap.get('levelId'))
     this.getTestQuestions();
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
   getTestQuestions() {
+    this.courseId = Number(this.route.snapshot.paramMap.get('courseId'))
+    this.levelId = Number(this.route.snapshot.paramMap.get('levelId'))
     this.dataLoadingState.setLoading()
     this.testQuestionService.getAllTestQuestions(this.courseId, this.levelId)
       .pipe(
@@ -59,7 +52,7 @@ export class TestQuestionsPageComponent implements OnInit {
       )
       .subscribe({
       next: res => {
-        this.dataSource.data = res
+        this.data = res
       },
       error: err => {
       },
@@ -82,14 +75,8 @@ export class TestQuestionsPageComponent implements OnInit {
     });
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    console.log(filterValue.trim().toLowerCase())
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  rowClicked(event: any) {
+    this.router.navigate([`${event.id}`], {relativeTo: this.route})
   }
 
 }

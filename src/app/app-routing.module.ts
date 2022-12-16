@@ -55,7 +55,7 @@ const routes: Routes = [
   {path: "auth", component: AuthComponent, children: [
     {path: "signin", component: SigninPageComponent}
   ]},
-   {path: "**", redirectTo: '/'}
+   // {path: "**", redirectTo: '/'}
 
 ];
 

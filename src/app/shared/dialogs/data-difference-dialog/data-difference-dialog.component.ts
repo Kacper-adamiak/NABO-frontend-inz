@@ -40,12 +40,4 @@ export class DataDifferenceDialogComponent implements OnInit {
   onAccept() {
     this.dialogRef.close(true);
   }
-
-  firstLetterToUpperCase(str: string) {
-    return str.charAt(0).toUpperCase() + str.slice(1)
-  }
-
-  translate(key: string) {
-    return this.dictionaryService.translate(key);
-  }
 }

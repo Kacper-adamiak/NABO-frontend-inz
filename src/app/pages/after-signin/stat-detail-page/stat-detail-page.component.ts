@@ -19,6 +19,11 @@ export class StatDetailPageComponent implements OnInit {
   data!: NewUsersPerDayResponse
   dataChart!: ChartData<'bar'>;
 
+  get courseName() {
+    if(!this.data) return ""
+    return this.data.courseName ?? ""
+  }
+
   maxYValue: number = 0
 
   options: ChartOptions<'bar'> = {
