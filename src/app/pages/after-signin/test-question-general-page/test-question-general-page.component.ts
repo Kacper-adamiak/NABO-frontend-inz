@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TestQuestion} from "../../../models/test-question";
-import {UntypedFormControl, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Image} from "../../../models/image";
 import {TestQuestionService} from "../../../services/test-question.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -20,9 +20,12 @@ export class TestQuestionGeneralPageComponent implements OnInit {
 
   originalTestQuestion = {} as TestQuestion
   editedTestQuestion = {} as TestQuestion
-  question = new UntypedFormControl('', [Validators.required])
-  answer = new UntypedFormControl('', [Validators.required])
   selectedImage!: Image
+
+  testQuestionForm = new FormGroup({
+    question: new FormControl('', [Validators.required]),
+    answer: new FormControl('', [Validators.required])
+  })
 
   courseId!: number
   levelId!: number
@@ -37,9 +40,11 @@ export class TestQuestionGeneralPageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.courseId = Number(this.route.snapshot.paramMap.get('courseId'))
-    this.levelId = Number(this.route.snapshot.paramMap.get('levelId'))
-    this.testQuestionId = Number(this.route.snapshot.paramMap.get('testQuestionId'))
+    this.getParamsFromRoute()
+    this.getTestQuestion()
+  }
+
+  getTestQuestion() {
     if(!!this.courseId && !!this.levelId && !!this.testQuestionId){
       this.dataLoadingState.setLoading()
       this.testQuestionService.getTestQuestionById(this.courseId, this.levelId, this.testQuestionId)
@@ -49,24 +54,38 @@ export class TestQuestionGeneralPageComponent implements OnInit {
           })
         )
         .subscribe({
-        next: (res: TestQuestion) => {
-          const body = res
+          next: (res: TestQuestion) => {
+            const body = res
 
-          this.originalTestQuestion = JSON.parse(JSON.stringify(body))
-          this.editedTestQuestion = JSON.parse(JSON.stringify(body))
-
-          this.question.setValue(this.editedTestQuestion.question)
-          this.answer.setValue(this.editedTestQuestion.answer)
-          this.selectedImage = {name: this.editedTestQuestion.imageName, url: this.editedTestQuestion.imageUrl}
-        },
-        error: error => {
-          this.snackBarService.openSnackBar(error.message)
-          this.router.navigate([`/home/courses/${this.courseId}/levels/${this.levelId}/testquestions`])
-        },
-        complete: () => {
-        }
-      })
+            this.originalTestQuestion = JSON.parse(JSON.stringify(body))
+            this.editedTestQuestion = JSON.parse(JSON.stringify(body))
+            this.setFormValues()
+          },
+          error: error => {
+            this.snackBarService.openSnackBar(error.message)
+            this.router.navigate([`/home/courses/${this.courseId}/levels/${this.levelId}/testquestions`])
+          },
+        })
     }
+  }
+
+  getParamsFromRoute() {
+    this.courseId = Number(this.route.snapshot.paramMap.get('courseId'))
+    this.levelId = Number(this.route.snapshot.paramMap.get('levelId'))
+    this.testQuestionId = Number(this.route.snapshot.paramMap.get('testQuestionId'))
+  }
+
+  setFormValues() {
+    this.testQuestionForm.controls['question'].setValue(this.editedTestQuestion.question)
+    this.testQuestionForm.controls['answer'].setValue(this.editedTestQuestion.answer)
+    this.selectedImage = {name: this.editedTestQuestion.imageName, url: this.editedTestQuestion.imageUrl}
+  }
+
+  updateEditedTestQuestion() {
+    this.editedTestQuestion.question = this.testQuestionForm.controls['question'].value!
+    this.editedTestQuestion.answer = this.testQuestionForm.controls['answer'].value!
+    this.editedTestQuestion.imageName = this.selectedImage.name
+    this.editedTestQuestion.imageUrl = this.selectedImage.url
   }
 
   openImagePicker() {
@@ -85,11 +104,7 @@ export class TestQuestionGeneralPageComponent implements OnInit {
   }
 
   saveChanges() {
-    this.editedTestQuestion.question = this.question.value
-    this.editedTestQuestion.answer = this.answer.value
-    this.editedTestQuestion.imageName = this.selectedImage.name
-    this.editedTestQuestion.imageUrl = this.selectedImage.url
-
+    this.updateEditedTestQuestion()
     const dialogRef = this.dialogService.openDataDiffDialog(this.originalTestQuestion, this.editedTestQuestion)
 
     dialogRef.afterClosed().subscribe(result => {

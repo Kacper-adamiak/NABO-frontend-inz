@@ -2,41 +2,37 @@
 
   <h2>Dodaj nową fiszkę</h2>
 
-  <div style="width: 100%;">
-    <mat-form-field appearance="fill" style="width: 100%;">
-      <mat-label>Wyrażenie [Ang]</mat-label>
-      <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="expOriginal" required>
-      <mat-error *ngIf="expOriginal.invalid">Nazwa musi być wypełniona</mat-error>
+  <form [formGroup]="flashcardForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Wyrażenie[Ang]</mat-label>
+      <input matInput placeholder="Tu wprowadź nazwę wyrażenie po angielsku" formControlName="expOriginal" required>
+      <mat-error>Wytażenie[Ang] musi być wypełniona</mat-error>
     </mat-form-field>
-  </div>
 
-  <div style="width: 100%;">
-    <mat-form-field appearance="fill" style="width: 100%;">
-      <mat-label>Tłumaczenie [Pol]</mat-label>
-      <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="expTranslation" required>
-      <mat-error *ngIf="expTranslation.invalid">Nazwa musi być wypełniona</mat-error>
+    <mat-form-field appearance="fill">
+      <mat-label>Tłumaczenie[Pol]</mat-label>
+      <input matInput placeholder="Tu wprowadź nazwę tłumaczenie po polsku" formControlName="expTranslation" required>
+      <mat-error>Tłumaczenie[Pol] musi być wypełniona</mat-error>
     </mat-form-field>
-  </div>
 
-  <div style="width: 100%;">
-    <mat-form-field appearance="fill" style="width: 100%;">
+    <mat-form-field appearance="fill">
       <mat-label>Opis</mat-label>
-      <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="expDescription" required>
-      <mat-error *ngIf="expDescription.invalid">Nazwa musi być wypełniona</mat-error>
+      <input matInput placeholder="Tu wprowadź opis" formControlName="expDescription" required>
+      <mat-error>Opis musi być wypełniona</mat-error>
     </mat-form-field>
-  </div>
 
-  <div>
-    <button mat-raised-button color="primary" (click)="openImagePicker()">Wybierz obraz</button>
-    <p>{{selectedImage ? selectedImage.name : "nie wybrano obrazu"}}</p>
-    <img *ngIf="!!selectedImage" src="{{selectedImage.url}}" width="128px" height="128px">
-  </div>
-
-
-
+    <div>
+      <button mat-raised-button color="primary" (click)="openImagePicker()">Wybierz obraz</button>
+      <p>{{selectedImage ? selectedImage.name : "nie wybrano obrazu"}}</p>
+      <img *ngIf="!!selectedImage" src="{{selectedImage.url}}" width="128px" height="128px">
+    </div>
+  </form>
 
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Anuluj</button>
-  <button mat-button (click)="onAccept()" [disabled]="!(expTranslation.valid && expOriginal.valid && expDescription.valid && selectedImage)">Utwórz fiszkę</button>
+  <button mat-button (click)="onAccept()"
+          [disabled]="flashcardForm.invalid || selectedImage.name == null">Utwórz
+    fiszkę
+  </button>
 </div>

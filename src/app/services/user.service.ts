@@ -38,7 +38,7 @@ export class UserService {
   }
 
   resetPassword(token: string, userPassword: string): Observable<{ message: string }> {
-    return this.http.patch<{ message: string }>(`http://localhost:8081/api/user/resetPassword`,{
+    return this.http.patch<{ message: string }>(`${this.webService.SOURCE}/user/resetPassword`,{
       password: userPassword
     }, {
       headers: new HttpHeaders({

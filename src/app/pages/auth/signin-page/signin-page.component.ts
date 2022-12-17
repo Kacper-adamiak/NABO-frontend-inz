@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {UntypedFormControl} from '@angular/forms';
+import {FormControl, Validators} from '@angular/forms';
 import {AuthService} from 'src/app/services/auth.service';
 import {DialogService} from "../../../services/dialog.service";
 import {SnackbarService} from "../../../services/snackbar.service";
@@ -22,11 +22,11 @@ export class SigninPageComponent implements OnInit {
     this.chceckIfUserLoggedIn()
   }
 
-  email = new UntypedFormControl('')
-  password = new UntypedFormControl('')
+  login = new FormControl('', [Validators.required])
+  password = new FormControl('', [Validators.required])
 
   onSubmit() {
-    this.authService.signin(this.email.value, this.password.value).subscribe({
+    this.authService.login({login: this.login.value!, password: this.password.value!}).subscribe({
       next: res => {
         console.log(res)
       },
@@ -38,7 +38,6 @@ export class SigninPageComponent implements OnInit {
         else {
           this.snackbarService.openErrorSnackBar(err.error.message)
         }
-
       },
       complete: () => {
         this.snackbarService.openSuccessSnackBar("Pomyślnie zalogowano!")

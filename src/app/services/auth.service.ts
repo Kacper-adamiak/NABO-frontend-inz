@@ -1,10 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
-import {BehaviorSubject, first, map, tap} from 'rxjs';
+import {BehaviorSubject, first, map, Observable, tap} from 'rxjs';
 import {WebService} from './web.service';
 import {Role} from "../enums/role";
 import {LocalStorageService} from "./local-storage.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {LoginResponse} from "../models/responses/login-response";
+import {LoginData} from "../models/login-data";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,7 @@ export class AuthService {
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this._isLoggedIn$.asObservable().pipe(first());
   private _isCreator = new BehaviorSubject<boolean>(false);
-  isCrator$ = this._isCreator.asObservable().pipe(first());
+  isCreator$ = this._isCreator.asObservable().pipe(first());
   private _isAdmin$ = new BehaviorSubject<boolean>(false);
   isAdmin$ = this._isAdmin$.asObservable().pipe(first());
 
@@ -24,17 +26,17 @@ export class AuthService {
     private localStorageService: LocalStorageService) {
   }
 
-  signin(login: string, password: string) {
-    return this.webService.post<any>("/auth/signin", {
-      login: login,
-      password: password
+  login(loginData: LoginData): Observable<LoginResponse> {
+    return this.webService.post<LoginResponse>("/auth/signin", {
+      login: loginData.login,
+      password: loginData.password
     })
       .pipe(
         map((response) => {
-          if (this.userWithRoleHasAccessToSite(response.roles)) {
+          if (this.userHasAccess(response.roles)) {
             this.localStorageService.saveUserDataToLocalStorage(response)
-            this.checkAndUpdateIsLoggedIn()
-            this.checkAndUpdateRoleStatuses()
+            this.updateIsLoggedIn()
+            this.updateRoles()
             this.router.navigate(["/home"])
             return response
           }
@@ -43,10 +45,19 @@ export class AuthService {
       )
   }
 
+  updateRoles() {
+    this._isCreator.next(this.hasRole(Role.ROLE_CREATOR))
+    this._isAdmin$.next(this.hasRole(Role.ROLE_ADMIN))
+  }
 
+  updateIsLoggedIn() {
+    if (this.getUserData()) this.setValueOfIsLoggedIn(true)
+    else this.setValueOfIsLoggedIn(false)
+  }
 
   logout() {
     console.log("-> logout");
+    this.webService.post<any>("/auth/signout").subscribe()
     this.removeUserData()
     this._isLoggedIn$.next(false)
     this._isCreator.next(false)
@@ -75,27 +86,13 @@ export class AuthService {
     })
   }
 
-
-  checkAndUpdateRoleStatuses() {
-    this._isCreator.next(this.hasRole(Role.ROLE_CREATOR))
-    this._isAdmin$.next(this.hasRole(Role.ROLE_ADMIN))
-  }
-
-  checkAndUpdateIsLoggedIn() {
-    if (this.getUserData() && this.getAccessToken() && this.getRefreshToken() && this.getRoles()) this.updateIsLoggedIn(true)
-    else this.updateIsLoggedIn(false)
-  }
-
   hasRole(role: Role) {
     const roles = this.getRoles()
-    console.log("role: ", role)
-    console.log("getRoles: ", roles)
-    console.log("hasRole: ", roles.includes(role))
     if (roles) return roles.includes(role)
     return false
   }
 
-  updateIsLoggedIn(value: boolean) {
+  setValueOfIsLoggedIn(value: boolean) {
     this._isLoggedIn$.next(value)
   }
 
@@ -112,7 +109,6 @@ export class AuthService {
   }
 
   getRefreshToken() {
-    console.log("-> this.localStorage.getRefreshTokenFromLocalStorage()", this.localStorageService.getRefreshTokenFromLocalStorage());
     return this.localStorageService.getRefreshTokenFromLocalStorage()
   }
 
@@ -124,8 +120,12 @@ export class AuthService {
     this.localStorageService.removeUserDataFromLocalStorage()
   }
 
-  userWithRoleHasAccessToSite(roles: Role[]) {
+  userHasAccess(roles: Role[]) {
     return roles.includes(Role.ROLE_CREATOR) || roles.includes(Role.ROLE_ADMIN)
+  }
+
+  forgotPassword(email: string) {
+    return this.webService.post<any>('/auth/forgotPassword', {email: email})
   }
 
 }

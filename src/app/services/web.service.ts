@@ -1,6 +1,5 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {tap} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,38 +7,28 @@ import {tap} from 'rxjs';
 export class WebService {
 
   readonly SOURCE = 'http://localhost:8081/api';
+  readonly URL_WITHOUT_AUTH = [
+    'http://localhost:8081/api/auth/signup',
+    'http://localhost:8081/api/auth/signin',
+    'http://localhost:8081/api/auth/forgotPassword'
+  ]
 
-  constructor(private http: HttpClient) {}
-
-  get<T>(uri: string) {
-    return this.http.get<T>(`${this.SOURCE}${uri}`).pipe(
-      tap(
-        res => console.log('get: ',res)
-      )
-    )
+  constructor(private http: HttpClient) {
   }
 
-  post<T>(uri: string, payload?: any) {
-    return this.http.post<T>(`${this.SOURCE}${uri}`, payload).pipe(
-      tap(
-        res => console.log('Post: ',res)
-      )
-    )
+  get<T>(url: string) {
+    return this.http.get<T>(`${this.SOURCE}${url}`)
   }
 
-  patch<T>(uri: string, payload?: any) {
-    return this.http.patch<T>(`${this.SOURCE}${uri}`, payload).pipe(
-      tap(
-        res => console.log(res)
-      )
-    )
+  post<T>(url: string, payload?: any) {
+    return this.http.post<T>(`${this.SOURCE}${url}`, payload)
   }
 
-  delete<T>(uri: string) {
-    return this.http.delete<T>(`${this.SOURCE}${uri}`).pipe(
-      tap(
-        res => console.log(res)
-      )
-    )
+  patch<T>(url: string, payload?: any) {
+    return this.http.patch<T>(`${this.SOURCE}${url}`, payload)
+  }
+
+  delete<T>(url: string) {
+    return this.http.delete<T>(`${this.SOURCE}${url}`)
   }
 }

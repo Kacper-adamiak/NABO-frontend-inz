@@ -1,54 +1,47 @@
 <div class="segment">
   <div class="elevated_box">
 
-    <app-elevated-box-top-buttons [rightButtonHidden]="true" ></app-elevated-box-top-buttons>
+    <app-elevated-box-top-buttons [rightButtonHidden]="true"></app-elevated-box-top-buttons>
     <app-elevated-box-header>Ćwiczenie: {{originalData.question}}</app-elevated-box-header>
 
-    <div style="width: 100%;">
-      <mat-form-field appearance="fill" style="width: 100%;">
+    <form [formGroup]="exerciseForm">
+      <mat-form-field appearance="fill">
         <mat-label>Pytanie</mat-label>
-        <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="question" required>
-        <mat-error *ngIf="question.invalid">Nazwa musi być wypełniona</mat-error>
+        <input matInput placeholder="Tu wprowadź nazwę kursu" formControlName="question" required>
+        <mat-error>Pytanie musi być wypełniona</mat-error>
       </mat-form-field>
-    </div>
 
-    <div style="width: 100%;">
-      <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-form-field appearance="fill">
         <mat-label>Odpowiedź</mat-label>
-        <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="answer" required>
-        <mat-error *ngIf="answer.invalid">Nazwa musi być wypełniona</mat-error>
+        <input matInput placeholder="Tu wprowadź nazwę kursu" formControlName="answer" required>
+        <mat-error>Odpowiedź musi być wypełniona</mat-error>
       </mat-form-field>
-    </div>
 
-    <div style="width: 100%;">
-      <mat-form-field appearance="fill" style="width: 100%;">
-        <mat-label>Zła odpowiedź [1]</mat-label>
-        <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="bad_answer1" required>
-        <mat-error *ngIf="bad_answer1.invalid">Nazwa musi być wypełniona</mat-error>
+      <mat-form-field appearance="fill">
+        <mat-label>Zła odpowiedź[1]</mat-label>
+        <input matInput placeholder="Tu wprowadź nazwę kursu" formControlName="bad_answer1" required>
+        <mat-error>Zła odpowiedź[1] musi być wypełniona</mat-error>
       </mat-form-field>
-    </div>
 
-    <div style="width: 100%;">
-      <mat-form-field appearance="fill" style="width: 100%;">
-        <mat-label>Zła odpowiedź [2]</mat-label>
-        <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="bad_answer2" required>
-        <mat-error *ngIf="bad_answer2.invalid">Nazwa musi być wypełniona</mat-error>
+      <mat-form-field appearance="fill">
+        <mat-label>Zła odpowiedź[2]</mat-label>
+        <input matInput placeholder="Tu wprowadź nazwę kursu" formControlName="bad_answer2" required>
+        <mat-error>Zła odpowiedź[2] musi być wypełniona</mat-error>
       </mat-form-field>
-    </div>
 
-    <div style="width: 100%;">
-      <mat-form-field appearance="fill" style="width: 100%;">
-        <mat-label>Zła odpowiedź [3]</mat-label>
-        <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="bad_answer3" required>
-        <mat-error *ngIf="bad_answer3.invalid">Nazwa musi być wypełniona</mat-error>
+      <mat-form-field appearance="fill">
+        <mat-label>Zła odpowiedź[3]</mat-label>
+        <input matInput placeholder="Tu wprowadź nazwę kursu" formControlName="bad_answer3" required>
+        <mat-error>Zła odpowiedź[3] musi być wypełniona</mat-error>
       </mat-form-field>
-    </div>
 
-    <div>
-      <button mat-raised-button color="primary" (click)="openImagePicker()">Wybierz obraz</button>
-      <p>{{selectedImage ? selectedImage.name : "nie wybrano obrazu"}}</p>
-      <img *ngIf="!!selectedImage" src="{{selectedImage.url}}" width="128px" height="128px">
-    </div>
+      <div>
+        <button mat-raised-button color="primary" (click)="openImagePicker()">Wybierz obraz</button>
+        <p>{{selectedImage ? selectedImage.name : "nie wybrano obrazu"}}</p>
+        <img *ngIf="!!selectedImage" src="{{selectedImage.url}}" width="128px" height="128px">
+      </div>
+    </form>
+
 
     <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
       <button mat-raised-button color="primary" (click)="openDialog()" [disabled]="false">Zapisz zmiany</button>
@@ -56,6 +49,7 @@
     </div>
 
   </div>
-  <app-spinner-hero style="position: absolute; width: 100%; height: 100%" *ngIf="this.dataLoadingState.loading$ | async"></app-spinner-hero>
+  <app-spinner-hero style="position: absolute; width: 100%; height: 100%"
+                    *ngIf="this.dataLoadingState.loading$ | async"></app-spinner-hero>
 
 </div>

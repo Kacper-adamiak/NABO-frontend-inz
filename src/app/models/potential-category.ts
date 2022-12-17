@@ -3,9 +3,3 @@ export interface PotentialCategory {
   name: string,
   author: string
 }
-
-/*
-  Validation:
-    name: required, min: 2, max: 16
-    TODO:: NADAĆ WALIDATORY
-*/

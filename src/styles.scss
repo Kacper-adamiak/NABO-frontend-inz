@@ -355,16 +355,12 @@ $secondary-20:rgba(79, 79, 183, 0.2);
   }
 }
 
-.mat-form-field {
+.mat-form-field-flex {
   line-height: 2 !important;
 }
 
-mat-error {
-  padding: 2px 0;
-}
-
 .mat-form-field {
-  //padding: 6px 0;
+  padding: 3px 0;
 }
 
 
@@ -391,8 +387,7 @@ mat-error {
 
 .mat-dialog-content {
   position: relative;
-  height: 100%;
-
+  max-height: 90% !important;
 }
 
 .mat-dialog-actions {

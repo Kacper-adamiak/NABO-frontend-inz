@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {UntypedFormControl, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {SnackbarService} from "../../../../services/snackbar.service";
 import {Exercise} from "../../../../models/exercise";
@@ -16,12 +16,16 @@ import {Router} from "@angular/router";
 export class NewExerciseDialogComponent implements OnInit {
 
   newExercise = {} as Exercise
-  question = new UntypedFormControl('', [Validators.required])
-  answer = new UntypedFormControl('', [Validators.required])
-  bad_answer1 = new UntypedFormControl('', [Validators.required])
-  bad_answer2 = new UntypedFormControl('', [Validators.required])
-  bad_answer3 = new UntypedFormControl('', [Validators.required])
+
   selectedImage!: Image
+
+  exerciseForm = new FormGroup({
+    question: new FormControl('', [Validators.required]),
+    answer: new FormControl('', [Validators.required]),
+    bad_answer1: new FormControl('', [Validators.required]),
+    bad_answer2: new FormControl('', [Validators.required]),
+    bad_answer3: new FormControl('', [Validators.required])
+  })
 
   constructor(
     public dialogRef: MatDialogRef<NewExerciseDialogComponent>,
@@ -42,15 +46,12 @@ export class NewExerciseDialogComponent implements OnInit {
   }
 
   onAccept() {
-    this.newExercise.question = this.question.value
-    this.newExercise.answer = this.answer.value
-    this.newExercise.bad_answer1 = this.bad_answer1.value
-    this.newExercise.bad_answer2 = this.bad_answer2.value
-    this.newExercise.bad_answer3 = this.bad_answer3.value
-    this.newExercise.imageName = this.selectedImage.name
+    this.setNewExerciseData()
+    this.addNewExercise()
+  }
 
-
-    this.exerciseService.addExercise(this.data.courseId, this.data.levelId ,this.newExercise).subscribe({
+  addNewExercise() {
+    this.exerciseService.addExercise(this.data.courseId, this.data.levelId, this.newExercise).subscribe({
       next: res => {
         this.snackBarService.openSuccessSnackBar(res.message)
         this.dialogRef.close(true)
@@ -58,25 +59,28 @@ export class NewExerciseDialogComponent implements OnInit {
       error: err => {
         console.log("exerciseService", err)
         this.snackBarService.openErrorSnackBar(err.error)
-      },
-      complete: () => {
-
       }
     })
+  }
 
+  setNewExerciseData() {
+    this.newExercise.question = this.exerciseForm.controls['question'].value!
+    this.newExercise.answer = this.exerciseForm.controls['answer'].value!
+    this.newExercise.bad_answer1 = this.exerciseForm.controls['bad_answer1'].value!
+    this.newExercise.bad_answer2 = this.exerciseForm.controls['bad_answer2'].value!
+    this.newExercise.bad_answer3 = this.exerciseForm.controls['bad_answer3'].value!
+    this.newExercise.imageName = this.selectedImage.name
   }
 
   openImagePicker() {
     const dialog = this.dialogService.openImagePicker()
     dialog.afterClosed().subscribe({
       next: value => {
-        if(value){
+        if (value) {
           this.selectedImage = value
-          console.log("after close picker: ",value)
         }
       },
       error: err => {
-        console.log('something went wrong')
       }
     })
   }

@@ -8,36 +8,36 @@
       <span class="underline"></span>
     </div>
 
-    <mat-form-field appearance="fill" style="width: 100%;">
-      <mat-label>Hasło</mat-label>
-      <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password" required>
-      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" >
-        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-      </button>
-      <mat-error *ngIf="password.invalid">Podaj hasło</mat-error>
-    </mat-form-field>
+    <form [formGroup]="editAccountForm">
+      <mat-form-field appearance="fill">
+        <mat-label>Hasło</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error>Podaj hasło</mat-error>
+      </mat-form-field>
 
-    <div style="width: 100%; margin-bottom: 10px;">
-      <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-form-field appearance="fill">
         <mat-label>Imię</mat-label>
-        <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="firstName" required>
-        <mat-error *ngIf="firstName.invalid" style="padding: 3px">Nazwa musi być wypełniona</mat-error>
+        <input matInput placeholder="Tu wprowadź nazwę kursu" formControlName="firstName" required>
+        <mat-error>Imię musi być wypełniona</mat-error>
       </mat-form-field>
-    </div>
 
-    <div style="width: 100%; margin-bottom: 10px;">
-      <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-form-field appearance="fill">
         <mat-label>Nazwisko</mat-label>
-        <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="lastName" required>
-        <mat-error *ngIf="lastName.invalid" style="padding: 3px">Nazwa musi być wypełniona</mat-error>
+        <input matInput placeholder="Tu wprowadź nazwę kursu" formControlName="lastName" required>
+        <mat-error>Nazwisko musi być wypełniona</mat-error>
       </mat-form-field>
-    </div>
+    </form>
 
     <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
-      <button mat-raised-button color="primary" (click)="saveChanges()">Zapisz dane</button>
+      <button mat-raised-button color="primary" (click)="saveChanges()" [disabled]="editAccountForm.invalid">Zapisz dane</button>
     </div>
 
 
   </div>
-  <app-spinner-hero style="position: absolute; width: 100%; height: 100%" *ngIf="this.dataLoadingState.loading$ | async"></app-spinner-hero>
+  <app-spinner-hero style="position: absolute; width: 100%; height: 100%"
+                    *ngIf="this.dataLoadingState.loading$ | async"></app-spinner-hero>
 </div>

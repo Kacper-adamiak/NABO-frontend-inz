@@ -3,7 +3,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {CourseService} from "../../../services/course.service";
 import {Course} from "../../../models/course";
 import {ActivatedRoute, Router} from "@angular/router";
-import {UntypedFormControl, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {SnackbarService} from "../../../services/snackbar.service";
 import {DialogService} from "../../../services/dialog.service";
 import {CategoryService} from "../../../services/category.service";
@@ -23,11 +23,14 @@ export class CourseGeneralPageComponent implements OnInit {
   originalData = {} as Course
   editedData = {} as Course
   categories = [] as Category[]
-  name = new UntypedFormControl('', [Validators.required])
-  description = new UntypedFormControl('', [Validators.required])
-  category = new UntypedFormControl('', [Validators.required])
-  status = new UntypedFormControl('', [Validators.required])
   courseId!: number
+
+  courseForm = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    description: new FormControl('', [Validators.required, Validators.min(2), Validators.max(240)]),
+    category: new FormControl('', [Validators.required]),
+    status: new FormControl('', [Validators.required])
+  })
 
   constructor(
     public dialog: MatDialog,
@@ -38,18 +41,24 @@ export class CourseGeneralPageComponent implements OnInit {
     private dialogService: DialogService,
     private router: Router
   ) {
+
+  }
+
+  ngOnInit(): void {
+    this.getCourse()
+  }
+
+  getCategories() {
     this.categoryService.getCategories().subscribe({
       next: res => {
         this.categories = res
       }
     })
-    console.log(typeof this.originalData)
   }
 
-  ngOnInit(): void {
-
+  getCourse() {
     this.courseId = Number(this.route.snapshot.paramMap.get('courseId'))
-    if(!!this.courseId){
+    if (!!this.courseId) {
       this.dataLoadingState.setLoading()
       this.courseService.getCourseById(this.courseId)
         .pipe(
@@ -58,42 +67,40 @@ export class CourseGeneralPageComponent implements OnInit {
           })
         )
         .subscribe({
-        next: (res: Course) => {
-          const body = res
+          next: (res: Course) => {
+            const body = res
+            this.getCategories()
+            this.editedData = JSON.parse(JSON.stringify(body))
+            this.originalData = JSON.parse(JSON.stringify(body))
 
-          this.editedData = JSON.parse(JSON.stringify(body))
-          this.originalData = JSON.parse(JSON.stringify(body))
-
-          this.setFromValues(this.editedData)
-        },
-        error: error => {
-          this.snackBarService.openSnackBar(error.message)
-          this.router.navigate(["/home/courses"])
-        },
-        complete: () => {
-        }
-      })
+            this.setFromValues(this.editedData)
+          },
+          error: error => {
+            this.snackBarService.openErrorSnackBar(error.error)
+            this.router.navigate(["/home/courses"])
+          }
+        })
     }
   }
 
   setFromValues(course: Course) {
-    this.name.setValue(course.name)
-    this.description.setValue(course.description)
-    this.category.setValue(course.categoryName)
-    this.status.setValue(course.statusName)
+    this.courseForm.controls['name'].setValue(course.name)
+    this.courseForm.controls['description'].setValue(course.description)
+    this.courseForm.controls['category'].setValue(course.categoryName)
+    this.courseForm.controls['status'].setValue(course.statusName)
   }
 
   onSubmit() {
-    this.editedData.name = this.name.value
-    this.editedData.description = this.description.value
-    this.editedData.statusName = this.status.value
-    this.editedData.categoryName = this.category.value
+    this.editedData.name = this.courseForm.controls['name'].value!
+    this.editedData.description = this.courseForm.controls['description'].value!
+    this.editedData.statusName = this.courseForm.controls['status'].value!
+    this.editedData.categoryName = this.courseForm.controls['category'].value!
 
     this.openDialog()
   }
 
-  deleteCourse(){
-    if(this.originalData.id){
+  deleteCourse() {
+    if (this.originalData.id) {
       this.courseService.deleteCourseById(this.originalData.id).subscribe(
         {
           next: (res) => {
@@ -111,7 +118,7 @@ export class CourseGeneralPageComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialogService.openDataDiffDialog(this.originalData, this.editedData)
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
+      if (result) {
         this.courseService.editCourseById(this.editedData.id!, this.editedData).subscribe({
           next: (res) => {
             this.snackBarService.openSuccessSnackBar(res.message)
@@ -119,13 +126,13 @@ export class CourseGeneralPageComponent implements OnInit {
           },
           error: (err) => {
             console.log("error: ", err)
-            if(err.error.name) {
+            if (err.error.name) {
               this.snackBarService.openErrorSnackBar(err.name)
             }
-            if(err.error.description) {
+            if (err.error.description) {
               this.snackBarService.openErrorSnackBar(err.description)
             }
-            if(err.error.statusName) {
+            if (err.error.statusName) {
               this.snackBarService.openErrorSnackBar(err.statusName)
             }
             this.editedData = JSON.parse(JSON.stringify(this.originalData))

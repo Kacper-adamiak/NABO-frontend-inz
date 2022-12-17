@@ -4,8 +4,8 @@
 
     <mat-form-field appearance="fill" style="margin-bottom: 10px;">
       <mat-label>Login</mat-label>
-      <input matInput placeholder="Tu wprowadź login" [formControl]="email"  required>
-      <mat-error *ngIf="email.invalid">Podaj login</mat-error>
+      <input matInput placeholder="Tu wprowadź login" [formControl]="login"  required>
+      <mat-error *ngIf="login.invalid">Podaj login</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill" style="margin-bottom: 10px;">
@@ -17,7 +17,9 @@
       <mat-error *ngIf="password.invalid">Podaj hasło</mat-error>
     </mat-form-field>
 
-    <button mat-raised-button color="primary" (click)="onSubmit()">Zaloguj</button>
+    <button mat-flat-button routerLink="/auth/forgotpassword">Zapomniałem hasła</button>
+
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="password.invalid || login.invalid">Zaloguj</button>
 
   </div>
 </div>

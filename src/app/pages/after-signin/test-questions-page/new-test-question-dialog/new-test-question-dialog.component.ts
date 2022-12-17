@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {UntypedFormControl, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {SnackbarService} from "../../../../services/snackbar.service";
 import {TestQuestionService} from "../../../../services/test-question.service";
@@ -15,9 +15,13 @@ import {DialogService} from "../../../../services/dialog.service";
 export class NewTestQuestionDialogComponent implements OnInit {
 
   newTestQuestion = {} as TestQuestion
-  question = new UntypedFormControl('', [Validators.required])
-  answer = new UntypedFormControl('', [Validators.required])
+
   selectedImage!: Image
+
+  testQuestionForm = new FormGroup({
+    question: new FormControl('', [Validators.required]),
+    answer: new FormControl('', [Validators.required])
+  })
 
   constructor(
     public dialogRef: MatDialogRef<NewTestQuestionDialogComponent>,
@@ -37,10 +41,11 @@ export class NewTestQuestionDialogComponent implements OnInit {
   }
 
   onAccept() {
-    this.newTestQuestion.question = this.question.value
-    this.newTestQuestion.answer = this.answer.value
-    this.newTestQuestion.imageName = this.selectedImage.name
+    this.getNewTestQuestionFromForm()
+    this.addNewTestQuestion()
+  }
 
+  addNewTestQuestion(){
     this.testQuestionService.addTestQuestion(this.data.courseId, this.data.levelId ,this.newTestQuestion).subscribe({
       next: res => {
         this.dialogRef.close(true)
@@ -52,6 +57,12 @@ export class NewTestQuestionDialogComponent implements OnInit {
         this.snackBarService.openErrorSnackBar(err)
       }
     })
+  }
+
+  getNewTestQuestionFromForm() {
+    this.newTestQuestion.question = this.testQuestionForm.controls['question'].value!
+    this.newTestQuestion.answer = this.testQuestionForm.controls['answer'].value!
+    this.newTestQuestion.imageName = this.selectedImage.name
   }
 
   openImagePicker() {

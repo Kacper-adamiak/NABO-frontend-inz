@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Flashcard} from "../../../models/flashcard";
-import {UntypedFormControl, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {SnackbarService} from "../../../services/snackbar.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -21,10 +21,14 @@ export class FlashcardGeneralPageComponent implements OnInit {
 
   originalData = {} as Flashcard
   editedData = {} as Flashcard
-  expOriginal = new UntypedFormControl('', [Validators.required])
-  expTranslation = new UntypedFormControl('', [Validators.required])
-  expDescription = new UntypedFormControl('', [Validators.required])
+
   selectedImage!: Image
+
+  flashcardForm = new FormGroup({
+    expOriginal: new FormControl('', [Validators.required]),
+    expTranslation: new FormControl('', [Validators.required]),
+    expDescription: new FormControl('', [Validators.required])
+  })
 
   courseId!: number
   levelId!: number
@@ -39,9 +43,17 @@ export class FlashcardGeneralPageComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
+    this.getParamsFromRoute()
+    this.getFlashcard()
+  }
+
+  getParamsFromRoute() {
     this.courseId = Number(this.route.snapshot.paramMap.get('courseId'))
     this.levelId = Number(this.route.snapshot.paramMap.get('levelId'))
     this.flashcardId = Number(this.route.snapshot.paramMap.get('flashcardId'))
+  }
+
+  getFlashcard() {
     if(!!this.courseId && !!this.levelId && !!this.flashcardId){
       this.dataLoadingState.setLoading()
       this.flashcardService.getFlashcardById(this.courseId, this.levelId, this.flashcardId)
@@ -51,36 +63,41 @@ export class FlashcardGeneralPageComponent implements OnInit {
           })
         )
         .subscribe({
-        next: (res: Flashcard) => {
-          const body = res
+          next: (res: Flashcard) => {
+            const body = res
 
-          this.editedData = JSON.parse(JSON.stringify(body))
-          this.originalData = JSON.parse(JSON.stringify(body))
+            this.editedData = JSON.parse(JSON.stringify(body))
+            this.originalData = JSON.parse(JSON.stringify(body))
 
-          this.expOriginal.setValue(this.editedData.expOriginal)
-          this.expTranslation.setValue(this.editedData.expTranslation)
-          this.expDescription.setValue(this.editedData.expDescription)
-          this.selectedImage = {name: this.editedData.imageName, url: this.editedData.imageUrl}
-        },
-        error: error => {
-          this.snackBarService.openSnackBar(error.message)
-          this.router.navigate([`/home/courses/${this.courseId}/levels/${this.levelId}/flashcards`])
-        },
-        complete: () => {
-        }
-      })
+            this.setFormFields()
+          },
+          error: error => {
+            this.snackBarService.openSnackBar(error.message)
+            this.router.navigate([`/home/courses/${this.courseId}/levels/${this.levelId}/flashcards`])
+          }
+        })
     }
   }
 
-  saveChanges() {
-    this.editedData.expOriginal = this.expOriginal.value
-    this.editedData.expTranslation = this.expTranslation.value
-    this.editedData.expDescription = this.expDescription.value
+  setFormFields(){
+    this.flashcardForm.controls['expOriginal'].setValue(this.editedData.expOriginal)
+    this.flashcardForm.controls['expTranslation'].setValue(this.editedData.expTranslation)
+    this.flashcardForm.controls['expDescription'].setValue(this.editedData.expDescription ?? "")
+    this.selectedImage = {name: this.editedData.imageName, url: this.editedData.imageUrl}
+  }
+
+  updateEditedFlashcard() {
+    this.editedData.expOriginal = this.flashcardForm.controls['expOriginal'].value!
+    this.editedData.expTranslation = this.flashcardForm.controls['expTranslation'].value!
+    this.editedData.expDescription = this.flashcardForm.controls['expDescription'].value!
     this.editedData.imageName = this.selectedImage.name
     this.editedData.imageUrl = this.selectedImage.url
+  }
 
+  saveChanges() {
+
+    this.updateEditedFlashcard()
     const dialogRef = this.dialogService.openDataDiffDialog(this.originalData, this.editedData)
-
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
         this.flashcardService.editFlashcardById(this.courseId, this.levelId, this.flashcardId, this.editedData).subscribe({
@@ -102,7 +119,6 @@ export class FlashcardGeneralPageComponent implements OnInit {
         })
         this.originalData = JSON.parse(JSON.stringify(this.editedData))
       }
-      console.log('The dialog was closed');
     });
   }
 

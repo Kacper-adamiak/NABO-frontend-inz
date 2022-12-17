@@ -4,38 +4,35 @@
     <app-elevated-box-top-buttons [rightButtonHidden]="true" ></app-elevated-box-top-buttons>
     <app-elevated-box-header>Fiszka: {{originalData.expOriginal}}</app-elevated-box-header>
 
-    <div style="width: 100%;">
-      <mat-form-field appearance="fill" style="width: 100%;">
+    <form [formGroup]="flashcardForm">
+      <mat-form-field appearance="fill">
         <mat-label>Wyrażenie [Ang]</mat-label>
-        <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="expOriginal" required>
-        <mat-error *ngIf="expOriginal.invalid">Nazwa musi być wypełniona</mat-error>
+        <input matInput placeholder="Tu wprowadź nazwę kursu" formControlName="expOriginal" required>
+        <mat-error>Nazwa musi być wypełniona</mat-error>
       </mat-form-field>
-    </div>
 
-    <div style="width: 100%;">
-      <mat-form-field appearance="fill" style="width: 100%;">
+
+      <mat-form-field appearance="fill">
         <mat-label>Tłumaczenie [Pol]</mat-label>
-        <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="expTranslation" required>
-        <mat-error *ngIf="expTranslation.invalid">Nazwa musi być wypełniona</mat-error>
+        <input matInput placeholder="Tu wprowadź nazwę kursu" formControlName="expTranslation" required>
+        <mat-error>Nazwa musi być wypełniona</mat-error>
       </mat-form-field>
-    </div>
 
-    <div style="width: 100%;">
-      <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-form-field appearance="fill">
         <mat-label>Opis</mat-label>
-        <input matInput placeholder="Tu wprowadź nazwę kursu" [formControl]="expDescription" required>
-        <mat-error *ngIf="expDescription.invalid">Nazwa musi być wypełniona</mat-error>
+        <input matInput placeholder="Tu wprowadź nazwę kursu" formControlName="expDescription" required>
+        <mat-error>Nazwa musi być wypełniona</mat-error>
       </mat-form-field>
-    </div>
 
-    <div>
-      <button mat-raised-button color="primary" (click)="openImagePicker()">Wybierz obraz</button>
-      <p>{{selectedImage ? selectedImage.name : "nie wybrano obrazu"}}</p>
-      <img *ngIf="!!selectedImage" src="{{selectedImage.url}}" width="128px" height="128px">
-    </div>
+      <div>
+        <button mat-raised-button color="primary" (click)="openImagePicker()">Wybierz obraz</button>
+        <p>{{selectedImage ? selectedImage.name : "nie wybrano obrazu"}}</p>
+        <img *ngIf="!!selectedImage" src="{{selectedImage.url}}" width="128px" height="128px">
+      </div>
+    </form>
 
     <div class="elevated_box_button_container">
-      <button mat-raised-button color="primary" (click)="saveChanges()" [disabled]="false">Zapisz zmiany</button>
+      <button mat-raised-button color="primary" (click)="saveChanges()" [disabled]="flashcardForm.invalid || selectedImage.name == null">Zapisz zmiany</button>
       <button mat-raised-button color="warn" (click)="deleteFlashcard()">Usuń</button>
     </div>
 

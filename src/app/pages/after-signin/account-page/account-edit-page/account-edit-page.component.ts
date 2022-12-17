@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {UntypedFormControl, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../../../services/user.service";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogService} from "../../../../services/dialog.service";
@@ -23,9 +23,11 @@ export class AccountEditPageComponent implements OnInit {
     isActive: true
   }
 
-  firstName = new UntypedFormControl('', Validators.required)
-  lastName = new UntypedFormControl('', Validators.required)
-  password = new UntypedFormControl('', Validators.required)
+  editAccountForm = new FormGroup({
+    firstName: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required)
+  })
 
   constructor(private userService: UserService,
               public dialog: MatDialog,
@@ -34,26 +36,31 @@ export class AccountEditPageComponent implements OnInit {
               ) { }
 
   ngOnInit(): void {
+    this.getUserData()
+  }
 
+  getUserData() {
     this.dataLoadingState.setLoading()
-    const userData = this.userService.getUserData()
+    this.userService.getUserData()
       .pipe(
         finalize(()=>{
           this.dataLoadingState.setNotLoading()
         })
       )
       .subscribe({
-      next: res => {
-        this.data = res
-        this.firstName.setValue(res.firstName)
-        this.lastName.setValue(res.lastName)
-      },
-      error: err => {
-        this.snackbarService.openErrorSnackBar(err.error)
-      },
-      complete: () => {
-      }
-    })
+        next: res => {
+          this.data = res
+          this.setEditAccountForm()
+        },
+        error: err => {
+          this.snackbarService.openErrorSnackBar(err.message)
+        }
+      })
+  }
+
+  setEditAccountForm() {
+    this.editAccountForm.controls['firstName'].setValue(this.data.firstName)
+    this.editAccountForm.controls['lastName'].setValue(this.data.lastName)
   }
 
   saveChanges() {
@@ -63,18 +70,18 @@ export class AccountEditPageComponent implements OnInit {
         this.snackbarService.openSuccessSnackBar(value.message)
       },
       error: err => {
-        this.snackbarService.openSuccessSnackBar(err.error)
-      },
-      complete: () => {
-
+        if(err.password) this.snackbarService.openErrorSnackBar(err.password)
+        if(err.firstName) this.snackbarService.openErrorSnackBar(err.firstName)
+        if(err.lastName) this.snackbarService.openErrorSnackBar(err.lastName)
+        if(err.error) this.snackbarService.openErrorSnackBar(err.error)
       }
     })
   }
 
   getValues() {
-    this.data.firstName = this.firstName.value
-    this.data.lastName = this.lastName.value
-    this.data.password = this.password.value
+    this.data.firstName = this.editAccountForm.controls['firstName'].value!
+    this.data.lastName = this.editAccountForm.controls['lastName'].value!
+    this.data.password = this.editAccountForm.controls['password'].value!
   }
 
 }

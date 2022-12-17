@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {UntypedFormControl, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {SnackbarService} from "../../../services/snackbar.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -21,11 +21,14 @@ export class ExerciseGeneralPageComponent implements OnInit {
 
   originalData = {} as Exercise
   editedData = {} as Exercise
-  question = new UntypedFormControl('', [Validators.required])
-  answer = new UntypedFormControl('', [Validators.required])
-  bad_answer1 = new UntypedFormControl('', [Validators.required])
-  bad_answer2 = new UntypedFormControl('', [Validators.required])
-  bad_answer3 = new UntypedFormControl('', [Validators.required])
+
+  exerciseForm = new FormGroup({
+    question: new FormControl('', [Validators.required]),
+    answer: new FormControl('', [Validators.required]),
+    bad_answer1: new FormControl('', [Validators.required]),
+    bad_answer2: new FormControl('', [Validators.required]),
+    bad_answer3: new FormControl('', [Validators.required])
+  })
   selectedImage!: Image
 
   courseId!: number
@@ -38,13 +41,22 @@ export class ExerciseGeneralPageComponent implements OnInit {
     private route: ActivatedRoute,
     private exerciseService: ExerciseService,
     private dialogService: DialogService,
-    private router: Router) { }
+    private router: Router) {
+  }
 
   ngOnInit(): void {
+    this.getParamsFromRoute()
+    this.getExercise()
+  }
+
+  getParamsFromRoute() {
     this.courseId = Number(this.route.snapshot.paramMap.get('courseId'))
     this.levelId = Number(this.route.snapshot.paramMap.get('levelId'))
     this.exerciseId = Number(this.route.snapshot.paramMap.get('exerciseId'))
-    if(!!this.courseId && !!this.levelId){
+  }
+
+  getExercise() {
+    if (!!this.courseId && !!this.levelId) {
       this.dataLoadingState.setLoading()
       this.exerciseService.getExerciseById(this.courseId, this.levelId, this.exerciseId)
         .pipe(
@@ -53,26 +65,36 @@ export class ExerciseGeneralPageComponent implements OnInit {
           })
         )
         .subscribe({
-        next: (res: Exercise) => {
-
-          this.editedData = JSON.parse(JSON.stringify(res))
-          this.originalData = JSON.parse(JSON.stringify(res))
-
-          this.question.setValue(this.editedData.question)
-          this.answer.setValue(this.editedData.answer)
-          this.bad_answer1.setValue(this.editedData.bad_answer1)
-          this.bad_answer2.setValue(this.editedData.bad_answer2)
-          this.bad_answer3.setValue(this.editedData.bad_answer3)
-          this.selectedImage = {name: this.editedData.imageName, url: this.editedData.imageUrl}
-        },
-        error: error => {
-          this.snackBarService.openSnackBar(error.message)
-          this.router.navigate([`..`], {relativeTo: this.route})
-        },
-        complete: () => {
-        }
-      })
+          next: (res: Exercise) => {
+            this.editedData = JSON.parse(JSON.stringify(res))
+            this.originalData = JSON.parse(JSON.stringify(res))
+            this.setEditedExercise()
+          },
+          error: error => {
+            this.snackBarService.openSnackBar(error.message)
+            this.router.navigate([`..`], {relativeTo: this.route})
+          }
+        })
     }
+  }
+
+  setEditedExercise() {
+    this.exerciseForm.controls['question'].setValue(this.editedData.question)
+    this.exerciseForm.controls['answer'].setValue(this.editedData.answer)
+    this.exerciseForm.controls['bad_answer1'].setValue(this.editedData.bad_answer1)
+    this.exerciseForm.controls['bad_answer2'].setValue(this.editedData.bad_answer2)
+    this.exerciseForm.controls['bad_answer3'].setValue(this.editedData.bad_answer3)
+    this.selectedImage = {name: this.editedData.imageName, url: this.editedData.imageUrl}
+  }
+
+  setEditedExerciseFromForm() {
+    this.editedData.question = this.exerciseForm.controls['question'].value!
+    this.editedData.answer = this.exerciseForm.controls['answer'].value!
+    this.editedData.bad_answer1 = this.exerciseForm.controls['bad_answer1'].value!
+    this.editedData.bad_answer2 = this.exerciseForm.controls['bad_answer2'].value!
+    this.editedData.bad_answer3 = this.exerciseForm.controls['bad_answer3'].value!
+    this.editedData.imageName = this.selectedImage.name
+    this.editedData.imageUrl = this.selectedImage.url
   }
 
   deleteExercise() {
@@ -89,18 +111,12 @@ export class ExerciseGeneralPageComponent implements OnInit {
 
   openDialog(): void {
 
-    this.editedData.question = this.question.value
-    this.editedData.answer = this.answer.value
-    this.editedData.bad_answer1 = this.bad_answer1.value
-    this.editedData.bad_answer2 = this.bad_answer2.value
-    this.editedData.bad_answer3 = this.bad_answer3.value
-    this.editedData.imageName = this.selectedImage.name
-    this.editedData.imageUrl = this.selectedImage.url
+    this.setEditedExerciseFromForm()
 
     const dialogRef = this.dialogService.openDataDiffDialog(this.originalData, this.editedData)
 
     dialogRef.afterClosed().subscribe(value => {
-      if(value) {
+      if (value) {
 
         this.exerciseService.editExerciseById(this.courseId, this.levelId, this.editedData).subscribe({
           next: res => {
@@ -114,8 +130,7 @@ export class ExerciseGeneralPageComponent implements OnInit {
 
           }
         })
-      }
-      else {
+      } else {
 
       }
       console.log('The dialog was closed');
@@ -126,9 +141,9 @@ export class ExerciseGeneralPageComponent implements OnInit {
     const dialog = this.dialogService.openImagePicker()
     dialog.afterClosed().subscribe({
       next: value => {
-        if(value){
+        if (value) {
           this.selectedImage = value
-          console.log("after close picker: ",value)
+          console.log("after close picker: ", value)
         }
       },
       error: err => {

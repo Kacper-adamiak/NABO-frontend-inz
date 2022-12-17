@@ -30,6 +30,7 @@ import {ResetPasswordPageComponent} from "./pages/reset-password-page/reset-pass
 import {Role} from "./enums/role";
 import {LoginGuard} from "./guards/login.guard";
 import {RoleGuard} from "./guards/role.guard";
+import {ForgotPasswordComponent} from "./pages/auth/forgot-password/forgot-password.component";
 
 const routes: Routes = [
   {path: "", component: StartingPageComponent},
@@ -53,7 +54,8 @@ const routes: Routes = [
     {path: 'adminpanel', component: AdminPanelPageComponent, canActivate: [RoleGuard], data: {role: Role.ROLE_ADMIN}},
   ], canActivate: [LoginGuard]},
   {path: "auth", component: AuthComponent, children: [
-    {path: "signin", component: SigninPageComponent}
+    {path: "signin", component: SigninPageComponent},
+      {path: "forgotpassword", component: ForgotPasswordComponent}
   ]},
    // {path: "**", redirectTo: '/'}
 

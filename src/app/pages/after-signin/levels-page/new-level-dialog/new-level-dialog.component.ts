@@ -1,8 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {UntypedFormControl, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {SnackbarService} from "../../../../services/snackbar.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {LevelService} from "../../../../services/level.service";
 import {Level} from "../../../../models/level";
 
@@ -13,10 +13,12 @@ import {Level} from "../../../../models/level";
 })
 export class NewLevelDialogComponent implements OnInit {
 
-  newLevel = {} as Level
-  name = new UntypedFormControl('', [Validators.required])
-  difficulty = new UntypedFormControl('', [Validators.required])
-  status = new UntypedFormControl('', [Validators.required])
+  newLevel!: Level
+
+  levelForm = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    difficulty: new FormControl('', [Validators.required]),
+  })
 
 
   constructor(
@@ -24,19 +26,12 @@ export class NewLevelDialogComponent implements OnInit {
     private levelService: LevelService,
     private snackBarService: SnackbarService,
     private router: Router,
-    private route: ActivatedRoute,
     @Inject(MAT_DIALOG_DATA) public data: { courseId: number },
   ) {
 
   }
 
   ngOnInit(): void {
-    this.status.disable()
-    this.status.setValue('STATUS_SUSPENDED')
-    this.difficulty.setValue(1)
-    console.log("-> this.route", this.route.snapshot.url);
-    console.log("-> this.route.root", this.route.root.snapshot.toString());
-    console.log("-> this.route.parent", this.route.parent);
   }
 
   onNoClick(): void {
@@ -44,10 +39,12 @@ export class NewLevelDialogComponent implements OnInit {
   }
 
   onAccept() {
-    this.newLevel.name = this.name.value
-    this.newLevel.difficulty = Number(this.difficulty.value)
-    this.newLevel.statusName = this.status.value
+    this.getNewLevelFromForm()
     console.log(this.newLevel)
+    this.addNewLevel()
+  }
+
+  addNewLevel() {
     this.levelService.addLevel(this.data.courseId, this.newLevel).subscribe({
       next: res => {
         if (res.level) {
@@ -61,7 +58,15 @@ export class NewLevelDialogComponent implements OnInit {
         this.snackBarService.openErrorSnackBar(err.error)
       }
     })
+  }
 
+  getNewLevelFromForm() {
+    let _newLevel: Level = {
+      name: this.levelForm.controls['name'].value!,
+      difficulty: Number(this.levelForm.controls['difficulty'].value!),
+      statusName: 'STATUS_SUSPENDED'
+    }
+    this.newLevel = _newLevel
   }
 
 }

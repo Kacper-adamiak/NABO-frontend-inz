@@ -1,12 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {UntypedFormControl, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {SnackbarService} from "../../../../services/snackbar.service";
 import {Flashcard} from "../../../../models/flashcard";
 import {FlashcardService} from "../../../../services/flashcard.service";
 import {DialogService} from "../../../../services/dialog.service";
 import {Image} from "../../../../models/image";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-new-flashcard-dialog',
@@ -16,17 +15,20 @@ import {Router} from "@angular/router";
 export class NewFlashcardDialogComponent implements OnInit {
 
   newFlashcard = {} as Flashcard
-  expOriginal = new UntypedFormControl('', [Validators.required])
-  expTranslation = new UntypedFormControl('', [Validators.required])
-  expDescription = new UntypedFormControl('', [Validators.required])
+
   selectedImage!: Image
+
+  flashcardForm = new FormGroup({
+    expOriginal: new FormControl('', [Validators.required]),
+    expTranslation: new FormControl('', [Validators.required]),
+    expDescription: new FormControl('', [Validators.required]),
+  })
 
   constructor(
     public dialogRef: MatDialogRef<NewFlashcardDialogComponent>,
     private flashcardService: FlashcardService,
     private snackBarService: SnackbarService,
     private dialogService: DialogService,
-    private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: { courseId: number, levelId: number },
   ) {
   }
@@ -40,23 +42,28 @@ export class NewFlashcardDialogComponent implements OnInit {
   }
 
   onAccept() {
-    this.newFlashcard.expOriginal = this.expOriginal.value
-    this.newFlashcard.expTranslation = this.expTranslation.value
-    this.newFlashcard.expDescription = this.expDescription.value
-    this.newFlashcard.imageName = this.selectedImage.name
+    this.setNewFlashcardFromForm()
+    this.addFlashcard()
+  }
 
+  addFlashcard() {
     this.flashcardService.addFlashcard(this.data.courseId, this.data.levelId ,this.newFlashcard).subscribe({
       next: res => {
-        let tempFlashcard: Flashcard = res.flashcard;
         this.snackBarService.openSuccessSnackBar(res.message)
         this.dialogRef.close(true)
       },
       error: err => {
-        this.snackBarService.openErrorSnackBar(err)
-        this.dialogRef.close(false)
+        this.snackBarService.openErrorSnackBar(err.message)
       },
       complete: () => {}
     })
+  }
+
+  setNewFlashcardFromForm() {
+    this.newFlashcard.expOriginal = this.flashcardForm.controls['expOriginal'].value!
+    this.newFlashcard.expTranslation = this.flashcardForm.controls['expTranslation'].value!
+    this.newFlashcard.expDescription = this.flashcardForm.controls['expDescription'].value!
+    this.newFlashcard.imageName = this.selectedImage.name
   }
 
   openImagePicker() {

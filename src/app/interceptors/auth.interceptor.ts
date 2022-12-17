@@ -11,24 +11,26 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (request.url != this.web.SOURCE + "/user/resetPassword") {
+    if (!this.web.URL_WITHOUT_AUTH.includes(request.url)) {
       request = this.addAuthHeader(request)
-
       return next.handle(request).pipe(
         catchError(err => {
           if (err.status == 401) {
             return this.authService.refreshAccessToken().pipe(
               switchMap(() => {
                 return next.handle(this.addAuthHeader(request));
+              }),
+              catchError(err1 => {
+                this.authService.logout()
+                return throwError(err1)
               })
             )
           }
           return throwError(err);
         }),
       )
-    } else {
-      return next.handle(request)
     }
+    return next.handle(request)
   }
 
   addAuthHeader(req: HttpRequest<any>) {

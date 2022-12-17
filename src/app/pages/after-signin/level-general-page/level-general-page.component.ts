@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {UntypedFormControl, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {SnackbarService} from "../../../services/snackbar.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -20,11 +20,14 @@ export class LevelGeneralPageComponent implements OnInit {
 
   originalData = {} as Level
   editedData = {} as Level
-  name = new UntypedFormControl('', [Validators.required])
-  difficulty = new UntypedFormControl('', [Validators.required])
-  status = new UntypedFormControl('', [Validators.required])
   courseId!: number
   levelId!: number
+
+  levelForm = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    difficulty: new FormControl('', [Validators.required]),
+    status: new FormControl('', [Validators.required])
+  })
 
   constructor(
     public dialog: MatDialog,
@@ -36,8 +39,16 @@ export class LevelGeneralPageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getRouteParams()
+    this.getLevel()
+  }
+
+  getRouteParams() {
     this.courseId = Number(this.route.snapshot.paramMap.get('courseId'))
     this.levelId = Number(this.route.snapshot.paramMap.get('levelId'))
+  }
+
+  getLevel() {
     if(!!this.courseId && !!this.levelId){
       this.dataLoadingState.setLoading()
       this.levelService.getLevelById(this.courseId, this.levelId)
@@ -47,33 +58,35 @@ export class LevelGeneralPageComponent implements OnInit {
           })
         )
         .subscribe({
-        next: (res: Level) => {
-          this.editedData = res
-          this.originalData = JSON.parse(JSON.stringify(res))
-          this.setFormFields(this.editedData)
-        },
-        error: error => {
-          this.snackBarService.openSnackBar(error.message)
-          this.router.navigate([`/home/courses/${this.courseId}/levels`])
-        },
-        complete: () => {
-
-        }
-      })
+          next: (res: Level) => {
+            this.editedData = res
+            this.originalData = JSON.parse(JSON.stringify(res))
+            this.setFormFields()
+          },
+          error: error => {
+            this.snackBarService.openSnackBar(error.message)
+            this.router.navigate([`/home/courses/${this.courseId}/levels`])
+          }
+        })
     }
   }
 
-  private setFormFields(level: Level){
-    this.name.setValue(level.name)
-    this.difficulty.setValue(level.difficulty)
-    this.status.setValue(level.statusName)
+  setFormFields(){
+    console.log("-> String(this.editedData.difficulty)", String(this.editedData.difficulty));
+    this.levelForm.controls['name'].setValue(this.editedData.name)
+    this.levelForm.controls['difficulty'].setValue(String(this.editedData.difficulty))
+    this.levelForm.controls['status'].setValue(this.editedData.statusName)
   }
 
   onSubmit() {
-    this.editedData.name = this.name.value
-    this.editedData.difficulty = this.difficulty.value
-    this.editedData.statusName = this.status.value
+    this.getLevelFromForm()
     this.openDialog()
+  }
+
+  getLevelFromForm() {
+    this.editedData.name = this.levelForm.controls['name'].value!
+    this.editedData.difficulty = Number(this.levelForm.controls['difficulty'].value!)
+    this.editedData.statusName = this.levelForm.controls['status'].value!
   }
 
   deleteLevel(){
@@ -97,22 +110,21 @@ export class LevelGeneralPageComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(value => {
       if(value) {
-        this.levelService.editLevelById(this.courseId, this.levelId, this.editedData).subscribe({
-          next: res => {
-            this.originalData = JSON.parse(JSON.stringify(this.editedData))
-            this.snackBarService.openSuccessSnackBar(res.message)
-          },
-          error: err => {
-            this.snackBarService.openSuccessSnackBar(err.error)
-          },
-          complete: () => {
-          }
-        })
+        this.editLevel()
       }
-      else {
-      }
-      console.log('The dialog was closed');
     });
+  }
+
+  editLevel() {
+    this.levelService.editLevelById(this.courseId, this.levelId, this.editedData).subscribe({
+      next: res => {
+        this.originalData = JSON.parse(JSON.stringify(this.editedData))
+        this.snackBarService.openSuccessSnackBar(res.message)
+      },
+      error: err => {
+        this.snackBarService.openSuccessSnackBar(err.error)
+      },
+    })
   }
 
 }

@@ -19,15 +19,12 @@ export class RoleGuard implements CanActivate {
   }
 
   checkUserHasRole(route: ActivatedRouteSnapshot): boolean {
-
     let roleFromData: string = route.data['role']
-    console.log("roleGuard", roleFromData)
-    if (roleFromData == null) return false
-    console.log("roleGuard after roleFrom")
+    if (roleFromData == null) {
+      return false
+    }
     let role: Role = Role[roleFromData as keyof typeof Role]
-    console.log("roleGuard role: ", role)
     if (!this.authService.hasRole(role)) {
-      console.log("roleGuard after has role")
       this.router.navigate(['/home']);
       return false;
     }
