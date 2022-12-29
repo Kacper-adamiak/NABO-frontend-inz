@@ -5,26 +5,25 @@
   <form [formGroup]="flashcardForm">
     <mat-form-field appearance="fill">
       <mat-label>Wyrażenie[Ang]</mat-label>
-      <input matInput placeholder="Tu wprowadź nazwę wyrażenie po angielsku" formControlName="expOriginal" required>
+      <input matInput placeholder="Tu wprowadź wyrażenie po angielsku" formControlName="expOriginal" required>
       <mat-error>Wytażenie[Ang] musi być wypełniona</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Tłumaczenie[Pol]</mat-label>
-      <input matInput placeholder="Tu wprowadź nazwę tłumaczenie po polsku" formControlName="expTranslation" required>
+      <input matInput placeholder="Tu wprowadź tłumaczenie po polsku" formControlName="expTranslation" required>
       <mat-error>Tłumaczenie[Pol] musi być wypełniona</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Opis</mat-label>
-      <input matInput placeholder="Tu wprowadź opis" formControlName="expDescription" required>
-      <mat-error>Opis musi być wypełniona</mat-error>
+      <input matInput placeholder="Tu wprowadź opis" formControlName="expDescription">
     </mat-form-field>
 
     <div>
       <button mat-raised-button color="primary" (click)="openImagePicker()">Wybierz obraz</button>
-      <p>{{selectedImage ? selectedImage.name : "nie wybrano obrazu"}}</p>
-      <img *ngIf="!!selectedImage" src="{{selectedImage.url}}" width="128px" height="128px">
+      <p>{{selectedImage.name ? selectedImage.name : "nie wybrano obrazu"}}</p>
+      <img *ngIf="selectedImage.name" src="{{selectedImage.url}}" width="128px" height="128px">
     </div>
   </form>
 

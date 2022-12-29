@@ -70,10 +70,10 @@ export class AccountEditPageComponent implements OnInit {
         this.snackbarService.openSuccessSnackBar(value.message)
       },
       error: err => {
-        if(err.password) this.snackbarService.openErrorSnackBar(err.password)
-        if(err.firstName) this.snackbarService.openErrorSnackBar(err.firstName)
-        if(err.lastName) this.snackbarService.openErrorSnackBar(err.lastName)
-        if(err.error) this.snackbarService.openErrorSnackBar(err.error)
+        if(err.password) this.snackbarService.openErrorSnackBar(err.error.password)
+        if(err.firstName) this.snackbarService.openErrorSnackBar(err.error.firstName)
+        if(err.lastName) this.snackbarService.openErrorSnackBar(err.error.lastName)
+        if(err.error) this.snackbarService.openErrorSnackBar(err.error.error)
       }
     })
   }

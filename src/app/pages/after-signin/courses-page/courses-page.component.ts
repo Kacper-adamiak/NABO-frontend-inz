@@ -86,7 +86,7 @@ export class CoursesPageComponent implements OnInit {
     })
   }
 
-  openDialog(): void {
+  openNewCourseDialog(): void {
     const dialogRef = this.dialog.open(NewCourseDialogComponent, {
       width: '80%',
       height: '80%'

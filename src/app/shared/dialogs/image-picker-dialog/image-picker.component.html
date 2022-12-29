@@ -1,8 +1,11 @@
 <div mat-dialog-content >
 
-  <button mat-raised-button color="primary" (click)="openUploadImageDialog()">Dodaj zdjęcie</button>
+  <div style="display: flex; justify-content: right;">
+    <button mat-raised-button color="primary" (click)="openUploadImageDialog()">Dodaj zdjęcie</button>
+  </div>
 
   <div style="width: 100%;">
+    <p style="font-weight: bold;">Aby zobaczyć zdjęcia wybierz interesującą cię kategorię</p>
     <mat-form-field appearance="fill" style="width: 100%;">
       <mat-label>Kategoria</mat-label>
       <mat-select (valueChange)="onSelectChange($event)" [formControl]="categoryFormControl">
@@ -11,10 +14,7 @@
     </mat-form-field>
   </div>
 
-  <mat-form-field appearance="standard">
-    <mat-label>Wyszukaj</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="np. kurs o zwierzętach" #input>
-  </mat-form-field>
+  <app-search-field (onKeyUp)="applyFilter($event)"></app-search-field>
 
   <div *ngIf="filteredData.length != 0" class="img_container">
     <div class="img_data" *ngFor="let image of slicedData" (click)="chooseImage(image)" [class.chosen_image]="image.name == this.chosenImage.name">
@@ -33,9 +33,9 @@
                  aria-label="Select page">
   </mat-paginator>
 
-  <h2>Wybrane zdjęcie: {{chosenImage.name || 'nie wybrano'}}</h2>
+  <h3>Wybrane zdjęcie: {{chosenImage.name || 'nie wybrano'}}</h3>
 </div>
 <div mat-dialog-actions style="position: relative; bottom: 0px;">
   <button mat-button (click)="onNoClick()">Anuluj</button>
-  <button mat-button (click)="onAccept()">Wybierz zdjęcie</button>
+  <button mat-button (click)="onAccept()" [disabled]="chosenImage.name == null">Wybierz zdjęcie</button>
 </div>

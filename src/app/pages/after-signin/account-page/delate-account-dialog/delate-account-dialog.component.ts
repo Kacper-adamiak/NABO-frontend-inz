@@ -30,6 +30,7 @@ export class DelateAccountDialogComponent implements OnInit {
       next: value => {
         this.authService.logout();
         this.snackbarService.openSuccessSnackBar(value.message)
+        this.dialogRef.close(true)
       },
       error: err => {
         this.snackbarService.openErrorSnackBar(err.message)

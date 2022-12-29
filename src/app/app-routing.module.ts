@@ -57,7 +57,7 @@ const routes: Routes = [
     {path: "signin", component: SigninPageComponent},
       {path: "forgotpassword", component: ForgotPasswordComponent}
   ]},
-   // {path: "**", redirectTo: '/'}
+   {path: "**", redirectTo: '/'}
 
 ];
 

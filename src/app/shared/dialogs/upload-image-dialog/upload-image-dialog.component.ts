@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {UntypedFormBuilder, UntypedFormControl, Validators} from "@angular/forms";
+import {FormControl, UntypedFormBuilder, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {SnackbarService} from "../../../services/snackbar.service";
 import {ImageService} from "../../../services/image.service";
@@ -16,9 +16,9 @@ import {Category} from "../../../models/category";
 })
 export class UploadImageDialogComponent implements OnInit {
 
-  category = new UntypedFormControl('', [Validators.required])
-  image = new UntypedFormControl(null)
-  name = new UntypedFormControl('')
+  category = new FormControl('', [Validators.required])
+  image = new FormControl(null, [Validators.required])
+  name = new FormControl('', [Validators.required])
   categories = [] as Category[]
   spinnerValue = 0;
   spinnerShow = false;
@@ -47,7 +47,6 @@ export class UploadImageDialogComponent implements OnInit {
 
   uploadFile(event: any) {
     this.selectedFile = event.target.files[0];
-    console.log(this.selectedFile);
     this.fileName = this.selectedFile!.name
   }
 
@@ -67,12 +66,12 @@ export class UploadImageDialogComponent implements OnInit {
   }
 
   onAccept() {
+    var formData = this.createNewFormData()
+    this.addNewImage(formData)
+  }
+
+  addNewImage(formData: FormData) {
     this.spinnerMode = 'determinate'
-    var formData: any = new FormData();
-    formData.append('image', this.selectedFile);
-    formData.append('name', this.name.value);
-    formData.append('categoryName', this.category.value);
-    console.log(formData.get('image'))
     this.http.post<any>("http://localhost:8081/api/image/uploadImage", formData, {
       reportProgress: true,
       observe: 'events',
@@ -83,14 +82,10 @@ export class UploadImageDialogComponent implements OnInit {
           if(this.isHttpProgressEvent(event)){
             if(event.total != undefined) {
               this.spinnerValue = (event.loaded / event.total!)*100
-              console.log("progress:", (event.loaded / event.total!)*100)
             }
             if(event.loaded == event.total){
               this.spinnerMode = 'indeterminate'
             }
-          }
-          if (this.isHttpResponse(event)) {
-            console.log("progress:", 100)
           }
           return event
         })
@@ -98,18 +93,24 @@ export class UploadImageDialogComponent implements OnInit {
       .subscribe({
         next: res => {
           if(this.isHttpResponse(res)) {
-            console.log("res",res)
+            this.spinnerShow = false
+            this.snackBarService.openSuccessSnackBar(res.body.message)
             this.dialogRef.close(res.body.image)
           }
         },
         error: error => {
           this.spinnerShow = false
-          console.log("er",error)
-        },
-        complete: () => {
-          this.spinnerShow = false
+          this.snackBarService.openErrorSnackBar(error.error)
         }
       })
+  }
+
+  createNewFormData() {
+    let formData = new FormData()
+    formData.append('image', this.selectedFile);
+    formData.append('name', this.name.value!);
+    formData.append('categoryName', this.category.value!);
+    return formData
   }
 
 }

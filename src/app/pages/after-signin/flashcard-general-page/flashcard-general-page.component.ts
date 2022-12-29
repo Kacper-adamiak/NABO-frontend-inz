@@ -25,9 +25,9 @@ export class FlashcardGeneralPageComponent implements OnInit {
   selectedImage!: Image
 
   flashcardForm = new FormGroup({
-    expOriginal: new FormControl('', [Validators.required]),
-    expTranslation: new FormControl('', [Validators.required]),
-    expDescription: new FormControl('', [Validators.required])
+    expOriginal: new FormControl('', [Validators.required, Validators.max(30)]),
+    expTranslation: new FormControl('', [Validators.required, Validators.max(30)]),
+    expDescription: new FormControl('')
   })
 
   courseId!: number
@@ -86,26 +86,23 @@ export class FlashcardGeneralPageComponent implements OnInit {
     this.selectedImage = {name: this.editedData.imageName, url: this.editedData.imageUrl}
   }
 
-  updateEditedFlashcard() {
-    this.editedData.expOriginal = this.flashcardForm.controls['expOriginal'].value!
-    this.editedData.expTranslation = this.flashcardForm.controls['expTranslation'].value!
-    this.editedData.expDescription = this.flashcardForm.controls['expDescription'].value!
-    this.editedData.imageName = this.selectedImage.name
-    this.editedData.imageUrl = this.selectedImage.url
-  }
-
   saveChanges() {
-
     this.updateEditedFlashcard()
     const dialogRef = this.dialogService.openDataDiffDialog(this.originalData, this.editedData)
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
-        this.flashcardService.editFlashcardById(this.courseId, this.levelId, this.flashcardId, this.editedData).subscribe({
+        this.dataLoadingState.setLoading()
+        this.flashcardService.editFlashcardById(this.courseId, this.levelId, this.flashcardId, this.editedData)
+          .pipe(
+            finalize(() => {
+              this.dataLoadingState.setNotLoading()
+            })
+          )
+          .subscribe({
           next: (res) => {
             this.snackBarService.openSuccessSnackBar(res.message)
           },
           error: (err) => {
-            console.log("error: ", err)
             if(err.error.name) {
               this.snackBarService.openErrorSnackBar(err.name)
             }
@@ -120,6 +117,14 @@ export class FlashcardGeneralPageComponent implements OnInit {
         this.originalData = JSON.parse(JSON.stringify(this.editedData))
       }
     });
+  }
+
+  updateEditedFlashcard() {
+    this.editedData.expOriginal = this.flashcardForm.controls['expOriginal'].value!
+    this.editedData.expTranslation = this.flashcardForm.controls['expTranslation'].value!
+    this.editedData.expDescription = this.flashcardForm.controls['expDescription'].value!
+    this.editedData.imageName = this.selectedImage.name
+    this.editedData.imageUrl = this.selectedImage.url
   }
 
   deleteFlashcard() {

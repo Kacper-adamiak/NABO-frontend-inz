@@ -16,12 +16,12 @@ export class NewFlashcardDialogComponent implements OnInit {
 
   newFlashcard = {} as Flashcard
 
-  selectedImage!: Image
+  selectedImage: Image = {} as Image
 
   flashcardForm = new FormGroup({
-    expOriginal: new FormControl('', [Validators.required]),
-    expTranslation: new FormControl('', [Validators.required]),
-    expDescription: new FormControl('', [Validators.required]),
+    expOriginal: new FormControl('', [Validators.required, Validators.max(30)]),
+    expTranslation: new FormControl('', [Validators.required, Validators.max(30)]),
+    expDescription: new FormControl(''),
   })
 
   constructor(

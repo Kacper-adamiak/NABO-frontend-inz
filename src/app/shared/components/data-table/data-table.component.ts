@@ -1,8 +1,7 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
-import {DictionaryService} from "../../../services/dictionary.service";
 
 
 @Component({
@@ -10,9 +9,8 @@ import {DictionaryService} from "../../../services/dictionary.service";
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss']
 })
-export class DataTableComponent implements OnInit, AfterViewInit {
+export class DataTableComponent implements OnInit {
 
-  public tableDataSource = new MatTableDataSource([]);
   @Input() displayedColumns: string[] = []
   @Input() set data(data: any[]){
     this.setTableDataSource(data)
@@ -20,33 +18,23 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   @Input() filterFormHidden: boolean = false
   @Input() paginatorHidden: boolean = false;
   @Output() onRowClick = new EventEmitter()
-  dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([])
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
+  dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([])
 
-  constructor(public dictionaryService: DictionaryService) {
+  constructor() {
   }
 
   ngOnInit(): void {
 
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
   setTableDataSource(data: any) {
     this.dataSource = new MatTableDataSource<any>(data);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-  }
-
-  isDate(object: any) {
-    let dateInputs = ['modified', 'created']
-    return dateInputs.includes(object)
   }
 
   applyFilter(event: Event) {
@@ -61,6 +49,11 @@ export class DataTableComponent implements OnInit, AfterViewInit {
 
   onRowClickEmit(row: any) {
     this.onRowClick.emit(row)
+  }
+
+  isDate(object: any) {
+    let dateInputsKeys = ['modified', 'created']
+    return dateInputsKeys.includes(object)
   }
 
 }

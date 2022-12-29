@@ -47,6 +47,12 @@ import {
 } from './courses-page/new-potential-category-dialog/new-potential-category-dialog.component';
 import {SharedModule} from "../../shared/shared.module";
 import {DelateAccountDialogComponent} from './account-page/delate-account-dialog/delate-account-dialog.component';
+import {
+  EditAnotherUserDialogComponent
+} from './admin-panel-page/components/users-panel/edit-another-user-dialog/edit-another-user-dialog.component';
+import {
+  DeleteAnotherUserDialogComponent
+} from './admin-panel-page/components/users-panel/delete-another-user-dialog/delete-another-user-dialog.component';
 
 
 @NgModule({
@@ -81,6 +87,8 @@ import {DelateAccountDialogComponent} from './account-page/delate-account-dialog
     AddNewCreatorPanelComponent,
     NewPotentialCategoryDialogComponent,
     DelateAccountDialogComponent,
+    EditAnotherUserDialogComponent,
+    DeleteAnotherUserDialogComponent,
   ],
   imports: [
     CommonModule,

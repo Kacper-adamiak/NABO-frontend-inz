@@ -12,33 +12,27 @@ export class DialogService {
   constructor(public dialog: MatDialog) { }
 
   openUploadImage() {
-    const dialogRef = this.dialog.open(UploadImageDialogComponent, {
+    return this.dialog.open(UploadImageDialogComponent, {
       width: '90%',
       height: 'fit-content',
-    });
-
-    return dialogRef
+    })
   }
 
   openImagePicker() {
-    const dialogRef = this.dialog.open(ImagePickerComponent, {
+    return this.dialog.open(ImagePickerComponent, {
       width: '90%',
-      height: '80%',
-    });
-
-    return dialogRef
+      height: '90%',
+    })
   }
 
   openDataDiffDialog(_originalData: any, _editedData: any) {
-    const dialogRef = this.dialog.open(DataDifferenceDialogComponent, {
+    return this.dialog.open(DataDifferenceDialogComponent, {
       width: '90%',
-      height: '80%',
+      height: '90%',
       data: {
         originalData: _originalData,
         editedData: _editedData
       }
-    });
-
-    return dialogRef
+    })
   }
 }

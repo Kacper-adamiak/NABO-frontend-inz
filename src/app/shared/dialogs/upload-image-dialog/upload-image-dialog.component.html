@@ -1,5 +1,6 @@
 <div mat-dialog-content>
 
+  <h2 style="text-align: center; padding-bottom: 2rem;">Dodaj nowe zdjęcie</h2>
 
   <mat-form-field appearance="fill" style="width: 100%;">
     <mat-label>Nazwa zdjęcia</mat-label>
@@ -13,13 +14,12 @@
       <mat-select [formControl]="category">
         <mat-option *ngFor="let category of categories" [value]="category.name">{{category.name}}</mat-option>
       </mat-select>
+      <mat-error>Kategoria musi być wypełniona</mat-error>
     </mat-form-field>
   </div>
 
 
   <div style="display: flex;align-items: center; height: 50px; margin-bottom: 20px">
-
-
     <input type="file" [formControl]="image" (change)="uploadFile($event)" #fileUpload required hidden="true">
 
     <button mat-mini-fab style="height: 50px; width: 50px;" color="primary" class="upload-btn"
@@ -40,5 +40,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Anuluj</button>
-  <button mat-button (click)="onAccept()">Dodaj zdjęcie</button>
+  <button mat-button (click)="onAccept()" [disabled]="name.invalid || category.invalid || image.invalid">Dodaj zdjęcie</button>
 </div>

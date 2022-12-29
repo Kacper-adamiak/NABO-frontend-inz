@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {UntypedFormControl} from "@angular/forms";
+import {FormControl} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {ActivatedRoute, Router} from "@angular/router";
 import {DialogService} from "../../../services/dialog.service";
@@ -23,7 +23,7 @@ export class FlashcardsPageComponent implements OnInit {
   courseId!: number
   levelId!: number
 
-  filterValue = new UntypedFormControl('');
+  filterValue = new FormControl('');
 
   constructor(
     private flashcardService: FlashcardService,

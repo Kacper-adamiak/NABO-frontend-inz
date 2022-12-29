@@ -76,7 +76,6 @@ export class ImagePickerComponent implements OnInit, AfterViewInit{
   }
 
   paginatorPageEvent(event: PageEvent){
-    console.log(event)
     const startIndex = event.pageIndex * event.pageSize
     let endIndex = startIndex + event.pageSize
     if (endIndex > this.filteredData.length) {

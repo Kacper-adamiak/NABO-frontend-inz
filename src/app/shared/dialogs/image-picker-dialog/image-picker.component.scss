@@ -13,6 +13,13 @@
     cursor: pointer;
     padding: 10px;
   }
+
+}
+
+@media (max-width: 650px) {
+  .img_container {
+    grid-template-columns: repeat(2, 49% [col-start]);
+  }
 }
 
 

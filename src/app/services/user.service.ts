@@ -17,6 +17,10 @@ export class UserService {
     return this.webService.get<any>('/user')
   }
 
+  getUserDataById(userId: number) {
+    return this.webService.get<any>(`/user/${userId}`)
+  }
+
   getAllCreators() {
     return this.webService.get<any>('/user/creators')
   }
@@ -34,7 +38,7 @@ export class UserService {
   }
 
   deleteUserById(userId: number) {
-    return this.webService.delete<any>(`/user/delete${userId}`)
+    return this.webService.delete<any>(`/user/delete/${userId}`)
   }
 
   resetPassword(token: string, userPassword: string): Observable<{ message: string }> {

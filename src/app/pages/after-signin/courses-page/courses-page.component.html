@@ -2,7 +2,7 @@
   <div class="elevated_box">
 
     <app-elevated-box-top-buttons [rightButtonIcon]="'add'"
-                                  (rightButtonOnClick)="openDialog()"></app-elevated-box-top-buttons>
+                                  (rightButtonOnClick)="openNewCourseDialog()"></app-elevated-box-top-buttons>
     <app-elevated-box-header>Kursy</app-elevated-box-header>
 
     <div class="elevated_box_button_container">
@@ -16,9 +16,11 @@
 
     <app-data-table
       (onRowClick)="rowClicked($event)"
+      [filterFormHidden]="false"
       [displayedColumns]="displayedColumns"
       [data]="data"></app-data-table>
 
   </div>
-  <app-spinner-hero style="position: absolute; width: 100%; height: 100%" *ngIf="this.dataState.loading$ | async"></app-spinner-hero>
+  <app-spinner-hero *ngIf="this.dataState.loading$ | async"></app-spinner-hero>
 </div>
+
