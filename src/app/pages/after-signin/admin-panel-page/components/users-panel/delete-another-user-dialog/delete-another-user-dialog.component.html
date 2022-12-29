@@ -1,0 +1,9 @@
+<div mat-dialog-content >
+
+  <h2>Czy na pewno chcesz usunąć bezpowrotnie konto {{data.login!}}?</h2>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Anuluj</button>
+  <button mat-button (click)="onAccept()" >Usuń konto</button>
+</div>
