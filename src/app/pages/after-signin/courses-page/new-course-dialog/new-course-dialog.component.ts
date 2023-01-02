@@ -52,7 +52,6 @@ export class NewCourseDialogComponent implements OnInit {
 
   onAccept() {
     this.getNewCourseFromForm()
-    console.log(this.newCourse)
     this.addNewCourse()
   }
 
@@ -72,7 +71,6 @@ export class NewCourseDialogComponent implements OnInit {
         }
       },
       error: err => {
-        console.log(err)
         this.snackBarService.openErrorSnackBar(err.error)
       }
     })

@@ -41,7 +41,7 @@ export class ImagePickerComponent implements OnInit, AfterViewInit{
         this.categories = res
       },
       error: err => {
-        console.log(err)
+
       }
     })
 
@@ -59,7 +59,7 @@ export class ImagePickerComponent implements OnInit, AfterViewInit{
   }
 
   onAccept() {
-    console.log("dialog image name: ", this.chosenImage)
+
     this.dialogRef.close(this.chosenImage);
   }
 
@@ -70,7 +70,7 @@ export class ImagePickerComponent implements OnInit, AfterViewInit{
         this.filteredData = JSON.parse(JSON.stringify(res))
         this.paginatorLength = this.filteredData.length
         this.slicedData = this.filteredData.slice(0, this.paginatorPageSize)
-        console.log(this.filteredData)
+
       }
     })
   }
@@ -93,7 +93,7 @@ export class ImagePickerComponent implements OnInit, AfterViewInit{
     this.filteredData = this.data.filter(item => {return item.name.trim().toLowerCase().includes(filterValue)});
     this.paginatorLength = this.filteredData.length
     this.slicedData = this.filteredData.slice(0, this.paginatorPageSize)
-    console.log(this.filteredData)
+
   }
 
   openUploadImageDialog() {
@@ -102,7 +102,7 @@ export class ImagePickerComponent implements OnInit, AfterViewInit{
       next: value => {
         if(value) {
           this.chooseImage(value)
-          console.log("imageUploadInPicker: ",value)
+
         }
       }
     })

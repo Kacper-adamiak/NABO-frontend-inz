@@ -93,7 +93,6 @@ export class CoursesPageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result =>  {
-      console.log(`The dialog was closed ${result}`);
     });
   }
 
@@ -104,7 +103,6 @@ export class CoursesPageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result =>  {
-      console.log(`The dialog was closed ${result}`);
     });
   }
 

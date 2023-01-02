@@ -21,11 +21,11 @@ export class ForgotPasswordComponent implements OnInit {
   onSubmit() {
     this.authService.forgotPassword(this.email.value!).subscribe({
       next: value => {
-        console.log("-> value", value);
+
         this.snackbarService.openSuccessSnackBar(value.message)
       },
       error: err => {
-        console.log("-> err", err);
+
         this.snackbarService.openSuccessSnackBar(err.message)
       }
     })

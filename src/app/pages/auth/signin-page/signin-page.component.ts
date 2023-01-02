@@ -28,10 +28,8 @@ export class SigninPageComponent implements OnInit {
   onSubmit() {
     this.authService.login({login: this.login.value!, password: this.password.value!}).subscribe({
       next: res => {
-        console.log(res)
       },
       error: err => {
-        console.log(err)
         if(err.status == 401){
           this.snackbarService.openErrorSnackBar("Konto o podanym loginie i haśle nie istnieje")
         }

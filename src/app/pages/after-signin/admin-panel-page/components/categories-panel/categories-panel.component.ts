@@ -56,7 +56,6 @@ export class CategoriesPanelComponent implements OnInit, AfterViewInit {
       }))
       .subscribe({
       next: value => {
-        console.log("kategorie:", value)
         this.categoriesDataSource.data = value
       },
       error: err => {

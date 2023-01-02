@@ -13,7 +13,6 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (!this.web.URL_WITHOUT_AUTH.includes(request.url)) {
       request = this.addAuthHeader(request)
-      console.log("-> request", request);
       return next.handle(request).pipe(
         catchError(err => {
           if (err.status == 401) {

@@ -57,7 +57,7 @@ export class LocalStorageService {
 
   getRefreshTokenFromLocalStorage() {
     const user_data = this.getUserDataFromLocalStorage()
-    console.log("-> user_data.refreshToken", user_data.refreshToken);
+
     if (user_data && user_data.refreshToken) return user_data.refreshToken
     return null
   }

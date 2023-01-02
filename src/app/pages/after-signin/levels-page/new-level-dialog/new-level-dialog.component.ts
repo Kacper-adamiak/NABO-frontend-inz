@@ -40,7 +40,6 @@ export class NewLevelDialogComponent implements OnInit {
 
   onAccept() {
     this.getNewLevelFromForm()
-    console.log(this.newLevel)
     this.addNewLevel()
   }
 
@@ -48,7 +47,6 @@ export class NewLevelDialogComponent implements OnInit {
     this.levelService.addLevel(this.data.courseId, this.newLevel).subscribe({
       next: res => {
         if (res.level) {
-          console.log("-> level.id", res.level.id);
           this.router.navigate([`/home/courses/${this.data.courseId}/levels`, res.level.id])
         }
         this.dialogRef.close(true)

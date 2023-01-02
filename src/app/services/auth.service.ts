@@ -56,7 +56,7 @@ export class AuthService {
   }
 
   logout() {
-    console.log("-> logout");
+
     this.webService.post<any>("/auth/signout").subscribe()
     this.removeUserData()
     this._isLoggedIn$.next(false)

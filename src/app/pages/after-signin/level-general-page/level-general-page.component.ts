@@ -72,7 +72,7 @@ export class LevelGeneralPageComponent implements OnInit {
   }
 
   setFormFields(){
-    console.log("-> String(this.editedData.difficulty)", String(this.editedData.difficulty));
+
     this.levelForm.controls['name'].setValue(this.editedData.name)
     this.levelForm.controls['difficulty'].setValue(String(this.editedData.difficulty))
     this.levelForm.controls['status'].setValue(this.editedData.statusName)
@@ -98,7 +98,7 @@ export class LevelGeneralPageComponent implements OnInit {
             this.router.navigate([`/home/courses/${this.courseId}/levels`])
           },
           error: (err) => {
-            console.log("error: ", err)
+
           }
         }
       );

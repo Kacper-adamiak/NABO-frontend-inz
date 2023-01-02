@@ -24,7 +24,6 @@ export class AddNewCategoryPanelComponent implements OnInit {
 
     this.categoryService.addCategory(this.newCategoryForm.value).subscribe({
       next: value => {
-        console.log("added new category",value)
         this.snackbarService.openSuccessSnackBar(value.message)
       },
       error: err => {

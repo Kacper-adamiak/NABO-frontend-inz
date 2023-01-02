@@ -94,11 +94,11 @@ export class TestQuestionGeneralPageComponent implements OnInit {
       next: value => {
         if(value){
           this.selectedImage = value
-          console.log("after close picker: ",value)
+
         }
       },
       error: err => {
-        console.log('something went wrong')
+
       }
     })
   }
@@ -114,7 +114,7 @@ export class TestQuestionGeneralPageComponent implements OnInit {
             this.snackBarService.openSuccessSnackBar(res.message)
           },
           error: (err) => {
-            console.log("error: ", err)
+
             if(err.error.name) {
               this.snackBarService.openErrorSnackBar(err.name)
             }
@@ -128,7 +128,7 @@ export class TestQuestionGeneralPageComponent implements OnInit {
         })
         this.originalTestQuestion = JSON.parse(JSON.stringify(this.editedTestQuestion))
       }
-      console.log('The dialog was closed');
+
     });
   }
 
@@ -138,7 +138,7 @@ export class TestQuestionGeneralPageComponent implements OnInit {
         this.snackBarService.openSuccessSnackBar(res.message)
       },
       error: (err) => {
-        console.log("error: ", err)
+
         if(err.error.name) {
           this.snackBarService.openErrorSnackBar(err.name)
         }

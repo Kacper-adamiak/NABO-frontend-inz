@@ -57,7 +57,7 @@ export class NewExerciseDialogComponent implements OnInit {
         this.dialogRef.close(true)
       },
       error: err => {
-        console.log("exerciseService", err)
+
         this.snackBarService.openErrorSnackBar(err.error)
       }
     })

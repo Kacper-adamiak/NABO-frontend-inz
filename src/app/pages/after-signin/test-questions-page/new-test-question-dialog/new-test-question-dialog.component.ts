@@ -71,11 +71,11 @@ export class NewTestQuestionDialogComponent implements OnInit {
       next: value => {
         if(value){
           this.selectedImage = value
-          console.log("after close picker: ",value)
+
         }
       },
       error: err => {
-        console.log('something went wrong')
+
       }
     })
   }

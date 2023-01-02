@@ -4,7 +4,7 @@ export class LoadingState {
   private _loading = new BehaviorSubject<boolean>(false);
   public readonly loading$ = this._loading.asObservable().pipe(
     tap(value => {
-      console.log("-> loading$");
+
     })
   );
   private loadingCount = 0

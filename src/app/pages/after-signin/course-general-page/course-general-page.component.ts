@@ -108,7 +108,6 @@ export class CourseGeneralPageComponent implements OnInit {
             this.router.navigate(["/home/courses"])
           },
           error: (err) => {
-            console.log("error: ", err)
           }
         }
       );
@@ -125,7 +124,6 @@ export class CourseGeneralPageComponent implements OnInit {
             this.originalData = JSON.parse(JSON.stringify(this.editedData))
           },
           error: (err) => {
-            console.log("error: ", err)
             if (err.error.name) {
               this.snackBarService.openErrorSnackBar(err.name)
             }

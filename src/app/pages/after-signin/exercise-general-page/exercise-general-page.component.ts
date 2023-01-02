@@ -133,7 +133,7 @@ export class ExerciseGeneralPageComponent implements OnInit {
       } else {
 
       }
-      console.log('The dialog was closed');
+
     });
   }
 
@@ -143,11 +143,11 @@ export class ExerciseGeneralPageComponent implements OnInit {
       next: value => {
         if (value) {
           this.selectedImage = value
-          console.log("after close picker: ", value)
+
         }
       },
       error: err => {
-        console.log('something went wrong')
+
       }
     })
   }
